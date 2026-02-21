@@ -1,0 +1,36 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appmgr-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: appmgr }
+  template:
+    metadata:
+      labels:
+        app: appmgr
+    spec:
+      containers:
+        - name: appmgr
+          image: your.registry/appmgr:latest
+          ports:
+            - containerPort: 8005
+          env:
+            - name: SERVICE_MODE
+              value: "micro"
+            - name: APP_NAME
+              value: "echo-mermaid-platform"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: appmgr-svc
+spec:
+  selector:
+    app: appmgr
+  ports:
+    - port: 8005
+      targetPort: 8005
+      protocol: TCP

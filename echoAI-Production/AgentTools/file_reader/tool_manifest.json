@@ -1,0 +1,99 @@
+{
+  "tool_id": "tool_file_reader",
+  "name": "File Reader",
+  "description": "Reads and processes various file formats including PDF, JSON, XML, and CSV. Supports document parsing, text extraction, vector embeddings, semantic search, and CSV querying with summarization capabilities",
+  "tool_type": "local",
+  "version": "1.0",
+  "tags": ["file", "reader", "pdf", "json", "xml", "csv", "parser", "document", "rag", "embeddings"],
+  "status": "active",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "content_base64": {
+        "type": "string",
+        "description": "Base64 encoded file content"
+      },
+      "file_name": {
+        "type": "string",
+        "description": "Name of the file including extension"
+      },
+      "mime_type": {
+        "type": "string",
+        "enum": [
+          "application/pdf",
+          "application/json",
+          "application/xml",
+          "text/xml",
+          "text/csv",
+          "application/vnd.ms-excel",
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        ],
+        "description": "MIME type of the file"
+      },
+      "mode": {
+        "type": "string",
+        "enum": ["extract", "query", "summarize"],
+        "default": "extract",
+        "description": "Processing mode: extract (get raw content), query (semantic search), summarize (generate summary)"
+      },
+      "query": {
+        "type": "string",
+        "description": "Query for semantic search (required when mode is 'query')"
+      },
+      "chunk_size": {
+        "type": "integer",
+        "default": 1000,
+        "description": "Size of text chunks for embedding (used in query mode)"
+      },
+      "chunk_overlap": {
+        "type": "integer",
+        "default": 200,
+        "description": "Overlap between chunks (used in query mode)"
+      },
+      "stream": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable streaming response for large files"
+      }
+    },
+    "required": ["content_base64", "file_name", "mime_type"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "content": {
+        "type": "string",
+        "description": "Extracted or processed content"
+      },
+      "metadata": {
+        "type": "object",
+        "properties": {
+          "file_name": {"type": "string"},
+          "mime_type": {"type": "string"},
+          "mode": {"type": "string"},
+          "size_bytes": {"type": "integer"}
+        },
+        "description": "File and processing metadata"
+      },
+      "chunks": {
+        "type": "array",
+        "items": {"type": "string"},
+        "description": "Text chunks (when using embeddings)"
+      },
+      "summary": {
+        "type": "string",
+        "description": "Generated summary (when mode is 'summarize')"
+      }
+    },
+    "required": ["content", "metadata"]
+  },
+  "execution_config": {
+    "module": "AgentTools.file_reader.service",
+    "class": "FileReaderService",
+    "method": "process"
+  },
+  "metadata": {
+    "author": "EchoAI",
+    "category": "document_processing"
+  }
+}

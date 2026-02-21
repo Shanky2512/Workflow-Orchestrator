@@ -1,0 +1,39 @@
+{
+  "agent_id": "agt_27b4a86e1fd540469a02aa7ab1a93101",
+  "name": "Operational Assessment",
+  "role": "Autonomous AI agent",
+  "description": "Complete the task as Operational Assessment",
+  "prompt": "Evaluate operational efficiency and identify integration challenges. Analyze: Key customer concentration, Supplier dependencies, IT systems and infrastructure, Employee retention risks, Process maturity, Scalability concerns. Assess post-merger integration complexity.",
+  "icon": "🔶",
+  "model": "claude-sonnet-4-5-20250514",
+  "tools": [
+    "tool_web_search"
+  ],
+  "variables": [],
+  "settings": {
+    "temperature": 0.3,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 3,
+    "provider": "anthropic"
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "Agent",
+    "goal": "Complete the task as Operational Assessment",
+    "ui_layout": {
+      "x": 600,
+      "y": 450,
+      "icon": "🔶",
+      "color": "#f59e0b"
+    },
+    "created_at": "2026-02-17T16:09:25.842754",
+    "registered_at": "2026-02-17T15:37:10.852793",
+    "updated_at": "2026-02-17T16:09:25.910542"
+  },
+  "input_schema": [],
+  "output_schema": []
+}

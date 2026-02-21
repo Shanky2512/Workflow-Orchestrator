@@ -1,0 +1,31 @@
+{
+  "session_id": "d0abe259-9332-4682-9ac4-fe1d762ca725",
+  "workflow_id": "wf_5a0da1045ead40fab24a54efe722848a",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-15T19:40:41.784115",
+  "last_activity": "2026-02-15T19:40:41.918921",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_5a0da1045ead40fab24a54efe722848a",
+      "timestamp": "2026-02-15T19:40:41.784115",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "Analyze the blog post and rewrite it for better SEO and social media engagement",
+      "timestamp": "2026-02-15T19:40:41.918921",
+      "agent_id": null,
+      "metadata": {}
+    }
+  ],
+  "context": {
+    "workflow_name": "Blog Content Pipeline"
+  },
+  "run_ids": [],
+  "message_count": 2,
+  "state_schema": {},
+  "variables": {}
+}

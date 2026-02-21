@@ -1,0 +1,782 @@
+{
+  "workflow_id": "wf_32e00c9227494feaaca8c7944df922e1",
+  "name": "contract_reviewer",
+  "description": "Created from canvas on 2026-02-17",
+  "status": "draft",
+  "version": "0.1",
+  "execution_model": "hybrid",
+  "agents": [
+    {
+      "agent_id": "agt_eeb4edacdb8c44499ec8f67cf53c5577",
+      "name": "Upload Contract",
+      "role": "Workflow entry point",
+      "description": "Start node",
+      "prompt": "",
+      "icon": " ",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Start",
+        "goal": "",
+        "ui_layout": {
+          "x": 100,
+          "y": 200,
+          "icon": " ",
+          "color": "#10b981"
+        },
+        "created_at": "2026-02-17T15:17:40.621694",
+        "registered_at": "2026-02-17T15:17:40.765099"
+      },
+      "input_schema": [
+        "contract_file",
+        "contract_type",
+        "user_id",
+        "priority",
+        "review_notes"
+      ],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_a3f43d73ac26419ab5c060f79d019c9b",
+      "name": "Document Parser",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Document Parser",
+      "prompt": "You are a Document Parser Agent specialized in extracting text and metadata from contracts.\n\n## INPUT:\n- Contract file: {contract_file}\n- Contract type: {contract_type}\n\n## YOUR TASK:\n1. Extract all text content from the contract\n2. Identify document structure (sections, clauses, exhibits)\n3. Extract metadata (parties, dates, amounts, terms)\n4. Detect contract language and jurisdiction\n5. Identify any embedded tables, schedules, or annexes\n\n## TOOLS AVAILABLE:\n- pdf_extractor: Extract text from PDF files\n- docx_reader: Read DOCX/DOC files\n- ocr_processor: OCR for scanned documents\n- table_detector: Identify and extract tables\n\n## OUTPUT FORMAT (JSON):\n```json\n{\n \"document_id\": \"unique_id\",\n \"full_text\": \"complete extracted text\",\n \"metadata\": {\n \"title\": \"contract title\",\n \"parties\": [\"Party A\", \"Party B\"],\n \"effective_date\": \"YYYY-MM-DD\",\n \"termination_date\": \"YYYY-MM-DD\",\n \"governing_law\": \"jurisdiction\",\n \"contract_value\": \"monetary amount\",\n \"term_length\": \"duration\"\n },\n \"structure\": {\n \"sections\": [\n {\"section_number\": \"1\", \"title\": \"Definitions\", \"start_page\": 1},\n {\"section_number\": \"2\", \"title\": \"Terms and Conditions\", \"start_page\": 2}\n ],\n \"total_pages\": 10,\n \"total_clauses\": 25\n },\n \"tables\": [\n {\"table_id\": 1, \"page\": 5, \"description\": \"Payment Schedule\"}\n ],\n \"language\": \"English\",\n \"is_scanned\": false,\n \"quality_score\": 0.95\n}\n```\n\n## QUALITY CHECKS:\n- Verify text extraction completeness (>95% confidence)\n- Flag any illegible sections\n- Identify missing pages or corrupted sections\n- Validate metadata extraction accuracy",
+      "icon": " ",
+      "model": "ollama:qwen3-vl:8b",
+      "tools": [
+        "tool_file_reader",
+        "tool_ocr",
+        "tool_document_analysis"
+      ],
+      "variables": [],
+      "settings": {
+        "temperature": 0.1,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Document Parser",
+        "ui_layout": {
+          "x": 350,
+          "y": 200,
+          "icon": " ",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T15:17:40.621694",
+        "registered_at": "2026-02-17T15:17:40.844465"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_0edc7b0e9137445dad1c48a1e4bfe8ad",
+      "name": "Clause Extraction Agent",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Clause Extraction Agent",
+      "prompt": "You are a Clause Extraction Agent specialized in identifying and categorizing contract clauses.\n\n## INPUT:\n- Full contract text: {full_text}\n- Contract type: {contract_type}\n- Document structure: {structure}\n\n## YOUR TASK:\nIdentify and extract ALL key clauses from the contract, categorizing them by type.\n\n## KEY CLAUSE TYPES TO IDENTIFY:\n1. **Financial Clauses**: Payment terms, pricing, invoicing, late fees, expenses\n2. **Term & Termination**: Contract duration, renewal, termination rights, notice periods\n3. **Intellectual Property**: IP ownership, licensing, usage rights, restrictions\n4. **Confidentiality**: NDA provisions, confidential information definition, exceptions\n5. **Liability & Indemnification**: Limitation of liability, indemnification obligations, caps\n6. **Warranties & Representations**: Performance warranties, disclaimer clauses\n7. **Dispute Resolution**: Arbitration, mediation, jurisdiction, governing law\n8. **Force Majeure**: Unforeseen circumstances, pandemic clauses\n9. **Assignment & Transfer**: Assignment rights, change of control\n10. **Compliance & Regulatory**: Regulatory compliance, audit rights, certifications\n11. **Data & Privacy**: Data processing, GDPR/CCPA compliance, data retention\n12. **Insurance**: Insurance requirements, coverage amounts\n13. **Non-Compete/Non-Solicit**: Restrictive covenants, exclusivity\n14. **Audit Rights**: Inspection rights, audit frequency\n15. **Service Levels**: SLAs, uptime guarantees, performance metrics\n\n## OUTPUT FORMAT (JSON):\n```json\n{\n \"clauses\": [\n {\n \"clause_id\": \"C001\",\n \"category\": \"Financial\",\n \"subcategory\": \"Payment Terms\",\n \"title\": \"Section 3.2 - Payment Schedule\",\n \"text\": \"Full clause text here...\",\n \"location\": \"Section 3.2, Page 4\",\n \"key_terms\": {\n \"payment_frequency\": \"monthly\",\n \"payment_method\": \"wire transfer\",\n \"due_date\": \"net 30\",\n \"late_fee\": \"1.5% per month\"\n },\n \"risk_level\": \"medium\",\n \"importance\": \"high\"\n }\n ],\n \"missing_clauses\": [\n \"Force Majeure clause not found\",\n \"Data Privacy provisions missing\"\n ],\n \"unusual_clauses\": [\n \"Perpetual license with no termination right\"\n ],\n \"total_clauses_identified\": 28\n}\n```\n\n## EXTRACTION RULES:\n- Extract complete clause text, not summaries\n- Identify cross-references between clauses\n- Flag unusual or non-standard language\n- Note any ambiguous or contradictory clauses\n- Highlight industry-specific terms",
+      "icon": " ",
+      "model": "ollama:qwen3-vl:8b",
+      "tools": [
+        "tool_file_reader",
+        "tool_web_search",
+        "tool_document_analysis"
+      ],
+      "variables": [],
+      "settings": {
+        "temperature": 0.1,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Clause Extraction Agent",
+        "ui_layout": {
+          "x": 600,
+          "y": 100,
+          "icon": " ",
+          "color": "#8b5cf6"
+        },
+        "created_at": "2026-02-17T15:17:40.621694",
+        "registered_at": "2026-02-17T15:17:40.916783"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_7d378da5b31048688897b2c82ca98721",
+      "name": "Risk Assessment Agent",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Risk Assessment Agent",
+      "prompt": "You are a Risk Assessment Agent specialized in identifying legal and business risks in contracts.\n\n## INPUT:\n- Full contract text: {full_text}\n- Extracted clauses: {clauses}\n- Contract type: {contract_type}\n- Contract metadata: {metadata}\n\n## YOUR TASK:\nAnalyze the contract for potential risks and issues across multiple dimensions.\n\n## RISK ASSESSMENT FRAMEWORK:\n\n### 1. LEGAL RISKS\n- **Enforceability Issues**: Vague terms, missing essential elements\n- **Regulatory Compliance**: GDPR, CCPA, SOX, HIPAA violations\n- **Jurisdictional Issues**: Unfavorable governing law or venue\n- **Statute of Limitations**: Unreasonable time limits\n\n### 2. FINANCIAL RISKS\n- **Unlimited Liability**: No liability caps or unreasonably high caps\n- **Payment Terms**: Unfavorable payment schedules, hidden fees\n- **Price Escalation**: Uncontrolled price increases\n- **Currency Risk**: Foreign currency exposure without hedging\n\n### 3. OPERATIONAL RISKS\n- **Service Level Failures**: Weak or missing SLAs\n- **Dependency Risk**: Over-reliance on single vendor\n- **Termination Difficulty**: Onerous termination requirements\n- **Transition Issues**: Lack of transition assistance provisions\n\n### 4. INTELLECTUAL PROPERTY RISKS\n- **IP Ownership Ambiguity**: Unclear IP rights allocation\n- **Broad License Grants**: Overly permissive licensing\n- **Infringement Liability**: Lack of IP indemnification\n- **Work Product Ownership**: Unclear ownership of deliverables\n\n### 5. DATA & PRIVACY RISKS\n- **Data Breach Liability**: Inadequate security requirements\n- **Privacy Violations**: Non-compliance with privacy laws\n- **Data Retention**: Excessive or undefined retention periods\n- **Cross-Border Transfers**: Illegal data transfers\n\n### 6. COMPETITIVE RISKS\n- **Non-Compete Overreach**: Overly broad restrictive covenants\n- **Exclusivity**: Unreasonable exclusive dealing terms\n- **Most Favored Nation**: Pricing disadvantages\n\n## RISK SCORING:\n- **Critical (9-10)**: Deal-breaker, requires immediate attention\n- **High (7-8)**: Significant risk, must be addressed before signing\n- **Medium (4-6)**: Notable concern, should be negotiated\n- **Low (1-3)**: Minor issue, acceptable with awareness\n\n## OUTPUT FORMAT (JSON):\n```json\n{\n \"overall_risk_score\": 6.5,\n \"recommendation\": \"Do Not Sign - Major Issues Require Resolution\",\n \"risks\": [\n {\n \"risk_id\": \"R001\",\n \"category\": \"Financial\",\n \"severity\": \"critical\",\n \"risk_score\": 9,\n \"title\": \"Unlimited Liability Exposure\",\n \"description\": \"Section 8.3 contains no limitation of liability cap, exposing company to potentially unlimited damages.\",\n \"affected_clause\": \"C015\",\n \"location\": \"Section 8.3, Page 12\",\n \"impact\": \"Company could be liable for damages far exceeding contract value.\",\n \"likelihood\": \"medium\",\n \"mitigation\": \"Negotiate a liability cap of 2x annual contract value or $1M, whichever is greater.\",\n \"supporting_law\": \"Standard practice in commercial contracts\",\n \"references\": [\"Section 8.3\", \"Indemnification Clause 8.5\"]\n }\n ],\n \"missing_protections\": [\n \"No force majeure clause\",\n \"Missing limitation of liability\",\n \"No data breach notification requirement\"\n ],\n \"red_flags\": [\n \"Perpetual auto-renewal with 180-day termination notice\",\n \"Broad IP assignment clause covering pre-existing IP\",\n \"Unilateral amendment rights\"\n ],\n \"favorable_terms\": [\n \"Strong termination for convenience clause\",\n \"Reasonable payment terms\"\n ],\n \"risk_summary\": {\n \"critical_risks\": 2,\n \"high_risks\": 5,\n \"medium_risks\": 8,\n \"low_risks\": 3,\n \"total_risks\": 18\n }\n}\n```\n\n## BENCHMARKING:\n- Compare against industry-standard contract terms\n- Reference market norms for contract type\n- Cite relevant case law where applicable",
+      "icon": " ",
+      "model": "ollama:qwen3-vl:8b",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.2,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Risk Assessment Agent",
+        "ui_layout": {
+          "x": 600,
+          "y": 300,
+          "icon": " ",
+          "color": "#ef4444"
+        },
+        "created_at": "2026-02-17T15:17:40.621694",
+        "registered_at": "2026-02-17T15:17:41.001136"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_7292a9c0418d4aa7905693920654ca2e",
+      "name": "Compliance Checker",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Compliance Checker",
+      "prompt": "You are a Compliance Checker Agent specialized in verifying regulatory and policy compliance.\n\n## INPUT:\n- Contract text: {full_text}\n- Contract type: {contract_type}\n- Jurisdiction: {governing_law}\n- Clauses: {clauses}\n\n## YOUR TASK:\nVerify compliance with applicable laws, regulations, and internal policies.\n\n## COMPLIANCE FRAMEWORKS TO CHECK:\n\n### 1. DATA PROTECTION & PRIVACY\n- **GDPR** (EU): Data processing, consent, rights, DPO, DPIA\n- **CCPA** (California): Consumer rights, opt-out, sale of data\n- **HIPAA** (Healthcare): PHI protection, BAA requirements\n- **PIPEDA** (Canada): Personal information handling\n\n### 2. FINANCIAL REGULATIONS\n- **SOX**: Financial controls, audit requirements\n- **PCI DSS**: Payment card data security\n- **Anti-Money Laundering**: KYC, transaction monitoring\n\n### 3. INDUSTRY-SPECIFIC\n- **FINRA** (Financial services)\n- **FDA** (Pharmaceuticals/Medical)\n- **FTC** (Consumer protection)\n- **Export Control** (ITAR, EAR)\n\n### 4. EMPLOYMENT LAW\n- **Fair Labor Standards Act**\n- **Equal Employment Opportunity**\n- **Non-compete enforceability**\n- **Wage and hour compliance**\n\n### 5. CORPORATE POLICIES\n- Procurement policy compliance\n- Authority levels and approval requirements\n- Standard terms and conditions adherence\n- Risk tolerance thresholds\n\n## OUTPUT FORMAT (JSON):\n```json\n{\n \"compliance_status\": \"Non-Compliant\",\n \"overall_compliance_score\": 65,\n \"violations\": [\n {\n \"violation_id\": \"V001\",\n \"regulation\": \"GDPR Article 28\",\n \"severity\": \"high\",\n \"description\": \"Missing Data Processing Agreement (DPA) required for EU data processing\",\n \"affected_section\": \"Section 7 - Data Handling\",\n \"requirement\": \"Must include DPA with processor obligations per GDPR Art. 28\",\n \"remediation\": \"Add GDPR-compliant DPA as exhibit to contract\",\n \"potential_penalty\": \"Up to \u20ac20M or 4% of annual revenue\",\n \"reference\": \"GDPR Article 28(3)\"\n }\n ],\n \"compliant_areas\": [\n {\n \"regulation\": \"SOX Section 404\",\n \"description\": \"Audit rights properly documented\",\n \"section\": \"Section 12.4\"\n }\n ],\n \"required_amendments\": [\n \"Add GDPR Data Processing Agreement\",\n \"Include CCPA consumer rights disclosure\",\n \"Add cybersecurity insurance requirement\"\n ],\n \"policy_violations\": [\n {\n \"policy\": \"Corporate Procurement Policy Section 3.2\",\n \"issue\": \"Contract value exceeds approval authority\",\n \"required_action\": \"Requires Board approval for contracts >$5M\"\n }\n ],\n \"certifications_required\": [\n \"SOC 2 Type II\",\n \"ISO 27001\",\n \"HIPAA compliance certification\"\n ],\n \"compliance_summary\": {\n \"total_checks\": 25,\n \"passed\": 18,\n \"failed\": 7,\n \"not_applicable\": 5\n }\n}\n```\n\n## VALIDATION RULES:\n- Cross-reference with latest regulatory updates\n- Check for jurisdiction-specific requirements\n- Verify certification and attestation requirements\n- Flag any sunset/grandfathering provisions",
+      "icon": "\u2713",
+      "model": "ollama:qwen3-vl:8b",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Compliance Checker",
+        "ui_layout": {
+          "x": 900,
+          "y": 100,
+          "icon": "\u2713",
+          "color": "#06b6d4"
+        },
+        "created_at": "2026-02-17T15:17:40.621694",
+        "registered_at": "2026-02-17T15:17:41.079464"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_b2e05fc521de446c9c45575498c53d20",
+      "name": "Financial Analysis Agent",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Financial Analysis Agent",
+      "prompt": "You are a Financial Analysis Agent specialized in analyzing contract economics and financial terms.\n\n## INPUT:\n- Contract text: {full_text}\n- Financial clauses: {financial_clauses}\n- Contract metadata: {metadata}\n\n## YOUR TASK:\nAnalyze all financial aspects of the contract and calculate total cost of ownership.\n\n## FINANCIAL ANALYSIS AREAS:\n\n### 1. DIRECT COSTS\n- Base fees and pricing\n- Implementation/setup fees\n- License fees\n- Subscription costs\n- Per-user/per-transaction fees\n\n### 2. VARIABLE COSTS\n- Overage charges\n- Volume-based pricing tiers\n- Usage-based fees\n- Transaction fees\n\n### 3. INDIRECT COSTS\n- Maintenance and support fees\n- Training costs\n- Integration costs\n- Customization fees\n- Professional services\n\n### 4. HIDDEN COSTS\n- Termination fees\n- Data extraction fees\n- Audit fees\n- Penalty clauses\n- Currency conversion fees\n\n### 5. COST ESCALATION\n- Annual price increases\n- CPI/inflation adjustments\n- Renewal pricing\n- Renegotiation terms\n\n## FINANCIAL METRICS TO CALCULATE:\n- **Total Contract Value (TCV)**: Sum of all payments over contract term\n- **Annual Contract Value (ACV)**: Average annual spend\n- **Total Cost of Ownership (TCO)**: Including hidden/indirect costs\n- **Cost Per User/Unit**: Normalized pricing metrics\n- **Break-even Point**: When benefits exceed costs\n- **ROI Projection**: Expected return on investment\n\n## OUTPUT FORMAT (JSON):\n```json\n{\n \"financial_summary\": {\n \"total_contract_value\": 500000,\n \"annual_contract_value\": 100000,\n \"total_cost_of_ownership\": 650000,\n \"contract_term_months\": 60,\n \"currency\": \"USD\",\n \"payment_frequency\": \"monthly\"\n },\n \"cost_breakdown\": {\n \"direct_costs\": {\n \"base_subscription\": 400000,\n \"implementation_fee\": 50000,\n \"license_fees\": 0,\n \"total\": 450000\n },\n \"variable_costs\": {\n \"overage_potential\": 30000,\n \"transaction_fees\": 20000,\n \"total\": 50000\n },\n \"indirect_costs\": {\n \"training\": 25000,\n \"integration\": 40000,\n \"support\": 35000,\n \"total\": 100000\n },\n \"hidden_costs\": {\n \"termination_fee\": 50000,\n \"data_extraction\": 0,\n \"total\": 50000\n }\n },\n \"pricing_structure\": {\n \"model\": \"tiered subscription\",\n \"base_price\": 15000,\n \"price_per_user\": 100,\n \"minimum_users\": 50,\n \"included_users\": 100,\n \"overage_rate\": 120,\n \"tiers\": [\n {\"users\": \"1-100\", \"monthly_rate\": 10000},\n {\"users\": \"101-250\", \"monthly_rate\": 20000},\n {\"users\": \"251+\", \"monthly_rate\": 35000}\n ]\n },\n \"price_escalation\": {\n \"year_1_increase\": 0,\n \"year_2_increase\": 3,\n \"year_3_increase\": 5,\n \"year_4_increase\": 5,\n \"year_5_increase\": 5,\n \"mechanism\": \"CPI or 5%, whichever is greater\",\n \"projected_total_increase\": 18,\n \"risk_level\": \"medium\"\n },\n \"payment_terms\": {\n \"schedule\": \"monthly in advance\",\n \"due_date\": \"net 30\",\n \"late_fee\": \"1.5% per month\",\n \"early_payment_discount\": \"2% for net 10\",\n \"payment_method\": \"wire transfer or ACH\"\n },\n \"financial_risks\": [\n {\n \"risk\": \"Uncapped price increases after year 2\",\n \"impact\": \"high\",\n \"potential_cost\": 100000,\n \"mitigation\": \"Negotiate price increase cap of 5% annually\"\n },\n {\n \"risk\": \"High termination fee (10% of remaining TCV)\",\n \"impact\": \"medium\",\n \"potential_cost\": 50000,\n \"mitigation\": \"Negotiate termination for cause without penalty\"\n }\n ],\n \"benchmarking\": {\n \"market_average_price\": 90000,\n \"variance_from_market\": \"+11%\",\n \"percentile_ranking\": 75,\n \"assessment\": \"Above market rate\"\n },\n \"roi_analysis\": {\n \"projected_benefits\": 800000,\n \"total_costs\": 650000,\n \"net_benefit\": 150000,\n \"roi_percentage\": 23,\n \"payback_period_months\": 28,\n \"assessment\": \"Positive ROI expected\"\n },\n \"recommendations\": [\n \"Negotiate 5% cap on annual price increases\",\n \"Request volume discount for commitment to 200+ users\",\n \"Negotiate waiver of implementation fee\",\n \"Add termination for convenience clause with pro-rated refund\"\n ]\n}\n```\n\n## ANALYSIS PRINCIPLES:\n- Calculate both best-case and worst-case scenarios\n- Consider time value of money for multi-year contracts\n- Factor in currency exchange risks for international contracts\n- Benchmark against industry standards\n- Identify cost optimization opportunities",
+      "icon": " ",
+      "model": "ollama:qwen3-vl:8b",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.1,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Financial Analysis Agent",
+        "ui_layout": {
+          "x": 900,
+          "y": 300,
+          "icon": " ",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T15:17:40.621694",
+        "registered_at": "2026-02-17T15:17:41.152991"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_399cfeb64781421bb707a8f3b3b15e49",
+      "name": "Redlining Agent",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Redlining Agent",
+      "prompt": "You are a Redlining Agent specialized in generating contract amendments and suggested edits.\n\n## INPUT:\n- Original contract: {full_text}\n- Risk assessment: {risks}\n- Compliance issues: {violations}\n- Financial analysis: {financial_risks}\n\n## YOUR TASK:\nGenerate specific redline edits to address identified issues and improve contract terms.\n\n## REDLINING PRINCIPLES:\n1. **Preserve Intent**: Maintain business objectives while improving terms\n2. **Be Specific**: Provide exact language, not general suggestions\n3. **Prioritize**: Focus on critical and high-risk items first\n4. **Justify**: Explain the rationale for each change\n5. **Market Standard**: Propose industry-standard language where applicable\n\n## EDIT TYPES:\n- **Delete**: Remove problematic language\n- **Add**: Insert missing protections\n- **Modify**: Revise existing language\n- **Replace**: Substitute entire clauses\n- **Clarify**: Add definitions or examples\n\n## OUTPUT FORMAT (JSON):\n```json\n{\n \"redline_summary\": {\n \"total_edits\": 15,\n \"critical_edits\": 3,\n \"high_priority_edits\": 5,\n \"medium_priority_edits\": 7,\n \"estimated_negotiation_difficulty\": \"medium\"\n },\n \"edits\": [\n {\n \"edit_id\": \"E001\",\n \"priority\": \"critical\",\n \"section\": \"Section 8.3 - Limitation of Liability\",\n \"page\": 12,\n \"edit_type\": \"add\",\n \"current_language\": \"Neither party shall be liable for any indirect, incidental, or consequential damages.\",\n \"proposed_language\": \"Neither party shall be liable for any indirect, incidental, or consequential damages. EXCEPT FOR BREACHES OF SECTION 7 (CONFIDENTIALITY) AND SECTION 9 (INTELLECTUAL PROPERTY), EACH PARTY'S TOTAL LIABILITY SHALL NOT EXCEED THE GREATER OF (I) TWO TIMES THE ANNUAL FEES PAID IN THE 12 MONTHS PRECEDING THE CLAIM OR (II) ONE MILLION DOLLARS ($1,000,000).\",\n \"rationale\": \"Adds liability cap to prevent unlimited exposure. Standard market practice is 1x-2x annual fees. Cap protects company from catastrophic damages.\",\n \"addresses_risk\": \"R001\",\n \"fallback_position\": \"If 2x is rejected, accept 1x annual fees with minimum cap of $500K\",\n \"market_precedent\": \"80% of SaaS contracts include liability caps between 1x-2x annual fees\",\n \"business_impact\": \"Reduces maximum liability exposure from unlimited to capped amount\"\n },\n {\n \"edit_id\": \"E002\",\n \"priority\": \"critical\",\n \"section\": \"Section 4.2 - Auto-Renewal\",\n \"page\": 5,\n \"edit_type\": \"modify\",\n \"current_language\": \"This Agreement shall automatically renew for successive one-year terms unless either party provides written notice of non-renewal at least one hundred eighty (180) days prior to the end of the then-current term.\",\n \"proposed_language\": \"This Agreement shall automatically renew for successive one-year terms unless either party provides written notice of non-renewal at least sixty (60) days prior to the end of the then-current term. CUSTOMER MAY TERMINATE THIS AGREEMENT FOR CONVENIENCE UPON NINETY (90) DAYS PRIOR WRITTEN NOTICE.\",\n \"rationale\": \"Reduces notice period from 180 to 60 days (industry standard) and adds termination for convenience. 180-day notice is unusually long and creates vendor lock-in.\",\n \"addresses_risk\": \"R003\",\n \"fallback_position\": \"Accept 90-day notice period if 60 days is rejected\",\n \"market_precedent\": \"Standard renewal notice is 30-90 days in commercial contracts\",\n \"business_impact\": \"Provides greater flexibility to exit if service quality declines\"\n },\n {\n \"edit_id\": \"E003\",\n \"priority\": \"high\",\n \"section\": \"New Section - Data Processing Agreement\",\n \"page\": \"Add as Exhibit A\",\n \"edit_type\": \"add\",\n \"current_language\": null,\n \"proposed_language\": \"EXHIBIT A - DATA PROCESSING AGREEMENT\\n\\n1. DEFINITIONS\\n'Personal Data' means any information relating to an identified or identifiable natural person as defined in GDPR Article 4(1).\\n\\n2. PROCESSOR OBLIGATIONS\\nVendor shall:\\n(a) Process Personal Data only on documented instructions from Customer;\\n(b) Ensure confidentiality of persons authorized to process Personal Data;\\n(c) Implement appropriate technical and organizational security measures per GDPR Article 32;\\n(d) Engage sub-processors only with prior written consent;\\n(e) Assist Customer with data subject rights requests;\\n(f) Delete or return all Personal Data upon termination;\\n(g) Make available all information necessary to demonstrate compliance.\\n\\n3. SUB-PROCESSORS\\nCustomer consents to Vendor's use of sub-processors listed at [URL]. Vendor shall provide 30 days notice of any changes.\\n\\n4. SECURITY MEASURES\\nVendor shall maintain security measures including: [list specific measures]\\n\\n5. DATA BREACH NOTIFICATION\\nVendor shall notify Customer within 24 hours of becoming aware of a Personal Data breach.\\n\\n6. CROSS-BORDER TRANSFERS\\nVendor shall process Personal Data only within the EEA unless Standard Contractual Clauses are executed.\",\n \"rationale\": \"GDPR Article 28 mandates Data Processing Agreement for any EU personal data processing. Without DPA, contract is non-compliant and exposes company to regulatory fines.\",\n \"addresses_risk\": \"V001\",\n \"fallback_position\": \"Non-negotiable - required by law\",\n \"market_precedent\": \"Standard GDPR DPA provisions, required for all EU data processors\",\n \"business_impact\": \"Ensures GDPR compliance and avoids potential fines up to 4% of global revenue\"\n },\n {\n \"edit_id\": \"E004\",\n \"priority\": \"high\",\n \"section\": \"Section 5.4 - Price Increases\",\n \"page\": 7,\n \"edit_type\": \"modify\",\n \"current_language\": \"Vendor may increase fees upon renewal by an amount equal to the greater of (i) the Consumer Price Index increase or (ii) five percent (5%).\",\n \"proposed_language\": \"Vendor may increase fees upon renewal by an amount not to exceed five percent (5%) annually, provided that Vendor provides Customer with at least ninety (90) days prior written notice of any increase. IF ANY ANNUAL INCREASE EXCEEDS FIVE PERCENT (5%), CUSTOMER MAY TERMINATE THIS AGREEMENT WITHOUT PENALTY UPON THIRTY (30) DAYS WRITTEN NOTICE.\",\n \"rationale\": \"Caps price increases at 5% (removes 'greater of' language that creates unlimited increases tied to CPI). Adds termination right if cap is exceeded. Protects against inflation-driven price spikes.\",\n \"addresses_risk\": \"F002\",\n \"fallback_position\": \"Accept 7% cap if 5% is rejected, but maintain termination right for increases above cap\",\n \"market_precedent\": \"Most commercial contracts cap annual increases at 3-5%\",\n \"business_impact\": \"Provides budget certainty and prevents runaway costs\"\n },\n {\n \"edit_id\": \"E005\",\n \"priority\": \"medium\",\n \"section\": \"Section 10.1 - Intellectual Property Ownership\",\n \"page\": 15,\n \"edit_type\": \"modify\",\n \"current_language\": \"All intellectual property developed in connection with the Services shall be owned by Vendor.\",\n \"proposed_language\": \"All intellectual property developed in connection with the Services shall be owned by Vendor, EXCEPT THAT: (i) CUSTOMER DATA AND CUSTOMER CONFIDENTIAL INFORMATION SHALL REMAIN THE EXCLUSIVE PROPERTY OF CUSTOMER; (ii) ANY CUSTOMIZATIONS, CONFIGURATIONS, OR WORK PRODUCT CREATED SPECIFICALLY FOR CUSTOMER SHALL BE OWNED BY CUSTOMER; AND (iii) CUSTOMER RETAINS ALL RIGHTS TO ITS PRE-EXISTING INTELLECTUAL PROPERTY.\",\n \"rationale\": \"Clarifies that customer retains ownership of its data, custom work product, and pre-existing IP. Prevents vendor from claiming ownership of customer's valuable assets.\",\n \"addresses_risk\": \"R007\",\n \"fallback_position\": \"At minimum, secure exclusive license to custom work product with right to modify and create derivative works\",\n \"market_precedent\": \"Standard in service agreements that customer owns its data and custom deliverables\",\n \"business_impact\": \"Protects customer's IP rights and prevents vendor lock-in\"\n }\n ],\n \"new_clauses_to_add\": [\n {\n \"clause_title\": \"Force Majeure\",\n \"priority\": \"medium\",\n \"proposed_language\": \"SECTION 12.5 - FORCE MAJEURE\\n\\nNeither party shall be liable for any failure or delay in performance due to events beyond its reasonable control, including but not limited to acts of God, war, terrorism, riots, embargoes, acts of civil or military authorities, fire, floods, accidents, pandemics, strikes, or shortages of transportation facilities, fuel, energy, labor or materials ('Force Majeure Event'). The affected party shall promptly notify the other party and use reasonable efforts to mitigate the impact. If a Force Majeure Event continues for more than thirty (30) days, either party may terminate this Agreement upon written notice without liability.\",\n \"rationale\": \"Standard protective clause missing from contract. Protects both parties from liability for events outside their control (natural disasters, pandemics, etc.).\",\n \"location\": \"Add as new Section 12.5\"\n }\n ],\n \"negotiation_strategy\": {\n \"must_haves\": [\n \"E001 - Liability cap\",\n \"E003 - GDPR DPA\"\n ],\n \"high_priority\": [\n \"E002 - Reduced renewal notice\",\n \"E004 - Price increase cap\"\n ],\n \"nice_to_haves\": [\n \"E005 - IP ownership clarification\",\n \"Force majeure clause\"\n ],\n \"leverage_points\": [\n \"GDPR DPA is non-negotiable legal requirement\",\n \"Liability cap is standard in 80%+ of comparable contracts\",\n \"Price increase cap provides budget certainty needed for board approval\"\n ],\n \"estimated_timeline\": \"2-3 negotiation rounds, 3-4 weeks\"\n },\n \"risk_mitigation_summary\": {\n \"critical_risks_addressed\": 2,\n \"high_risks_addressed\": 5,\n \"medium_risks_addressed\": 7,\n \"residual_risk_score\": 3.2,\n \"risk_reduction_percentage\": 68\n }\n}\n```\n\n## REDLINING BEST PRACTICES:\n- Use tracked changes format (strikethrough for deletions, underline for additions)\n- Provide clean version and marked version\n- Include comments explaining each change\n- Reference applicable laws, regulations, or market standards\n- Offer fallback positions for difficult negotiations\n- Prioritize changes that address compliance or high-risk issues",
+      "icon": " ",
+      "model": "ollama:qwen3-vl:8b",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.2,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Redlining Agent",
+        "ui_layout": {
+          "x": 1200,
+          "y": 200,
+          "icon": " ",
+          "color": "#ec4899"
+        },
+        "created_at": "2026-02-17T15:17:40.621694",
+        "registered_at": "2026-02-17T15:17:41.224631"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_2039dc5de2aa44b4850d2d780c2d766b",
+      "name": "Risk Level Check",
+      "role": "Conditional branching",
+      "description": "Conditional node",
+      "prompt": "",
+      "icon": " ",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Conditional",
+        "goal": "",
+        "ui_layout": {
+          "x": 1500,
+          "y": 200,
+          "icon": " ",
+          "color": "#8b5cf6"
+        },
+        "created_at": "2026-02-17T15:17:40.621694",
+        "branches": [
+          {
+            "type": "if",
+            "condition": "overall_risk_score >= 8",
+            "targetNodeId": 3008
+          },
+          {
+            "type": "elif",
+            "condition": "overall_risk_score >= 5 and overall_risk_score < 8",
+            "targetNodeId": 3009
+          },
+          {
+            "type": "else",
+            "condition": "",
+            "targetNodeId": 3010
+          }
+        ],
+        "registered_at": "2026-02-17T15:17:41.298866"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_23e2a9b0a7e343929cb8cbb0b6efa41b",
+      "name": "Critical Risk Alert",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": " ",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 1500,
+          "y": 50,
+          "icon": " ",
+          "color": "#ef4444"
+        },
+        "created_at": "2026-02-17T15:17:40.621694",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.notifications.com/v1/alert",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:17:41.368175"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.notifications.com/v1/alert",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_640bdca1b9c549ae8fbc581529a68eda",
+      "name": "Medium Risk Alert",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": " ",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 1500,
+          "y": 200,
+          "icon": " ",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T15:17:40.621694",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.notifications.com/v1/alert",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:17:41.439556"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.notifications.com/v1/alert",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_e75f81623eaf470ba2754e124c0d487c",
+      "name": "Low Risk Notification",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": " ",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 1500,
+          "y": 350,
+          "icon": " ",
+          "color": "#10b981"
+        },
+        "created_at": "2026-02-17T15:17:40.621694",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.notifications.com/v1/alert",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:17:41.509387"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.notifications.com/v1/alert",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_c3ad7ea9c7184c759f2965f4456679ce",
+      "name": "Report Generator",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Report Generator",
+      "prompt": "You are a Report Generator Agent that creates comprehensive contract review reports.\n\n## INPUT:\n- Document metadata: {metadata}\n- Clauses: {clauses}\n- Risks: {risks}\n- Compliance: {compliance_status}\n- Financial analysis: {financial_summary}\n- Redlines: {edits}\n\n## YOUR TASK:\nGenerate a professional, executive-ready contract review report.\n\n## REPORT STRUCTURE:\n\n### 1. EXECUTIVE SUMMARY (1 page)\n- Overall recommendation (Sign / Negotiate / Reject)\n- Risk score and assessment\n- Top 3 critical issues\n- Financial summary (TCV, TCO, ROI)\n- Timeline and next steps\n\n### 2. CONTRACT OVERVIEW\n- Parties and effective dates\n- Contract type and purpose\n- Key terms (duration, value, scope)\n- Governing law and jurisdiction\n\n### 3. RISK ANALYSIS\n- Risk score breakdown by category\n- Critical risks (with specific remediation)\n- High/Medium risks summary\n- Risk heat map\n\n### 4. FINANCIAL ANALYSIS\n- Total cost of ownership\n- Payment terms and schedule\n- Hidden costs and fees\n- Price escalation analysis\n- ROI projection\n- Benchmarking vs. market rates\n\n### 5. COMPLIANCE REVIEW\n- Regulatory compliance status\n- Violations and gaps\n- Required certifications\n- Policy compliance\n\n### 6. KEY CLAUSES REVIEW\n- Favorable terms\n- Unfavorable terms\n- Missing protections\n- Unusual provisions\n\n### 7. RECOMMENDED CHANGES\n- Must-have edits (deal-breakers)\n- High-priority edits\n- Nice-to-have improvements\n- Negotiation strategy and talking points\n\n### 8. APPENDICES\n- Full clause inventory\n- Detailed risk register\n- Redline document (tracked changes)\n- Comparison to company standards\n\n## OUTPUT FORMAT:\nGenerate a professional PDF report with:\n- Company branding and logo\n- Table of contents with page numbers\n- Visual charts and graphs for risk/financial data\n- Color-coded risk indicators (Red/Yellow/Green)\n- Executive summary as first page\n- Detailed analysis in subsequent sections\n\n## TONE:\n- Professional and objective\n- Clear and actionable\n- Business-focused (not overly legal)\n- Data-driven with specific examples\n- Balanced (acknowledge both risks and benefits)",
+      "icon": " ",
+      "model": "ollama:qwen3-vl:8b",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.3,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Report Generator",
+        "ui_layout": {
+          "x": 1800,
+          "y": 200,
+          "icon": " ",
+          "color": "#6366f1"
+        },
+        "created_at": "2026-02-17T15:17:40.621694",
+        "registered_at": "2026-02-17T15:17:41.575138"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_896d3410c32945379bc55e842a7b906e",
+      "name": "Generate Redline Document",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": " ",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 2100,
+          "y": 100,
+          "icon": " ",
+          "color": "#ec4899"
+        },
+        "created_at": "2026-02-17T15:17:40.621694",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.documentgen.com/v1/redline",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:17:41.650132"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.documentgen.com/v1/redline",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_6b257d2d210c461bbda5c4c166daa8d4",
+      "name": "Save to Contract Repository",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": " ",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 2100,
+          "y": 250,
+          "icon": " ",
+          "color": "#06b6d4"
+        },
+        "created_at": "2026-02-17T15:17:40.621694",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.contractdb.com/v1/contracts",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:17:41.724130"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.contractdb.com/v1/contracts",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_5cab152632274d2a8a63423dba6e8192",
+      "name": "Send Review Package to User",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": " ",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 2400,
+          "y": 200,
+          "icon": " ",
+          "color": "#8b5cf6"
+        },
+        "created_at": "2026-02-17T15:17:40.622210",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.email.com/v1/send",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:17:41.818813"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.email.com/v1/send",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_a6a93bb703284d508f1b16550c7ca211",
+      "name": "Review Complete",
+      "role": "Workflow exit point",
+      "description": "End node",
+      "prompt": "",
+      "icon": " ",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "End",
+        "goal": "",
+        "ui_layout": {
+          "x": 2700,
+          "y": 200,
+          "icon": " ",
+          "color": "#64748b"
+        },
+        "created_at": "2026-02-17T15:17:40.622210",
+        "registered_at": "2026-02-17T15:17:41.914849"
+      },
+      "input_schema": [],
+      "output_schema": []
+    }
+  ],
+  "connections": [
+    {
+      "from": "agt_eeb4edacdb8c44499ec8f67cf53c5577",
+      "to": "agt_a3f43d73ac26419ab5c060f79d019c9b"
+    },
+    {
+      "from": "agt_a3f43d73ac26419ab5c060f79d019c9b",
+      "to": "agt_0edc7b0e9137445dad1c48a1e4bfe8ad"
+    },
+    {
+      "from": "agt_a3f43d73ac26419ab5c060f79d019c9b",
+      "to": "agt_7d378da5b31048688897b2c82ca98721"
+    },
+    {
+      "from": "agt_0edc7b0e9137445dad1c48a1e4bfe8ad",
+      "to": "agt_7292a9c0418d4aa7905693920654ca2e"
+    },
+    {
+      "from": "agt_7d378da5b31048688897b2c82ca98721",
+      "to": "agt_b2e05fc521de446c9c45575498c53d20"
+    },
+    {
+      "from": "agt_7292a9c0418d4aa7905693920654ca2e",
+      "to": "agt_399cfeb64781421bb707a8f3b3b15e49"
+    },
+    {
+      "from": "agt_b2e05fc521de446c9c45575498c53d20",
+      "to": "agt_399cfeb64781421bb707a8f3b3b15e49"
+    },
+    {
+      "from": "agt_399cfeb64781421bb707a8f3b3b15e49",
+      "to": "agt_2039dc5de2aa44b4850d2d780c2d766b"
+    },
+    {
+      "from": "agt_2039dc5de2aa44b4850d2d780c2d766b",
+      "to": "agt_23e2a9b0a7e343929cb8cbb0b6efa41b"
+    },
+    {
+      "from": "agt_2039dc5de2aa44b4850d2d780c2d766b",
+      "to": "agt_640bdca1b9c549ae8fbc581529a68eda"
+    },
+    {
+      "from": "agt_2039dc5de2aa44b4850d2d780c2d766b",
+      "to": "agt_e75f81623eaf470ba2754e124c0d487c"
+    },
+    {
+      "from": "agt_23e2a9b0a7e343929cb8cbb0b6efa41b",
+      "to": "agt_c3ad7ea9c7184c759f2965f4456679ce"
+    },
+    {
+      "from": "agt_640bdca1b9c549ae8fbc581529a68eda",
+      "to": "agt_c3ad7ea9c7184c759f2965f4456679ce"
+    },
+    {
+      "from": "agt_e75f81623eaf470ba2754e124c0d487c",
+      "to": "agt_c3ad7ea9c7184c759f2965f4456679ce"
+    },
+    {
+      "from": "agt_c3ad7ea9c7184c759f2965f4456679ce",
+      "to": "agt_896d3410c32945379bc55e842a7b906e"
+    },
+    {
+      "from": "agt_c3ad7ea9c7184c759f2965f4456679ce",
+      "to": "agt_6b257d2d210c461bbda5c4c166daa8d4"
+    },
+    {
+      "from": "agt_896d3410c32945379bc55e842a7b906e",
+      "to": "agt_5cab152632274d2a8a63423dba6e8192"
+    },
+    {
+      "from": "agt_6b257d2d210c461bbda5c4c166daa8d4",
+      "to": "agt_5cab152632274d2a8a63423dba6e8192"
+    },
+    {
+      "from": "agt_5cab152632274d2a8a63423dba6e8192",
+      "to": "agt_a6a93bb703284d508f1b16550c7ca211"
+    }
+  ],
+  "state_schema": {
+    "contract_file": "string",
+    "contract_type": "string",
+    "user_id": "string",
+    "priority": "string",
+    "review_notes": "string"
+  },
+  "metadata": {
+    "created_by": "workflow_builder",
+    "created_at": "2026-02-17T15:17:40.622210",
+    "canvas_layout": {
+      "width": 5000,
+      "height": 5000
+    }
+  }
+}

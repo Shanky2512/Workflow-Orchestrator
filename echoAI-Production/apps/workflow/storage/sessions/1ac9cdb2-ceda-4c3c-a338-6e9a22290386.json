@@ -1,0 +1,59 @@
+{
+  "session_id": "1ac9cdb2-ceda-4c3c-a338-6e9a22290386",
+  "workflow_id": "wf_e8b737828d984d2e88f9c069c0123862",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-16T17:33:15.710340",
+  "last_activity": "2026-02-16T17:34:26.528011",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_e8b737828d984d2e88f9c069c0123862",
+      "timestamp": "2026-02-16T17:33:15.710340",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "give me the result of the code",
+      "timestamp": "2026-02-16T17:33:15.848257",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "Code Error in Code Execution: Code compilation failed: C:\\Users\\SHASHA~1\\AppData\\Local\\Temp\\echo_code_jhhzcncs\\Main.java:1: error: class FindMaxElement is public, should be declared in a file named FindMaxElement.java\npublic class FindMaxElement {\n       ^\n1 error",
+      "timestamp": "2026-02-16T17:33:18.730784",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "completed"
+      }
+    },
+    {
+      "role": "user",
+      "content": "give me the result of the code",
+      "timestamp": "2026-02-16T17:34:25.964646",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "The maximum element is: 100\n",
+      "timestamp": "2026-02-16T17:34:26.528011",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "completed"
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "Test Code Execution"
+  },
+  "run_ids": [
+    "run_187939fe80394ba8a2350224adcc2c38",
+    "run_b380e919b9f74b1db03fef75fa06598b"
+  ],
+  "message_count": 5,
+  "state_schema": {},
+  "variables": {}
+}

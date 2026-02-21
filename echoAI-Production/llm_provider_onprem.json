@@ -1,0 +1,49 @@
+{
+  "models": [
+    {
+      "id": "ollama-qwen3-vl-8b",
+      "name": "Qwen3-VL 8B (Ollama/OpenAI adaptor)",
+      "provider": "ollama",
+      "base_url": "http://10.188.100.130:8002/v1",
+      "api_key": "ollama",
+      "model_name": "qwen3-vl:8b",
+      "is_default": false
+    },
+    {
+      "id": "ollama-mistral-nemo-12b",
+      "name": "Mistral Nemo 12B Instruct (Ollama/OpenAI adaptor)",
+      "provider": "ollama",
+      "base_url": "http://10.188.100.130:8002/v1",
+      "api_key": "ollama",
+      "model_name": "mistral-nemo:12b-instruct-2407-fp16",
+      "is_default": true
+    },
+    {
+      "id": "ollama-gpt-oss-20b",
+      "name": "GPT-OSS 20B (Ollama/OpenAI adaptor)",
+      "provider": "ollama",
+      "base_url": "http://10.188.100.130:8002/v1",
+      "api_key": "ollama",
+      "model_name": "gpt-oss:20b",
+      "is_default": false
+    },
+    {
+      "id": "ollama-qwen3-embedding",
+      "name": "Qwen3 Embedding (Ollama/OpenAI adaptor)",
+      "provider": "ollama",
+      "base_url": "http://10.188.100.130:8002/v1",
+      "api_key": "ollama",
+      "model_name": "qwen3-embedding:latest",
+      "is_default": false
+    },
+    {
+      "id": "ollama-llama3.1-8b",
+      "name": "Llama 3.1 8B (Ollama/OpenAI adaptor)",
+      "provider": "ollama",
+      "base_url": "http://10.188.100.130:8002/v1",
+      "api_key": "ollama",
+      "model_name": "llama3.1:8b",
+      "is_default": false
+    }
+  ]
+}

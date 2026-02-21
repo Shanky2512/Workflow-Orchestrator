@@ -1,0 +1,43 @@
+{
+  "agent_id": "agt_c225d3675e6c4cdf960a6e6556f29198",
+  "name": "Manager Review",
+  "role": "Human approval gate",
+  "description": "HITL node",
+  "prompt": "",
+  "icon": "👤",
+  "model": "",
+  "tools": [],
+  "variables": [],
+  "settings": {
+    "temperature": 0.7,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 5,
+    "provider": ""
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "HITL",
+    "goal": "",
+    "ui_layout": {
+      "x": 1850,
+      "y": 300,
+      "icon": "👤",
+      "color": "#06b6d4"
+    },
+    "created_at": "2026-02-17T15:33:42.330054",
+    "hitl_config": {
+      "title": "",
+      "message": "Review insights and complete evaluation for {{employee_name}}. Self-assessment, peer feedback, and AI insights available.",
+      "priority": "high",
+      "allowEdit": true,
+      "allowDefer": false
+    },
+    "registered_at": "2026-02-17T15:33:42.477233"
+  },
+  "input_schema": [],
+  "output_schema": []
+}

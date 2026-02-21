@@ -1,0 +1,251 @@
+{
+  "workflow_id": "wf_00000000000000000000000000000001",
+  "name": "HITL Review Test Workflow",
+  "description": "Test workflow: Agent analyzes input → HITL node pauses for human review → Agent summarizes approved output.",
+  "status": "draft",
+  "version": "0.1",
+  "execution_model": "sequential",
+  "agents": [
+    {
+      "agent_id": "agt_hitl_test_start_000000000000001",
+      "name": "Workflow Start",
+      "role": "Workflow entry point",
+      "description": "Start node",
+      "prompt": "",
+      "icon": "▶️",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Start",
+        "goal": "",
+        "ui_layout": {
+          "x": 100,
+          "y": 200,
+          "icon": "▶️",
+          "color": "#10b981"
+        },
+        "created_at": "2026-02-17T00:00:00.000000"
+      },
+      "input_schema": [
+        "query"
+      ],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_hitl_test_analyst_00000000000001",
+      "name": "Risk Analyst",
+      "role": "Security risk analysis specialist",
+      "description": "Analyzes the user query for potential security risks and produces a risk assessment report.",
+      "prompt": "You are a senior security risk analyst. Analyze the following input and produce a structured risk assessment with: 1) Risk Level (Low/Medium/High/Critical), 2) Key Findings (bullet points), 3) Recommended Actions. Be thorough but concise.",
+      "icon": "🔶",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.3,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Produce a security risk assessment report",
+        "ui_layout": {
+          "x": 380,
+          "y": 200,
+          "icon": "🔶",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T00:00:00.000000"
+      },
+      "input_schema": [
+        "query"
+      ],
+      "output_schema": [
+        "analysis"
+      ]
+    },
+    {
+      "agent_id": "agt_hitl_test_review_00000000000001",
+      "name": "Human Review Gate",
+      "role": "Human approval gate",
+      "description": "Pauses workflow for human review of the risk assessment before proceeding.",
+      "prompt": "",
+      "icon": "👤",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 1,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "HITL",
+        "goal": "",
+        "hitl_config": {
+          "title": "Review Risk Assessment",
+          "message": "Please review the risk assessment produced by the analyst. Approve if accurate, reject if flawed, or edit to provide corrections.",
+          "priority": "high",
+          "allowEdit": true,
+          "allowDefer": true
+        },
+        "ui_layout": {
+          "x": 660,
+          "y": 200,
+          "icon": "👤",
+          "color": "#06b6d4"
+        },
+        "created_at": "2026-02-17T00:00:00.000000"
+      },
+      "config": {
+        "title": "Review Risk Assessment",
+        "message": "Please review the risk assessment produced by the analyst. Approve if accurate, reject if flawed, or edit to provide corrections.",
+        "priority": "high",
+        "allowEdit": true,
+        "allowDefer": true
+      },
+      "input_schema": [
+        "analysis"
+      ],
+      "output_schema": [
+        "analysis"
+      ]
+    },
+    {
+      "agent_id": "agt_hitl_test_summary_00000000000001",
+      "name": "Report Writer",
+      "role": "Executive summary writer",
+      "description": "Takes the approved risk assessment and produces a polished executive summary.",
+      "prompt": "You are an executive report writer. Take the approved risk assessment and produce a concise executive summary suitable for C-level stakeholders. Include: 1) One-line verdict, 2) Business impact, 3) Immediate next steps. Keep it under 200 words.",
+      "icon": "🔶",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.5,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Write an executive summary from the approved assessment",
+        "ui_layout": {
+          "x": 940,
+          "y": 200,
+          "icon": "🔶",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T00:00:00.000000"
+      },
+      "input_schema": [
+        "analysis"
+      ],
+      "output_schema": [
+        "report"
+      ]
+    },
+    {
+      "agent_id": "agt_hitl_test_end_000000000000001",
+      "name": "Workflow End",
+      "role": "Workflow exit point",
+      "description": "End node",
+      "prompt": "",
+      "icon": "⏹️",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "End",
+        "goal": "",
+        "ui_layout": {
+          "x": 1220,
+          "y": 200,
+          "icon": "⏹️",
+          "color": "#64748b"
+        },
+        "created_at": "2026-02-17T00:00:00.000000"
+      },
+      "input_schema": [],
+      "output_schema": [
+        "report"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "agt_hitl_test_start_000000000000001",
+      "to": "agt_hitl_test_analyst_00000000000001"
+    },
+    {
+      "from": "agt_hitl_test_analyst_00000000000001",
+      "to": "agt_hitl_test_review_00000000000001"
+    },
+    {
+      "from": "agt_hitl_test_review_00000000000001",
+      "to": "agt_hitl_test_summary_00000000000001"
+    },
+    {
+      "from": "agt_hitl_test_summary_00000000000001",
+      "to": "agt_hitl_test_end_000000000000001"
+    }
+  ],
+  "state_schema": {
+    "query": "string",
+    "report": "string"
+  },
+  "human_in_loop": {
+    "enabled": true,
+    "review_points": [
+      "agt_hitl_test_review_00000000000001"
+    ]
+  },
+  "metadata": {
+    "created_by": "hitl_test",
+    "created_at": "2026-02-17T00:00:00.000000",
+    "canvas_layout": {
+      "width": 5000,
+      "height": 5000
+    }
+  }
+}

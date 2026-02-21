@@ -1,0 +1,77 @@
+# EchoAI Workflow Orchestration Dependencies
+# Updated: 2026-01-23
+# Includes CrewAI integration for multi-agent collaboration
+
+# ============================================================================
+# Core LangGraph & LangChain (Orchestration Layer)
+# ============================================================================
+langgraph>=0.2.0
+langchain-core>=0.3.0
+langchain-openai>=0.2.0
+langchain-community>=0.3.0
+
+# ============================================================================
+# CrewAI (Agent Collaboration Layer)
+# ============================================================================
+crewai>=1.0.0             # LLM class requires 1.0.0+; latest is 1.8.1
+crewai-tools>=0.17.0
+
+# ============================================================================
+# LLM Providers
+# ============================================================================
+openai>=1.50.0          # OpenAI and Azure OpenAI
+anthropic>=0.40.0       # Anthropic Claude
+
+# ============================================================================
+# Web Framework
+# ============================================================================
+fastapi>=0.115.0
+uvicorn>=0.32.0
+pydantic>=2.9.0
+python-dotenv>=1.0.0
+
+# ============================================================================
+# Utilities
+# ============================================================================
+httpx>=0.27.0          # HTTP client for async requests
+tiktoken>=0.7.0        # Token counting for cost tracking
+python-dateutil>=2.9.0 # Date utilities
+
+# ============================================================================
+# Telemetry & Monitoring
+# ============================================================================
+opentelemetry-api>=1.20.0
+opentelemetry-sdk>=1.20.0
+
+# ============================================================================
+# Development & Testing
+# ============================================================================
+pytest>=8.3.0
+pytest-asyncio>=0.24.0
+pytest-cov>=5.0.0
+
+# ============================================================================
+# Database & Caching (Phase 1 - Multi-tenancy)
+# ============================================================================
+sqlalchemy[asyncio]>=2.0.35
+asyncpg>=0.30.0
+alembic>=1.18.3
+python-memcached>=1.62
+
+# ============================================================================
+# Optional: Advanced Features
+# ============================================================================
+redis>=5.0.0          # For distributed checkpointing and Celery broker
+psycopg2-binary>=2.9  # For PostgreSQL setup script and checkpointing
+
+# ============================================================================
+# MCP (Model Context Protocol) Client
+# ============================================================================
+mcp>=1.0.0            # Official MCP Python client library (Azure MCP Server integration)
+
+# ============================================================================
+# HITL Node & Celery (Async Workflow Orchestration)
+# ============================================================================
+celery>=5.4.0                        # Async task queue for HITL workflow orchestration
+langgraph-checkpoint-postgres>=2.0.0 # LangGraph persistent checkpointing via PostgreSQL
+psycopg[binary,pool]>=3.1.0         # psycopg v3 driver required by PostgresSaver

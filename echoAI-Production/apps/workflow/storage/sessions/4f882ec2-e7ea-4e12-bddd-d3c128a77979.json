@@ -1,0 +1,42 @@
+{
+  "session_id": "4f882ec2-e7ea-4e12-bddd-d3c128a77979",
+  "workflow_id": "wf_5a0da1045ead40fab24a54efe722848a",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-15T19:51:16.126230",
+  "last_activity": "2026-02-15T19:51:33.841786",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_5a0da1045ead40fab24a54efe722848a",
+      "timestamp": "2026-02-15T19:51:16.126230",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "Analyze the blog post and rewrite it for better SEO and social media engagement",
+      "timestamp": "2026-02-15T19:51:16.157803",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "**  \n\n---\n\n## \ud83d\udcc8 SEO\u2011Optimized & Social\u2011Media\u2011Ready Rewrite  \n\nBelow is a fully rewritten version of a generic blog post that has been optimized for search engines **and** crafted to maximize engagement on social platforms. I\u2019ve included:\n\n1. **Keyword\u2011rich title & meta description**  \n2. **Structured headings (H1\u2011H3) with LSI keywords**  \n3. **Bullet\u2011point \u201csnackable\u201d sections** for easy reading  \n4. **Social\u2011media teaser snippets** (Twitter/LinkedIn/Facebook)  \n5. **Internal linking suggestions**  \n6. **Call\u2011to\u2011Action (CTA) optimized for conversion**  \n\n---\n\n### 1\ufe0f\u20e3 Optimized Title & Meta Data  \n\n**Title (\u2264\u202f60\u202fchars, keyword\u2011front loaded):**  \n**\u201c10 Proven Time\u2011Management Hacks for Busy Professionals \u2013 Boost Productivity Today!\u201d**  \n\n**Meta Description (\u2248\u202f150\u2011160\u202fchars, includes primary & secondary keywords):**  \n*Discover 10 actionable time\u2011management strategies that help busy professionals increase focus, reduce stress, and get more done every day.*  \n\n**Slug:**  \n`/time-management-hacks-professionals`  \n\n---\n\n### 2\ufe0f\u20e3 SEO\u2011Friendly Structure  \n\n| Heading | Suggested Keywords | Purpose |\n|---------|-------------------|---------|\n| **H1** | time management, productivity hacks | Main topic, primary keyword |\n| **H2** | why time management matters, common time\u2011wasting traps | LSI & semantic keywords |\n| **H3** | Pomodoro technique, Eisenhower matrix, time\u2011blocking | Long\u2011tail keywords, sub\u2011topics |\n| **H2** | 10 proven hacks (list) | Core content |\n| **H3** (each hack) | hack #1: set clear goals, hack #2: batch tasks, \u2026 | Detailed, keyword\u2011rich sections |\n| **H2** | measuring your progress | CTA & engagement |\n\n---\n\n### 3\ufe0f\u20e3 Rewritten Blog Content  \n\n#### **H1: 10 Proven Time\u2011Management Hacks for Busy Professionals \u2013 Boost Productivity Today!**  \n\n> **Meta Description:** Discover 10 actionable time\u2011management strategies that help busy professionals increase focus, reduce stress, and get more done every day.  \n\n---\n\n#### **H2: Why Mastering Time Management Is Critical in 2025**  \n\n- **Increased workload** \u2013 Remote work and digital overload have expanded daily task lists.  \n- **Higher expectations** \u2013 Companies demand faster delivery and higher quality.  \n- **Burnout risk** \u2013 Poor time habits lead to stress, reduced creativity, and turnover.  \n\n*Keywords:* time management importance, productivity statistics 2025, work\u2011life balance  \n\n---\n\n#### **H2: 10 Proven Hacks to Reclaim Your Day**  \n\n| # | Hack | Quick Implementation Tip | SEO\u2011Friendly Sub\u2011Heading (H3) |\n|---|------|--------------------------|------------------------------|\n| **1** | **Set crystal\u2011clear goals** | Use the SMART framework (Specific, Measurable, Achievable, Relevant, Time\u2011bound). | *Hack #1: Set Clear, SMART Goals* |\n| **2** | **Batch similar tasks** | Group emails, meetings, and admin work into dedicated blocks. | *Hack #2: Batch Similar Tasks* |\n| **3** | **Apply the Pomodoro Technique** | Work 25\u202fmin, rest 5\u202fmin; after 4 cycles, take a longer break. | *Hack #3: Use Pomodoro for Focus* |\n| **4** | **Prioritize with the Eisenhower Matrix** | Separate urgent vs. important tasks; focus on \u201cImportant\u2011Not\u2011Urgent\u201d. | *Hack #4: Eisenhower Prioritization* |\n| **5** | **Time\u2011block your calendar** | Reserve chunks for deep work, meetings, and admin. |",
+      "timestamp": "2026-02-15T19:51:33.841786",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "completed"
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "Blog Content Pipeline"
+  },
+  "run_ids": [
+    "run_c9bc86608f304b4da4f77b5e9d4b6944"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

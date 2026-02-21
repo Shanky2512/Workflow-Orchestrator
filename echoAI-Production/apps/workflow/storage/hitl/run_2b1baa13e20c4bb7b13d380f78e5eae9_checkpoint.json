@@ -1,0 +1,52 @@
+{
+  "checkpoint_id": "hitl_cp_6e55aa8ee63e48f6bb5247e03ddd6609",
+  "run_id": "run_2b1baa13e20c4bb7b13d380f78e5eae9",
+  "state": "waiting_for_human",
+  "workflow_state": {
+    "employee_id": "Hello, tell me the performance of this employee",
+    "review_period": "Hello, tell me the performance of this employee",
+    "manager_id": "Hello, tell me the performance of this employee",
+    "user_input": "Hello, tell me the performance of this employee",
+    "task_description": "Hello, tell me the performance of this employee",
+    "crew_result": "null",
+    "original_user_input": "Hello, tell me the performance of this employee",
+    "run_id": "run_2b1baa13e20c4bb7b13d380f78e5eae9",
+    "workflow_id": "wf_5d530a9fb86046ffb1019988ecf020cb",
+    "last_node_output": null,
+    "api_result": {
+      "success": false,
+      "status_code": 500,
+      "data": null,
+      "headers": {},
+      "error": "HTTP Error\nPOST https://api.performance.com/v1/self-assessment/request/\n[SSL: TLSV1_UNRECOGNIZED_NAME] tlsv1 unrecognized name (_ssl.c:1000)",
+      "elapsed_seconds": 9.912648439407349
+    },
+    "messages": [
+      {
+        "agent": "agt_bd537f321eba4298be85eb157ffecc75",
+        "role": "Start",
+        "node_type": "Start",
+        "inputs": {
+          "user_input": "Hello, tell me the performance of this employee"
+        },
+        "outputs": {
+          "employee_id": "Hello, tell me the performance of this employee",
+          "review_period": "Hello, tell me the performance of this employee",
+          "manager_id": "Hello, tell me the performance of this employee"
+        }
+      },
+      {
+        "node": "agt_d571b12e83cc45b09fb27d636e729c44",
+        "type": "api",
+        "name": "Request Self-Assessment",
+        "mode": "ad-hoc",
+        "success": false,
+        "status_code": 500,
+        "data": null
+      }
+    ]
+  },
+  "execution_position": "agt_d1853ac2dec14f87bd091f66ad0e72a9",
+  "created_at": "2026-02-17T15:33:55.615894",
+  "timeout_at": null
+}

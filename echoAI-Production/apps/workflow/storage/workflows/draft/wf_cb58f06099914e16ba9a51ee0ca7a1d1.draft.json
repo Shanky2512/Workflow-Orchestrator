@@ -1,0 +1,632 @@
+{
+  "workflow_id": "wf_cb58f06099914e16ba9a51ee0ca7a1d1",
+  "name": "MaDueDiligence",
+  "description": "Created from canvas on 2026-02-17",
+  "status": "draft",
+  "version": "0.1",
+  "execution_model": "hybrid",
+  "agents": [
+    {
+      "agent_id": "agt_706885e16335411bad91508c49214471",
+      "name": "DD Request Received",
+      "role": "Workflow entry point",
+      "description": "Start node",
+      "prompt": "",
+      "icon": "\u25b6\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Start",
+        "goal": "",
+        "ui_layout": {
+          "x": 100,
+          "y": 300,
+          "icon": "\u25b6\ufe0f",
+          "color": "#10b981"
+        },
+        "created_at": "2026-02-17T15:37:10.759882",
+        "registered_at": "2026-02-17T15:37:10.794349"
+      },
+      "input_schema": [
+        "target_company",
+        "deal_size",
+        "industry",
+        "documents"
+      ],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_53b2b3e1a9fa416392d8312cc1726cf4",
+      "name": "Document Classifier",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Document Classifier",
+      "prompt": "You are a due diligence specialist. Classify uploaded documents into categories: Financial Statements, Legal Contracts, HR Documents, Operational Data, IP Documentation, Customer Contracts, Regulatory Filings. Extract key metadata from each document.",
+      "icon": "\ud83d\udd36",
+      "model": "ollama:gpt-oss:20b",
+      "tools": [
+        "tool_web_search"
+      ],
+      "variables": [],
+      "settings": {
+        "temperature": 0.3,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 3,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Document Classifier",
+        "ui_layout": {
+          "x": 352,
+          "y": 300,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T15:37:10.759882",
+        "registered_at": "2026-02-17T15:37:10.802765"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_8758d98da7f54e8db491b4a437ba09ef",
+      "name": "Financial Analysis",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Financial Analysis",
+      "prompt": "Analyze financial statements and perform comprehensive financial due diligence. Calculate key metrics: Revenue growth, EBITDA margins, Working capital trends, Debt/Equity ratio, Cash flow analysis. Identify red flags: Revenue concentration, Declining margins, Cash flow issues, Unusual transactions. Generate detailed financial risk assessment.",
+      "icon": "\ud83d\udd36",
+      "model": "claude-opus-4-20250514",
+      "tools": [
+        "tool_web_search"
+      ],
+      "variables": [],
+      "settings": {
+        "temperature": 0.2,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Financial Analysis",
+        "ui_layout": {
+          "x": 600,
+          "y": 150,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T15:37:10.759882",
+        "registered_at": "2026-02-17T15:37:10.821819"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_1c6a14bdeee5410cb30a55f993a42c5e",
+      "name": "Legal Risk Analysis",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Legal Risk Analysis",
+      "prompt": "Review legal documents and contracts for risks and liabilities. Assess: Contract terms and obligations, Litigation history, Regulatory compliance, IP ownership and disputes, Employment agreements, Material contracts. Flag high-risk items requiring immediate attention.",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [
+        "tool_web_search"
+      ],
+      "variables": [],
+      "settings": {
+        "temperature": 0.2,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Legal Risk Analysis",
+        "ui_layout": {
+          "x": 600,
+          "y": 300,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T15:37:10.759882",
+        "registered_at": "2026-02-17T15:37:10.838178"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_27b4a86e1fd540469a02aa7ab1a93101",
+      "name": "Operational Assessment",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Operational Assessment",
+      "prompt": "Evaluate operational efficiency and identify integration challenges. Analyze: Key customer concentration, Supplier dependencies, IT systems and infrastructure, Employee retention risks, Process maturity, Scalability concerns. Assess post-merger integration complexity.",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [
+        "tool_web_search"
+      ],
+      "variables": [],
+      "settings": {
+        "temperature": 0.3,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 3,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Operational Assessment",
+        "ui_layout": {
+          "x": 600,
+          "y": 450,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T15:37:10.759882",
+        "registered_at": "2026-02-17T15:37:10.852793"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_14bf3bcbedcb43ffa8258833f1aa0e95",
+      "name": "Consolidate Findings",
+      "role": "Branch merging",
+      "description": "Merge node",
+      "prompt": "",
+      "icon": "\ud83d\udd87\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Merge",
+        "goal": "",
+        "ui_layout": {
+          "x": 850,
+          "y": 300,
+          "icon": "\ud83d\udd87\ufe0f",
+          "color": "#8b5cf6"
+        },
+        "created_at": "2026-02-17T15:37:10.759882",
+        "registered_at": "2026-02-17T15:37:10.869368"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_07d44a0fc71c4db49e451a52b13f89c0",
+      "name": "Risk Scoring Engine",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Risk Scoring Engine",
+      "prompt": "Synthesize all due diligence findings and calculate overall risk score. Use weighted scoring model: Financial risks (40%), Legal risks (30%), Operational risks (30%). Generate risk rating: Low (0-30), Medium (31-60), High (61-100). Provide executive summary with key findings and deal-breakers.",
+      "icon": "\ud83d\udd36",
+      "model": "claude-opus-4-20250514",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.2,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 3,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Risk Scoring Engine",
+        "ui_layout": {
+          "x": 883,
+          "y": 444,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T15:37:10.759882",
+        "registered_at": "2026-02-17T15:37:10.885399"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_3b0fa9654c8041ff9f5d9dafe161ab4c",
+      "name": "Risk Assessment Gate",
+      "role": "Conditional branching",
+      "description": "Conditional node",
+      "prompt": "",
+      "icon": "\ud83d\udd00",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Conditional",
+        "goal": "",
+        "ui_layout": {
+          "x": 1350,
+          "y": 300,
+          "icon": "\ud83d\udd00",
+          "color": "#8b5cf6"
+        },
+        "created_at": "2026-02-17T15:37:10.759882",
+        "branches": [
+          {
+            "type": "if",
+            "condition": "risk_score > 70",
+            "targetNodeId": 1008
+          },
+          {
+            "type": "elif",
+            "condition": "risk_score > 40",
+            "targetNodeId": 1009
+          },
+          {
+            "type": "else",
+            "condition": "",
+            "targetNodeId": 1010
+          }
+        ],
+        "registered_at": "2026-02-17T15:37:10.902600"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_a88c9052806e48828403aafeb7dfef1a",
+      "name": "Partner Escalation",
+      "role": "Human approval gate",
+      "description": "HITL node",
+      "prompt": "",
+      "icon": "\ud83d\udc64",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "HITL",
+        "goal": "",
+        "ui_layout": {
+          "x": 1600,
+          "y": 150,
+          "icon": "\ud83d\udc64",
+          "color": "#06b6d4"
+        },
+        "created_at": "2026-02-17T15:37:10.759882",
+        "hitl_config": {
+          "title": "",
+          "message": "Deal has critical risks requiring partner decision",
+          "priority": "critical",
+          "allowEdit": true,
+          "allowDefer": false
+        },
+        "registered_at": "2026-02-17T15:37:10.916825"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_7cc1af774d7d4e15aea5f1cccdad8cee",
+      "name": "Senior Manager Review",
+      "role": "Human approval gate",
+      "description": "HITL node",
+      "prompt": "",
+      "icon": "\ud83d\udc64",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "HITL",
+        "goal": "",
+        "ui_layout": {
+          "x": 1600,
+          "y": 300,
+          "icon": "\ud83d\udc64",
+          "color": "#06b6d4"
+        },
+        "created_at": "2026-02-17T15:37:10.759882",
+        "hitl_config": {
+          "title": "",
+          "message": "Moderate risks identified requiring management review",
+          "priority": "high",
+          "allowEdit": true,
+          "allowDefer": false
+        },
+        "registered_at": "2026-02-17T15:37:10.932985"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_ce1c75edbbad45618407ae11addbe042",
+      "name": "Report Generator",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Report Generator",
+      "prompt": "Generate comprehensive due diligence report. Include: Executive Summary, Detailed Findings by Category, Risk Analysis with Scores, Recommendations, Mitigation Strategies, Deal Structure Suggestions. Format as professional consulting deliverable.",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.4,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Report Generator",
+        "ui_layout": {
+          "x": 1600,
+          "y": 450,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T15:37:10.759882",
+        "registered_at": "2026-02-17T15:37:10.946894"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_efeae7a1b93b4ac1b536fe016cf2e2e3",
+      "name": "Deliver to Client Portal",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 1850,
+          "y": 300,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T15:37:10.759882",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.clientportal.com/v1/deliverables",
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:37:10.963965"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.clientportal.com/v1/deliverables",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_eb083a6432f640f2a0151b76929f91a0",
+      "name": "DD Complete",
+      "role": "Workflow exit point",
+      "description": "End node",
+      "prompt": "",
+      "icon": "\u23f9\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "End",
+        "goal": "",
+        "ui_layout": {
+          "x": 2100,
+          "y": 300,
+          "icon": "\u23f9\ufe0f",
+          "color": "#64748b"
+        },
+        "created_at": "2026-02-17T15:37:10.759882",
+        "registered_at": "2026-02-17T15:37:10.981411"
+      },
+      "input_schema": [],
+      "output_schema": [
+        "risk_score",
+        "recommendation",
+        "report_url"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "agt_706885e16335411bad91508c49214471",
+      "to": "agt_53b2b3e1a9fa416392d8312cc1726cf4"
+    },
+    {
+      "from": "agt_53b2b3e1a9fa416392d8312cc1726cf4",
+      "to": "agt_8758d98da7f54e8db491b4a437ba09ef"
+    },
+    {
+      "from": "agt_53b2b3e1a9fa416392d8312cc1726cf4",
+      "to": "agt_1c6a14bdeee5410cb30a55f993a42c5e"
+    },
+    {
+      "from": "agt_53b2b3e1a9fa416392d8312cc1726cf4",
+      "to": "agt_27b4a86e1fd540469a02aa7ab1a93101"
+    },
+    {
+      "from": "agt_8758d98da7f54e8db491b4a437ba09ef",
+      "to": "agt_14bf3bcbedcb43ffa8258833f1aa0e95"
+    },
+    {
+      "from": "agt_1c6a14bdeee5410cb30a55f993a42c5e",
+      "to": "agt_14bf3bcbedcb43ffa8258833f1aa0e95"
+    },
+    {
+      "from": "agt_27b4a86e1fd540469a02aa7ab1a93101",
+      "to": "agt_14bf3bcbedcb43ffa8258833f1aa0e95"
+    },
+    {
+      "from": "agt_14bf3bcbedcb43ffa8258833f1aa0e95",
+      "to": "agt_07d44a0fc71c4db49e451a52b13f89c0"
+    },
+    {
+      "from": "agt_07d44a0fc71c4db49e451a52b13f89c0",
+      "to": "agt_3b0fa9654c8041ff9f5d9dafe161ab4c"
+    },
+    {
+      "from": "agt_3b0fa9654c8041ff9f5d9dafe161ab4c",
+      "to": "agt_a88c9052806e48828403aafeb7dfef1a"
+    },
+    {
+      "from": "agt_3b0fa9654c8041ff9f5d9dafe161ab4c",
+      "to": "agt_7cc1af774d7d4e15aea5f1cccdad8cee"
+    },
+    {
+      "from": "agt_3b0fa9654c8041ff9f5d9dafe161ab4c",
+      "to": "agt_ce1c75edbbad45618407ae11addbe042"
+    },
+    {
+      "from": "agt_a88c9052806e48828403aafeb7dfef1a",
+      "to": "agt_efeae7a1b93b4ac1b536fe016cf2e2e3"
+    },
+    {
+      "from": "agt_7cc1af774d7d4e15aea5f1cccdad8cee",
+      "to": "agt_efeae7a1b93b4ac1b536fe016cf2e2e3"
+    },
+    {
+      "from": "agt_ce1c75edbbad45618407ae11addbe042",
+      "to": "agt_efeae7a1b93b4ac1b536fe016cf2e2e3"
+    },
+    {
+      "from": "agt_efeae7a1b93b4ac1b536fe016cf2e2e3",
+      "to": "agt_eb083a6432f640f2a0151b76929f91a0"
+    }
+  ],
+  "state_schema": {
+    "target_company": "string",
+    "deal_size": "string",
+    "industry": "string",
+    "documents": "string",
+    "risk_score": "string",
+    "recommendation": "string",
+    "report_url": "string"
+  },
+  "metadata": {
+    "created_by": "workflow_builder",
+    "created_at": "2026-02-17T15:37:10.759882",
+    "canvas_layout": {
+      "width": 5000,
+      "height": 5000
+    }
+  },
+  "human_in_loop": {
+    "enabled": true,
+    "review_points": [
+      "agt_a88c9052806e48828403aafeb7dfef1a",
+      "agt_7cc1af774d7d4e15aea5f1cccdad8cee"
+    ]
+  }
+}

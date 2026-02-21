@@ -1,0 +1,36 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rag-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: rag }
+  template:
+    metadata:
+      labels:
+        app: rag
+    spec:
+      containers:
+        - name: rag
+          image: your.registry/rag:latest
+          ports:
+            - containerPort: 8002
+          env:
+            - name: SERVICE_MODE
+              value: "micro"
+            - name: APP_NAME
+              value: "echo-mermaid-platform"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rag-svc
+spec:
+  selector:
+    app: rag
+  ports:
+    - port: 8002
+      targetPort: 8002
+      protocol: TCP

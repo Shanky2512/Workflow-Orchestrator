@@ -1,0 +1,41 @@
+{
+  "agent_id": "agt_9086db03eefa4cb886b4a038c4cb0f7c",
+  "name": "Collect Peer Feedback",
+  "role": "Iteration logic",
+  "description": "Loop node",
+  "prompt": "",
+  "icon": "🔄",
+  "model": "",
+  "tools": [],
+  "variables": [],
+  "settings": {
+    "temperature": 0.7,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 10,
+    "provider": ""
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "Loop",
+    "goal": "",
+    "ui_layout": {
+      "x": 1100,
+      "y": 200,
+      "icon": "🔄",
+      "color": "#8b5cf6"
+    },
+    "created_at": "2026-02-17T15:33:42.330054",
+    "loop_config": {
+      "loopType": "for-each",
+      "arrayVariable": "peers",
+      "maxIterations": 10
+    },
+    "registered_at": "2026-02-17T15:33:42.425913"
+  },
+  "input_schema": [],
+  "output_schema": []
+}

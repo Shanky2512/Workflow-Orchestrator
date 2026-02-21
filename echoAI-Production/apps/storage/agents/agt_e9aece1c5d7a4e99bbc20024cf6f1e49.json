@@ -1,0 +1,38 @@
+{
+  "agent_id": "agt_e9aece1c5d7a4e99bbc20024cf6f1e49",
+  "name": "Generate Goal Suggestions",
+  "role": "Autonomous AI agent",
+  "description": "Complete the task as Generate Goal Suggestions",
+  "prompt": "Generate SMART goal suggestions for next period. Based on: Development areas identified, Career aspirations mentioned, Role requirements, Company objectives, Industry trends. Create 3-5 goals covering: Performance improvement, Skill development, Career advancement, Team contribution. Goals should be: Specific, Measurable, Achievable, Relevant, Time-bound.",
+  "icon": "🔶",
+  "model": "ollama:qwen3-vl:8b",
+  "tools": [
+    "tool_web_search"
+  ],
+  "variables": [],
+  "settings": {
+    "temperature": 0.5,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 5,
+    "provider": "anthropic"
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "Agent",
+    "goal": "Complete the task as Generate Goal Suggestions",
+    "ui_layout": {
+      "x": 2100,
+      "y": 299,
+      "icon": "🔶",
+      "color": "#f59e0b"
+    },
+    "created_at": "2026-02-17T15:33:42.330054",
+    "registered_at": "2026-02-17T15:33:42.495560"
+  },
+  "input_schema": [],
+  "output_schema": []
+}

@@ -1,0 +1,37 @@
+{
+  "agent_id": "agt_ce1c75edbbad45618407ae11addbe042",
+  "name": "Report Generator",
+  "role": "Autonomous AI agent",
+  "description": "Complete the task as Report Generator",
+  "prompt": "Generate comprehensive due diligence report. Include: Executive Summary, Detailed Findings by Category, Risk Analysis with Scores, Recommendations, Mitigation Strategies, Deal Structure Suggestions. Format as professional consulting deliverable.",
+  "icon": "🔶",
+  "model": "claude-sonnet-4-5-20250514",
+  "tools": [],
+  "variables": [],
+  "settings": {
+    "temperature": 0.4,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 5,
+    "provider": "anthropic"
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "Agent",
+    "goal": "Complete the task as Report Generator",
+    "ui_layout": {
+      "x": 1600,
+      "y": 450,
+      "icon": "🔶",
+      "color": "#f59e0b"
+    },
+    "created_at": "2026-02-17T16:09:25.842754",
+    "registered_at": "2026-02-17T15:37:10.946894",
+    "updated_at": "2026-02-17T16:09:25.947172"
+  },
+  "input_schema": [],
+  "output_schema": []
+}

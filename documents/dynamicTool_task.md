@@ -1,0 +1,154 @@
+# Task Checklist: Universal Integration Layer (API & MCP)
+
+- [x] **Phase 1: Architecture & Planning**
+    - [x] Analyze existing `ConnectorManager` (strict no-modify constraint)
+    - [x] Research Integration Platform standards (Leah AI/UnifyApps)
+    - [x] Define "Universal Integration Layer" architecture
+    - [x] Create `implementation_plan.md` with deep technical specs
+    - [x] Add Connector API Reference to plan
+    - [x] Audit plan against real codebase — fix 5 issues (sync/async, signatures, dispatcher)
+
+- [x] **Phase 2: Workflow Runtime Engine (The "Core")** ✅ COMPLETED
+    - [x] **Prepare Workflow Compiler** (`apps/workflow/designer/compiler.py`)
+        - [x] Add imports: `asyncio`, `json`, `Optional` + lazy imports for `ConnectorManager`, `ConnectorFactory`, `ConnectorConfig`, `HTTPMCPConnector`
+        - [x] Update `_create_state_class` — added `last_node_output`, `api_result`, `mcp_result`, `code_result`, `review_result` fields so full data flows to next node
+    - [x] **Implement API Node Logic** — `_create_api_node()` method (lines 1510–1644)
+        - [x] Create `_create_api_node` method foundation — async node function
+        - [x] Implement **Managed Path**: `await asyncio.to_thread(api_manager.invoke, connector_id, payload)` — sync → thread
+        - [x] Implement **Ad-hoc Path**: `ConnectorFactory.create(ConnectorConfig(...))` then `await asyncio.to_thread(connector.execute, method, endpoint, headers, query_params, body)` — sync → thread
+        - [x] Map node config `url` → `base_url`, `authentication`/`auth_config`/`auth` → normalized auth dict, `method` → `execute(method=...)`
+        - [x] Normalize string auth (e.g. `"bearer"`) to dict `{"type": "bearer"}`
+        - [x] Full transparency integration (step_started, step_completed, step_failed)
+        - [x] FULL response data stored in `state["last_node_output"]` + `state["api_result"]` for next node context
+    - [x] **Implement MCP Node Logic** — `_create_mcp_node()` method (lines 1646–1777)
+        - [x] Create `_create_mcp_node` method foundation — async node function
+        - [x] Implement **Managed Path**: `await mcp_manager.invoke_async(connector_id, payload)` — native async
+        - [x] Implement **Ad-hoc Path**: `HTTPMCPConnector(**adhoc_config)` then `await connector.test(payload)` — native async
+        - [x] Full transparency integration
+        - [x] FULL response data stored in `state["last_node_output"]` + `state["mcp_result"]` for next node context
+    - [x] **Implement Code Node Logic** — `_create_code_node()` method (lines 1779–1910)
+        - [x] Create `_create_code_node` for `type="Code"` execution
+        - [x] Sandboxed exec() with state variable injection (previous_output, api_result, mcp_result)
+        - [x] stdout capture + `result` variable extraction
+        - [x] Runs in `asyncio.to_thread()` to avoid blocking event loop
+        - [x] FULL output stored in `state["last_node_output"]` + `state["code_result"]` for next node context
+    - [x] **Implement Self-Review Node Logic** — `_create_self_review_node()` method (lines 1912–2071)
+        - [x] Create `_create_self_review_node` for `type="Self-Review"` validation
+        - [x] LLM-based review against `reviewPrompt` criteria with JSON response parsing
+        - [x] `minConfidence` threshold enforcement (pass/fail gate)
+        - [x] Reviews `state["last_node_output"]` from the previous node
+        - [x] FULL review result stored in `state["last_node_output"]` + `state["review_result"]`
+    - [x] **Wire Up Dispatcher** — `_create_node_for_type()` method (lines 2077–2200)
+        - [x] Central dispatcher method replaces ALL direct `_create_agent_node` calls (11 call sites updated)
+        - [x] Route `type="API"` → `_create_api_node`
+        - [x] Route `type="MCP"` → `_create_mcp_node`
+        - [x] Route `type="Code"` → `_create_code_node`
+        - [x] Route `type="Self-Review"` → `_create_self_review_node`
+        - [x] Route `type="Conditional"/"Router"` → `_create_conditional_node`
+        - [x] Default (Agent/HITL/unknown) → `_create_agent_node`
+        - [x] Updated in: `_compile_sequential`, `_compile_parallel`, `_compile_hierarchical`, `_compile_hybrid`, `_compile_hybrid_from_connections` (all 5 compile methods)
+
+- [x] **Phase 3: Tool System Bridge (The "Glue")** ✅ COMPLETED
+    - [x] **Enhance Tool Registry** (`apps/tool/registry.py`) — rewrote `sync_connectors_as_tools` (lines 541–750)
+        - [x] **Fixed Bug**: Replaced broken `connector_manager.list()` with:
+            ```python
+            api_result = connector_manager.api.list()   # → {"success": True, "connectors": [...]}
+            mcp_result = connector_manager.mcp.list()   # → {"success": True, "connectors": [...]}
+            ```
+            Each source tagged with `_connector_source = "api"` or `"mcp"` for downstream routing.
+        - [x] **Schema Mapping**: Derives `input_schema` from connector's `creation_payload.input_schema` first, falls back to inferring schema from `creation_payload.example_payload` keys, with ultimate fallback to generic `{payload: object}`. Added `_infer_json_type()` helper for example payload inference.
+        - [x] **Prompt Generation**: Auto-generates system prompt: `"This tool allows you to interact with {name}. {description}. Use it when you need to call the {name} API/MCP service."`  Stored in both `ToolDef.description` and `ToolDef.metadata.system_prompt`.
+        - [x] **Tool Type**: Uses `ToolType.API` for API connectors, `ToolType.MCP` for MCP connectors (maps to existing enum values `"api"` and `"mcp"`)
+        - [x] **Tool ID**: Stable format `tool_{source}_{safe_name}` (e.g. `tool_api_jira`, `tool_mcp_slack`)
+        - [x] **execution_config**: Stores `connector_id` and `connector_source` for runtime invocation lookup
+    - [x] **Lifecycle Integration**
+        - [x] Added `sync_connectors_as_tools()` call in `ToolRegistry.__init__` — auto-syncs on startup
+        - [x] Updated `refresh_cache()` to also re-sync connectors after clearing cache
+
+- [x] **Phase 4: Agent Intelligence (The "Brain")** ✅ COMPLETED
+    - [x] **Upgrade Tool Selection** (`apps/agent/designer/agent_designer.py`) — 3 methods added/modified
+        - [x] Rewrote `_select_tools_for_agent()` — now uses two-phase strategy:
+            1. Phase 1: Static keyword matching against built-in tools (unchanged)
+            2. Phase 2: Dynamic search via `_search_connector_tools()` against ToolRegistry
+            - Connector tools compete in the same scoring pool as built-in tools
+            - Connector tools get a relevance boost (name match = +5, keyword overlap = +2 per word)
+            - Max selection raised from 2 → 3 to accommodate connector tools
+        - [x] Added `_search_connector_tools()` method — queries ToolRegistry for `ToolType.API` + `ToolType.MCP`, filters by "synced" tag, scores by name/description/tag overlap with prompt keywords
+        - [x] Added `_get_connector_tools_description()` method — builds a dynamic bullet list of available connector tools for the LLM system prompt
+        - [x] **Optimized LLM Prompt** in `_design_with_llm()`:
+            - System prompt now includes full AVAILABLE TOOLS section listing all built-in tools
+            - Dynamically appends connector tools (e.g. `tool_api_jira: [API] Jira — ...`)
+            - Instructs LLM to mention external integrations in the agent's prompt
+        - [x] **Updated `_detect_update_fields()`** — tool detection keywords now include connector/integration terms (jira, slack, salesforce, servicenow, github, etc.)
+
+- [x] **Phase 5: Comprehensive Verification (The "Quality Gate")** ✅ COMPLETED
+    - [x] **Setup Verification Environment**
+        - [x] Created `tests/verify_integration_layer.py` — 6 test classes, 16 test methods
+    - [x] **Scenario A — Managed Mode** (`TestScenarioA_ManagedMode`)
+        - [x] `test_api_node_managed_invokes_connector` — Mocks Jira API connector, asserts `invoke(connector_id, payload)` called via thread
+        - [x] `test_mcp_node_managed_invokes_connector` — Mocks Slack MCP connector, asserts `invoke_async(connector_id, payload)` awaited directly
+    - [x] **Scenario B — Ad-hoc Mode** (`TestScenarioB_AdhocMode`)
+        - [x] `test_api_node_adhoc_creates_ephemeral_connector` — Asserts `ConnectorFactory.create()` + `execute()` called for inline URL config
+        - [x] `test_mcp_node_adhoc_creates_ephemeral_connector` — Asserts `HTTPMCPConnector(**config)` + `.test(payload)` called
+    - [x] **Scenario B+ — Code & Self-Review** (`TestScenarioB_CodeAndReview`)
+        - [x] `test_code_node_executes_python` — Validates stdout capture + `result` variable extraction
+        - [x] `test_code_node_receives_previous_output` — Validates `previous_output` injection from prior node
+        - [x] `test_self_review_node_passes_on_high_confidence` — confidence 0.92 ≥ 0.85 → passed=True
+        - [x] `test_self_review_node_fails_on_low_confidence` — confidence 0.65 < 0.9 → passed=False
+    - [x] **Scenario C — Agent Intelligence** (`TestScenarioC_AgentToolSelection`)
+        - [x] `test_select_tools_finds_synced_jira_connector` — "check Jira" → `tool_api_jira` selected
+        - [x] `test_select_tools_finds_synced_slack_mcp_connector` — "sends Slack messages" → `tool_mcp_slack` selected
+        - [x] `test_select_tools_no_connector_still_selects_builtin` — No connectors → `tool_web_search` still selected
+    - [x] **Scenario D — Dispatcher** (`TestDispatcher`) — 6 tests covering API/MCP/Code/Self-Review/Agent/case-insensitive routing
+    - [x] **Scenario E — Tool Registry Sync** (`TestToolRegistrySync`)
+        - [x] `test_sync_creates_api_and_mcp_tools` — Validates cm.api.list() + cm.mcp.list() → correct ToolDefs
+        - [x] `test_sync_is_idempotent` — Second sync skips existing tools
+    - [x] **Scenario F — Data Flow** (`TestDataFlowBetweenNodes`)
+        - [x] `test_api_data_available_to_code_node` — API result flows into Code node via `previous_output`
+    - [x] **Final Sign-off** (`TestFinalSignOff`)
+        - [x] `test_connector_manager_class_is_consumed_not_modified` — ConnectorManager has .api, .mcp, .get_manager() unchanged
+        - [x] `test_api_connector_invoke_is_sync` — APIConnector.invoke is sync (we wrap in to_thread)
+        - [x] `test_mcp_connector_invoke_async_is_async` — MCPConnector.invoke_async is async (we await directly)
+
+- [x] **Phase 6: Database Dual-Write Persistence (Multi-User Support)** ✅ COMPLETED
+    - [x] **Wire Up ToolRepository in ToolRegistry** (`apps/tool/registry.py`)
+        - [x] Direct-import `ToolRepository` from `echolib.repositories.tool_repo` (stateless, no DI needed)
+        - [x] Accept `tool_repo: Optional[ToolRepository] = None` in `__init__` → store as `self._tool_repo`
+        - [x] Reuse `DEFAULT_USER_ID` from `echolib.repositories.base` as `SYSTEM_USER_ID` (was `"...0001"`, not `"...0000"` — matched existing system user)
+        - [x] Update `apps/tool/container.py` to pass `ToolRepository()` to `ToolRegistry` constructor
+    - [x] **Async Bridge Helpers** (sync → async, non-blocking)
+        - [x] Add `_schedule_db_write(coro)` — uses `loop.create_task()` inside running loop, `threading.Thread` + `asyncio.run()` outside
+        - [x] Add `_safe_db_op(coro)` — async wrapper with try/except, logs warning on failure
+        - [x] ~~`asyncio.get_event_loop().run_until_complete()`~~ — **REMOVED** (crashes inside FastAPI's running loop)
+        - [x] ~~`asyncio.to_thread`~~ — **REMOVED** (that's sync→thread, not sync→async)
+    - [x] **UUID Conversion** (`Tool.tool_id` is UUID, `ToolDef.tool_id` is str)
+        - [x] Add `_TOOL_NS` fixed UUID namespace constant (`uuid.UUID("a1b2c3d4-e5f6-7890-abcd-ef1234567890")`)
+        - [x] Add `_tool_id_to_uuid(tool_id_str)` → deterministic `uuid5(_TOOL_NS, str)` — idempotent, reversible
+    - [x] **Dual-Write in `register()`** (lines 176–247)
+        - [x] Add `user_id: Optional[str] = None` parameter (defaults to `SYSTEM_USER_ID`)
+        - [x] After `self.storage.save_tool(tool)`, schedule `_persist_tool_to_db(tool, user_id)` via `_schedule_db_write`
+        - [x] Map `ToolDef` → `Tool` model using **corrected** field mapping:
+            - [x] `tool_id` → `_tool_id_to_uuid(tool.tool_id)` (UUID, not str)
+            - [x] `definition` → `tool.model_dump(mode="json")` (Pydantic V2, not `to_dict()`)
+            - [x] `tool_type` → `tool.tool_type.value` (str enum value)
+            - [x] `name`, `description`, `status`, `version`, `tags` → direct mapping
+        - [x] Upsert via check-then-act: `get_by_id()` → `update()` if exists, else `create()`
+        - [x] **Fail-safe**: DB errors wrapped in `_safe_db_op` — never block filesystem registration
+    - [x] **Dual-Delete in `delete()`** (lines 359–400)
+        - [x] Add `user_id: Optional[str] = None` parameter (defaults to `SYSTEM_USER_ID`)
+        - [x] After filesystem delete, schedule `_delete_tool_from_db(tool_id, user_id)` via `_schedule_db_write`
+        - [x] Convert `tool_id` to UUID via `_tool_id_to_uuid()` before calling `ToolRepository.delete()`
+    - [x] **Sync Update Support in `sync_connectors_as_tools()`** (lines 687–860)
+        - [x] When connector already exists but `connector_id` changed → fall through to re-register (updates both FS + DB)
+        - [x] `"synced"` tag already included in tags list (`tags = [source, "connector", "synced"]`)
+        - [x] `self.register(tool, user_id=SYSTEM_USER_ID)` — passes system user for all startup sync
+    - [x] **Schema Compatibility** (verified — no migration needed)
+        - [x] `tool_type` CheckConstraint already includes `'api'` and `'mcp'`
+        - [x] `definition` is free-form JSONB
+        - [x] `tags` is `ARRAY(String)` with GIN index
+        - [x] `user_id` FK to `users` for multi-tenancy
+    - [ ] **Verification** (pending runtime testing)
+        - [ ] `sync_connectors_as_tools` → tool exists in both JSON file and `tools` DB table
+        - [ ] Delete tool → soft-deleted in DB, removed from filesystem
+        - [ ] Two users sync same connector → each gets own DB row with different `user_id`
+        - [ ] DB failure during register → filesystem write still succeeds (graceful degradation)

@@ -1,0 +1,43 @@
+{
+  "session_id": "e10c2a9b-08dd-45a7-824b-8fe8b6e6495f",
+  "workflow_id": "wf_cb58f06099914e16ba9a51ee0ca7a1d1",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-17T15:37:26.652431",
+  "last_activity": "2026-02-17T15:38:22.933097",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_cb58f06099914e16ba9a51ee0ca7a1d1",
+      "timestamp": "2026-02-17T15:37:26.652431",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "Perform a due deligence on KPMG INDIA",
+      "timestamp": "2026-02-17T15:37:26.714713",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "\u26a0\ufe0f Workflow execution failed: '1010'",
+      "timestamp": "2026-02-17T15:38:22.933097",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "failed",
+        "error": "'1010'"
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "MaDueDiligence"
+  },
+  "run_ids": [
+    "run_02e55c50391d4a2fb6687d1c0594a12f"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

@@ -1,0 +1,59 @@
+CAUTION: This Email is from an EXTERNAL source. Ensure you trust this sender before clicking on any links or attachments.
+
+{
+  "name": "openweather-complete",
+  "description": "OpenWeather API with auto-test example",
+  "transport_type": "http",
+  "auth_config": {
+    "type": "api_key",
+    "location": "query",
+    "key_name": "appid",
+    "api_key": "6213ab7aa2f276094c77883649d66305"
+  },
+  "endpoint_url": "https://api.openweathermap.org/data/2.5/weather",
+  "method": "GET",
+  "query_mapping": {
+    "city": "q",
+    "temperature_unit": "units"
+  },
+  "headers": {},
+  "query_params": {},
+  "input_schema": {
+    "type": "object",
+    "required": ["city"],
+    "properties": {
+      "city": {
+        "type": "string"
+      },
+      "temperature_unit": {
+        "type": "string",
+        "default": "metric"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object"
+  },
+  "timeout": 10,
+  "retry_count": 0,
+  "verify_ssl": false,
+  "example_payload": {
+    "city": "London",
+    "temperature_unit": "metric"
+  }
+}
+
+invoke with custom payload
+{
+  "connector_id": "mcp_abc123xyz",
+  "payload": {
+    "city": "Tokyo",
+    "temperature_unit": "metric"
+  }
+}
+
+invoke with connector id
+{
+  "connector_id": "mcp_abc123xyz"
+}
+

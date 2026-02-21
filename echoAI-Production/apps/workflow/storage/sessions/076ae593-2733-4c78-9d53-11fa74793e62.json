@@ -1,0 +1,43 @@
+{
+  "session_id": "076ae593-2733-4c78-9d53-11fa74793e62",
+  "workflow_id": "wf_37644ef676a2410ea3394f0e5f6fdc00",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-17T23:53:38.265856",
+  "last_activity": "2026-02-17T23:53:39.493185",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_37644ef676a2410ea3394f0e5f6fdc00",
+      "timestamp": "2026-02-17T23:53:38.265856",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "List all my Azure resource groups",
+      "timestamp": "2026-02-17T23:53:38.469019",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "\u26a0\ufe0f Workflow execution failed: name '_interpolate_dict' is not defined",
+      "timestamp": "2026-02-17T23:53:39.493185",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "failed",
+        "error": "name '_interpolate_dict' is not defined"
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "Azure-MCP"
+  },
+  "run_ids": [
+    "run_90fbad206ee44ebdbf22b499497c77b9"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

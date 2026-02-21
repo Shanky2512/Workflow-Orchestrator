@@ -1,0 +1,145 @@
+{
+  "tool_id": "tool_code_reviewer",
+  "name": "Code Reviewer",
+  "description": "AI-powered code review service that analyzes code for bugs, security vulnerabilities, performance issues, best practices, and provides comprehensive feedback with actionable suggestions and refactoring recommendations",
+  "tool_type": "local",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string",
+        "description": "Code snippet to review"
+      },
+      "language": {
+        "type": "string",
+        "default": "python",
+        "enum": [
+          "python",
+          "javascript",
+          "typescript",
+          "java",
+          "go",
+          "rust",
+          "c++",
+          "c#"
+        ],
+        "description": "Programming language of the code"
+      },
+      "focus_areas": {
+        "type": "string",
+        "description": "Specific areas to focus on (e.g., 'security and performance', 'error handling')"
+      },
+      "review_type": {
+        "type": "string",
+        "enum": [
+          "comprehensive",
+          "quick"
+        ],
+        "default": "comprehensive",
+        "description": "Type of review: comprehensive (detailed) or quick (critical issues only)"
+      }
+    },
+    "required": [
+      "code"
+    ]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "review": {
+        "type": "string",
+        "description": "Complete code review report with formatted sections"
+      },
+      "summary": {
+        "type": "object",
+        "properties": {
+          "overall_score": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "bugs_score": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "security_score": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "performance_score": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "readability_score": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "maintainability_score": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          }
+        },
+        "description": "Scoring breakdown by category"
+      },
+      "critical_issues": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string"
+            },
+            "severity": {
+              "type": "string",
+              "enum": [
+                "critical",
+                "warning",
+                "suggestion"
+              ]
+            },
+            "description": {
+              "type": "string"
+            },
+            "fix": {
+              "type": "string"
+            }
+          }
+        },
+        "description": "List of critical issues found"
+      },
+      "refactored_code": {
+        "type": "string",
+        "description": "Improved version of the code (if significant improvements recommended)"
+      }
+    },
+    "required": [
+      "review"
+    ]
+  },
+  "execution_config": {
+    "module": "AgentTools.code_reviewer.service",
+    "class": "CodeReviewService",
+    "method": "review_code"
+  },
+  "version": "1.0",
+  "tags": [
+    "code",
+    "review",
+    "analysis",
+    "security",
+    "quality",
+    "best_practices",
+    "refactoring"
+  ],
+  "status": "active",
+  "metadata": {
+    "author": "EchoAI",
+    "category": "code_quality"
+  },
+  "_saved_at": "2026-01-26T07:06:32.157931"
+}

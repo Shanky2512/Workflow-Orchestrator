@@ -1,0 +1,153 @@
+{
+  "workflow_id": "wf_a1b2c3d4e5f6478890abcdef12345678",
+  "name": "Hybrid Data Pipeline",
+  "description": "Fetches a post via API, processes it in parallel with a JS Code node and an Agent, then merges results.",
+  "status": "draft",
+  "version": "0.1",
+  "execution_model": "hybrid",
+  "agents": [
+    {
+      "agent_id": "agt_start_001",
+      "name": "Start",
+      "role": "Workflow entry point",
+      "description": "Start node",
+      "prompt": "",
+      "icon": "\u25b6\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": { "temperature": 0.7, "max_token": 4000, "top_p": 0.9, "max_iteration": 5, "provider": "" },
+      "permissions": { "can_call_agents": false, "allowed_agents": [] },
+      "metadata": {
+        "node_type": "Start",
+        "goal": "",
+        "ui_layout": { "x": 50, "y": 250, "icon": "\u25b6\ufe0f", "color": "#10b981" },
+        "created_at": "2026-02-16T02:50:00.000000"
+      },
+      "input_schema": ["query"],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_api_002",
+      "name": "Fetch Post",
+      "role": "HTTP request",
+      "description": "Fetches a blog post from JSONPlaceholder API",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": { "temperature": 0.7, "max_token": 4000, "top_p": 0.9, "max_iteration": 5, "provider": "" },
+      "permissions": { "can_call_agents": false, "allowed_agents": [] },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": { "x": 300, "y": 250, "icon": "\ud83c\udf10", "color": "#3b82f6" },
+        "created_at": "2026-02-16T02:50:00.000000",
+        "api_config": {
+          "method": "GET",
+          "url": "https://jsonplaceholder.typicode.com/posts/3",
+          "headers": {},
+          "auth": { "type": "none", "value": "" }
+        }
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "GET",
+        "url": "https://jsonplaceholder.typicode.com/posts/3",
+        "headers": {},
+        "auth": { "type": "none", "value": "" }
+      }
+    },
+    {
+      "agent_id": "agt_code_003",
+      "name": "JS Transformer",
+      "role": "Code execution",
+      "description": "Transforms the API response using JavaScript",
+      "prompt": "",
+      "icon": "\ud83d\udcbb",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": { "temperature": 0.7, "max_token": 4000, "top_p": 0.9, "max_iteration": 5, "provider": "" },
+      "permissions": { "can_call_agents": false, "allowed_agents": [] },
+      "metadata": {
+        "node_type": "Code",
+        "goal": "",
+        "ui_layout": { "x": 580, "y": 120, "icon": "\ud83d\udcbb", "color": "#0ea5e9" },
+        "created_at": "2026-02-16T02:50:00.000000",
+        "code_config": {
+          "language": "javascript",
+          "code": "const data = typeof previous_output === 'string' ? JSON.parse(previous_output) : previous_output;\nconst title = (data && data.title) || 'No title';\nconst body = (data && data.body) || 'No body';\nconst wordCount = body.split(/\\s+/).length;\nconsole.log(`Title: ${title}`);\nconsole.log(`Word Count: ${wordCount}`);\nconsole.log(`Preview: ${body.substring(0, 100)}...`);",
+          "packages": ""
+        }
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "language": "javascript",
+        "code": "const data = typeof previous_output === 'string' ? JSON.parse(previous_output) : previous_output;\nconst title = (data && data.title) || 'No title';\nconst body = (data && data.body) || 'No body';\nconst wordCount = body.split(/\\s+/).length;\nconsole.log(`Title: ${title}`);\nconsole.log(`Word Count: ${wordCount}`);\nconsole.log(`Preview: ${body.substring(0, 100)}...`);",
+        "packages": ""
+      }
+    },
+    {
+      "agent_id": "agt_agent_004",
+      "name": "Content Analyst",
+      "role": "Autonomous AI agent",
+      "description": "Analyzes the blog post content for quality and engagement",
+      "prompt": "You are a content analyst. You will receive a blog post from an API. Analyze it and provide:\n1. A one-sentence summary\n2. The tone (formal, casual, technical, etc.)\n3. Three suggested tags/keywords\n4. A quality score from 1-10 with a brief justification\n\nKeep your response concise and structured.",
+      "icon": "\ud83d\udd36",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": { "temperature": 0.5, "max_token": 2000, "top_p": 0.9, "max_iteration": 5, "provider": "" },
+      "permissions": { "can_call_agents": false, "allowed_agents": [] },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Analyze the blog post content for quality and engagement",
+        "ui_layout": { "x": 580, "y": 380, "icon": "\ud83d\udd36", "color": "#f59e0b" },
+        "created_at": "2026-02-16T02:50:00.000000"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_end_005",
+      "name": "End",
+      "role": "Workflow exit point",
+      "description": "End node",
+      "prompt": "",
+      "icon": "\u23f9\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": { "temperature": 0.7, "max_token": 4000, "top_p": 0.9, "max_iteration": 5, "provider": "" },
+      "permissions": { "can_call_agents": false, "allowed_agents": [] },
+      "metadata": {
+        "node_type": "End",
+        "goal": "",
+        "ui_layout": { "x": 860, "y": 250, "icon": "\u23f9\ufe0f", "color": "#64748b" },
+        "created_at": "2026-02-16T02:50:00.000000"
+      },
+      "input_schema": [],
+      "output_schema": ["result"]
+    }
+  ],
+  "connections": [
+    { "from": "agt_start_001", "to": "agt_api_002" },
+    { "from": "agt_api_002", "to": "agt_code_003" },
+    { "from": "agt_api_002", "to": "agt_agent_004" },
+    { "from": "agt_code_003", "to": "agt_end_005" },
+    { "from": "agt_agent_004", "to": "agt_end_005" }
+  ],
+  "state_schema": {
+    "query": "string",
+    "result": "string"
+  },
+  "metadata": {
+    "created_by": "workflow_builder",
+    "created_at": "2026-02-16T02:50:00.000000",
+    "canvas_layout": { "width": 5000, "height": 5000 }
+  }
+}

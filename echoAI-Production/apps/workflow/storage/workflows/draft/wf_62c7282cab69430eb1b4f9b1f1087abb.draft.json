@@ -1,0 +1,1017 @@
+{
+  "workflow_id": "wf_62c7282cab69430eb1b4f9b1f1087abb",
+  "name": "Invoice Processing & ERP Posting Workflow",
+  "description": "Created from canvas on 2026-02-17",
+  "status": "draft",
+  "version": "0.1",
+  "execution_model": "hybrid",
+  "agents": [
+    {
+      "agent_id": "agt_24c36e3ab44d4388add46ecfbb072263",
+      "name": "Invoice Received",
+      "role": "Workflow entry point",
+      "description": "Start node",
+      "prompt": "",
+      "icon": "\u25b6\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Start",
+        "goal": "",
+        "ui_layout": {
+          "x": 100,
+          "y": 300,
+          "icon": "\u25b6\ufe0f",
+          "color": "#10b981"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "registered_at": "2026-02-17T19:20:25.369221"
+      },
+      "input_schema": [
+        "invoiceDocument",
+        "invoiceEmail",
+        "submittedBy"
+      ],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_e524c8be113344a984b3ada7a5b37379",
+      "name": "Invoice Data Extractor",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Invoice Data Extractor",
+      "prompt": "You are an AI Invoice Processing Specialist with expertise in document data extraction.\n\nYour task is to extract all relevant information from the invoice document:\n\n## Required Fields to Extract:\n\n### Vendor Information\n- Vendor Name\n- Vendor ID (if present)\n- Vendor Address\n- Vendor Tax ID / GST Number\n- Vendor Bank Account (if present)\n\n### Invoice Details\n- Invoice Number\n- Invoice Date\n- Due Date\n- Payment Terms (e.g., Net 30, Net 60)\n- Currency\n- Purchase Order Number (if referenced)\n\n### Line Items\nFor each line item extract:\n- Description\n- Quantity\n- Unit Price\n- Line Amount\n- Tax Rate\n- Tax Amount\n- Account Code / GL Code (if present)\n\n### Amounts\n- Subtotal (before tax)\n- Tax Amount (by tax type if multiple)\n- Total Amount\n- Amount in Words (if present)\n\n### Additional Information\n- Payment Instructions\n- Notes or Comments\n- Attachments mentioned\n\n## Validation During Extraction:\n1. Verify all mandatory fields are present\n2. Check that amounts add up correctly (subtotal + tax = total)\n3. Ensure dates are in valid format\n4. Flag any unclear or ambiguous information\n\n## Output Format:\nProvide extracted data in JSON format:\n```json\n{\n  \"vendor\": {...},\n  \"invoice\": {...},\n  \"lineItems\": [...],\n  \"amounts\": {...},\n  \"extractionConfidence\": 0.0-1.0,\n  \"warnings\": [],\n  \"missingFields\": []\n}\n```\n\nIf you cannot extract critical information with high confidence, flag it in warnings and set extractionConfidence accordingly.",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [],
+      "variables": [
+        {
+          "name": "invoiceDocument",
+          "type": "file",
+          "defaultValue": ""
+        }
+      ],
+      "settings": {
+        "temperature": 0.1,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Invoice Data Extractor",
+        "ui_layout": {
+          "x": 350,
+          "y": 300,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "registered_at": "2026-02-17T19:20:25.387644"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_0aa1f8e02deb4893bd7d361bd508e8de",
+      "name": "Extraction Quality Check",
+      "role": "Conditional branching",
+      "description": "Conditional node",
+      "prompt": "",
+      "icon": "\ud83d\udd00",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Conditional",
+        "goal": "",
+        "ui_layout": {
+          "x": 600,
+          "y": 300,
+          "icon": "\ud83d\udd00",
+          "color": "#8b5cf6"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "branches": [
+          {
+            "condition": "extractionConfidence >= 0.9 && missingFields.length === 0",
+            "targetNodeId": "agt_eb6b488aa9804cb595bb58209fa086ae"
+          },
+          {
+            "condition": "extractionConfidence >= 0.7 || missingFields.length > 0",
+            "targetNodeId": "agt_4863eca178c5441586933cb94de42940"
+          },
+          {
+            "condition": "",
+            "targetNodeId": "agt_fbc1c7d4b24e485490dcdd17c699d021"
+          }
+        ],
+        "registered_at": "2026-02-17T19:20:25.415861"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_eb6b488aa9804cb595bb58209fa086ae",
+      "name": "Invoice Validator",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Invoice Validator",
+      "prompt": "You are an Accounts Payable Specialist responsible for invoice validation.\n\nYour task is to perform comprehensive validation of the extracted invoice data:\n\n## Validation Checks:\n\n### 1. Master Data Validation\n- Verify vendor exists in system\n- Check vendor is active and approved\n- Validate vendor tax ID matches records\n- Verify vendor bank account (if payment required)\n\n### 2. Purchase Order Matching (if PO referenced)\n- PO number exists and is open\n- Invoice amount <= PO amount\n- Line items match PO line items\n- Quantities are within tolerance (\u00b15%)\n- Prices match PO prices (\u00b12% tolerance)\n\n### 3. Business Rules Validation\n- Invoice not already processed (duplicate check - preliminary)\n- Invoice date is not future dated\n- Invoice date is not older than 90 days\n- Due date is after invoice date\n- Payment terms match vendor master data\n\n### 4. Amount Validation\n- Line items sum equals subtotal\n- Tax calculation is correct\n- Subtotal + tax = total amount\n- Amount is within normal range for vendor\n- No unusual spikes or patterns\n\n### 5. Tax/Compliance Validation\n- Tax rate is correct for jurisdiction\n- Tax registration numbers valid\n- Withholding tax applicable?\n- Cross-border implications?\n\n### 6. GL Coding Validation\n- GL codes exist and are active\n- Cost centers are valid\n- Budget availability (if enforced)\n- Proper account classification\n\n## Approval Routing Rules:\nDetermine approval requirements based on:\n- Amount thresholds:\n  - < $5,000: Auto-approve (if all validations pass)\n  - $5,000 - $25,000: Department Manager approval\n  - $25,000 - $100,000: Director approval\n  - > $100,000: VP/CFO approval\n- Exception conditions:\n  - Non-PO invoices: Always require approval\n  - New vendors: Require additional approval\n  - Out-of-policy items: Escalate\n\n## Output Format:\n```json\n{\n  \"validationStatus\": \"pass\" | \"warning\" | \"fail\",\n  \"validationResults\": {\n    \"vendorValidation\": {...},\n    \"poMatching\": {...},\n    \"amountValidation\": {...},\n    \"taxValidation\": {...},\n    \"glValidation\": {...}\n  },\n  \"approvalRequired\": true | false,\n  \"approvalLevel\": \"auto\" | \"manager\" | \"director\" | \"vp\" | \"cfo\",\n  \"approvers\": [],\n  \"exceptions\": [],\n  \"warnings\": [],\n  \"recommendation\": \"approve\" | \"review\" | \"reject\",\n  \"reasoning\": \"...\"\n}\n```\n\nBe thorough and flag any anomalies or policy violations.",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.2,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Invoice Validator",
+        "ui_layout": {
+          "x": 850,
+          "y": 200,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "registered_at": "2026-02-17T19:20:25.439565"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_485ec8e49ac048e398dd7d547a541376",
+      "name": "Duplicate Check Agent",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Duplicate Check Agent",
+      "prompt": "You are a Duplicate Detection Specialist for invoice processing.\n\nYour task is to perform comprehensive duplicate checking:\n\n## Duplicate Detection Methods:\n\n### 1. Exact Match Detection\n- Same invoice number from same vendor\n- Same amount, date, and vendor\n- Exact document hash match\n\n### 2. Fuzzy Match Detection\n- Similar invoice numbers (typos, missing digits)\n- Same vendor, similar amount (\u00b12%), similar date (\u00b13 days)\n- Similar line item descriptions\n\n### 3. Pattern Analysis\n- Multiple invoices for same PO line\n- Recurring amounts from same vendor\n- Suspicious timing patterns\n\n### 4. Historical Search\n- Search last 12 months of invoice history\n- Check both posted and pending invoices\n- Include rejected/cancelled invoices\n\n## Matching Logic:\n```\nExact Match = 100% duplicate\nFuzzy Match (90%+ similarity) = Likely duplicate\nFuzzy Match (75-89% similarity) = Potential duplicate\nNo Match = Proceed\n```\n\n## Investigation Steps:\n1. Query invoice history by vendor + invoice number\n2. Query by vendor + amount + date range\n3. Query by PO number if referenced\n4. Check document fingerprint in system\n5. Analyze payment history to vendor\n\n## Output Format:\n```json\n{\n  \"isDuplicate\": true | false,\n  \"confidenceScore\": 0.0-1.0,\n  \"matchType\": \"exact\" | \"fuzzy\" | \"pattern\" | \"none\",\n  \"matchedInvoices\": [\n    {\n      \"invoiceNumber\": \"...\",\n      \"invoiceDate\": \"...\",\n      \"amount\": 0,\n      \"status\": \"posted\" | \"pending\" | \"rejected\",\n      \"documentId\": \"...\",\n      \"similarityScore\": 0.0-1.0\n    }\n  ],\n  \"recommendation\": \"proceed\" | \"review\" | \"reject\",\n  \"reasoning\": \"...\"\n}\n```\n\nIf exact or high-confidence fuzzy match found, flag as duplicate and recommend rejection.",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.1,
+        "max_token": 3000,
+        "top_p": 0.9,
+        "max_iteration": 3,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Duplicate Check Agent",
+        "ui_layout": {
+          "x": 983,
+          "y": 71,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "registered_at": "2026-02-17T19:20:25.464457"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_ae3c8925c0dd466599472baeb7d749a7",
+      "name": "Duplicate Found?",
+      "role": "Conditional branching",
+      "description": "Conditional node",
+      "prompt": "",
+      "icon": "\ud83d\udd00",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Conditional",
+        "goal": "",
+        "ui_layout": {
+          "x": 1350,
+          "y": 200,
+          "icon": "\ud83d\udd00",
+          "color": "#8b5cf6"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "branches": [
+          {
+            "condition": "isDuplicate === true && confidenceScore >= 0.9",
+            "targetNodeId": "agt_fbc1c7d4b24e485490dcdd17c699d021"
+          },
+          {
+            "condition": "isDuplicate === true && confidenceScore >= 0.7",
+            "targetNodeId": "agt_4863eca178c5441586933cb94de42940"
+          },
+          {
+            "condition": "",
+            "targetNodeId": "agt_c4127008e5cd4a2bb6373d6a9f2676b3"
+          }
+        ],
+        "registered_at": "2026-02-17T19:20:25.490600"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_c4127008e5cd4a2bb6373d6a9f2676b3",
+      "name": "Approval Required?",
+      "role": "Conditional branching",
+      "description": "Conditional node",
+      "prompt": "",
+      "icon": "\ud83d\udd00",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Conditional",
+        "goal": "",
+        "ui_layout": {
+          "x": 1600,
+          "y": 200,
+          "icon": "\ud83d\udd00",
+          "color": "#8b5cf6"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "branches": [
+          {
+            "condition": "approvalRequired === false && validationStatus === 'pass'",
+            "targetNodeId": "agt_1ad03fcb9c8f49779d29b29cfb728150"
+          },
+          {
+            "condition": "approvalRequired === true",
+            "targetNodeId": "agt_811b3d838f8c4190a6da8ea1be93a74b"
+          },
+          {
+            "condition": "",
+            "targetNodeId": "agt_4863eca178c5441586933cb94de42940"
+          }
+        ],
+        "registered_at": "2026-02-17T19:20:25.518266"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_811b3d838f8c4190a6da8ea1be93a74b",
+      "name": "Invoice Approval",
+      "role": "Human approval gate",
+      "description": "HITL node",
+      "prompt": "",
+      "icon": "\ud83d\udc64",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "HITL",
+        "goal": "",
+        "ui_layout": {
+          "x": 1850,
+          "y": 100,
+          "icon": "\ud83d\udc64",
+          "color": "#06b6d4"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "hitl_config": {
+          "title": "Invoice Approval Required",
+          "message": "Please review and approve this invoice for posting to ERP system. Review validation results, amount, and vendor details.",
+          "priority": "high",
+          "allowEdit": true,
+          "allowDefer": true
+        },
+        "registered_at": "2026-02-17T19:20:25.544593"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_1ad03fcb9c8f49779d29b29cfb728150",
+      "name": "Tax & Compliance Validator",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Tax & Compliance Validator",
+      "prompt": "You are a Tax Compliance Specialist for invoice processing.\n\nYour task is to perform final tax and regulatory compliance validation:\n\n## Tax Validation:\n\n### 1. Tax Calculation Verification\n- Verify tax rate applied is correct for:\n  - Jurisdiction (country, state, city)\n  - Product/service category\n  - Date of transaction\n- Check if reverse charge mechanism applies\n- Validate withholding tax requirements\n\n### 2. Tax Registration Validation\n- Verify vendor's tax registration number\n- Check if vendor is registered for tax in jurisdiction\n- Validate tax exemption certificates (if claimed)\n- Cross-reference with tax authority databases\n\n### 3. Tax Reporting Requirements\n- Identify reporting obligations\n- Flag if 1099 reporting required (US)\n- Check TDS/withholding tax obligations (India)\n- Verify VAT/GST reporting requirements\n\n### 4. Cross-Border Considerations\n- Import duties applicable?\n- Currency conversion for tax\n- Transfer pricing implications\n- Documentation requirements\n\n## Compliance Checks:\n\n### 1. Regulatory Compliance\n- Sanctions screening (vendor not on restricted list)\n- Anti-money laundering (AML) checks\n- Know Your Customer (KYC) validation\n- Export control regulations\n\n### 2. Internal Policy Compliance\n- Procurement policy adherence\n- Segregation of duties maintained\n- Authorization limits respected\n- Documentation requirements met\n\n### 3. Audit Trail\n- All required documents attached\n- Proper approval chain documented\n- Supporting documentation adequate\n- Change history maintained\n\n## Output Format:\n```json\n{\n  \"taxValidationStatus\": \"pass\" | \"warning\" | \"fail\",\n  \"complianceStatus\": \"compliant\" | \"non-compliant\",\n  \"taxDetails\": {\n    \"calculationCorrect\": true | false,\n    \"registrationValid\": true | false,\n    \"withholdingRequired\": true | false,\n    \"withholdingAmount\": 0,\n    \"reportingRequired\": []\n  },\n  \"complianceIssues\": [],\n  \"warnings\": [],\n  \"recommendation\": \"proceed\" | \"review\" | \"reject\",\n  \"reasoning\": \"...\"\n}\n```",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.1,
+        "max_token": 3000,
+        "top_p": 0.9,
+        "max_iteration": 3,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Tax & Compliance Validator",
+        "ui_layout": {
+          "x": 2100,
+          "y": 200,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "registered_at": "2026-02-17T19:20:25.568912"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_763fabe766204ad7a5d28ad80c9875dc",
+      "name": "Compliance Pass?",
+      "role": "Conditional branching",
+      "description": "Conditional node",
+      "prompt": "",
+      "icon": "\ud83d\udd00",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Conditional",
+        "goal": "",
+        "ui_layout": {
+          "x": 2350,
+          "y": 200,
+          "icon": "\ud83d\udd00",
+          "color": "#8b5cf6"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "branches": [
+          {
+            "condition": "taxValidationStatus === 'pass' && complianceStatus === 'compliant'",
+            "targetNodeId": "agt_6717eb82dca54049988de01dbef8ab5c"
+          },
+          {
+            "condition": "taxValidationStatus === 'warning'",
+            "targetNodeId": "agt_4863eca178c5441586933cb94de42940"
+          },
+          {
+            "condition": "",
+            "targetNodeId": "agt_fbc1c7d4b24e485490dcdd17c699d021"
+          }
+        ],
+        "registered_at": "2026-02-17T19:20:25.596162"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_6717eb82dca54049988de01dbef8ab5c",
+      "name": "ERP Posting Agent",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as ERP Posting Agent",
+      "prompt": "You are an ERP Integration Specialist responsible for posting invoices to Oracle/SAP.\n\nYour task is to post the validated invoice to the core financial system:\n\n## Pre-Posting Preparation:\n\n### 1. Data Transformation\n- Convert invoice data to ERP format\n- Map fields to ERP structure:\n  - Vendor Code \u2192 ERP Vendor ID\n  - GL Codes \u2192 ERP Account Codes\n  - Cost Centers \u2192 ERP Cost Center Codes\n  - Tax Codes \u2192 ERP Tax Type Codes\n\n### 2. Document Preparation\n- Generate unique document number\n- Set posting date (typically current date)\n- Set document date (invoice date)\n- Set due date based on payment terms\n- Calculate payment date\n\n### 3. Accounting Entries\n- Debit: Expense/Asset accounts (line items)\n- Debit: Tax Input accounts (recoverable tax)\n- Credit: Accounts Payable (total amount)\n- Withholding Tax entries (if applicable)\n\n## Posting Process:\n\n### For Oracle ERP:\n```\n1. Connect to Oracle AP module\n2. Call API: AP_INVOICES_PKG.CREATE_INVOICE\n3. Parameters:\n   - Invoice Header\n   - Invoice Lines\n   - Tax Lines\n   - Distribution Lines\n4. Validate posting\n5. Get document number\n```\n\n### For SAP ERP:\n```\n1. Connect to SAP via RFC/BAPI\n2. Call BAPI: BAPI_INVOICE_CREATE\n3. Parameters:\n   - Header Data (INVOICEDOCUMENT)\n   - Item Data (INVOICEITEM)\n   - Tax Data (INVOICETAXDATA)\n   - Account Assignment (ACCOUNTINGDOCUMENT)\n4. Call BAPI_TRANSACTION_COMMIT\n5. Get document number\n```\n\n## Error Handling:\n- Retry on connection timeout (3 attempts)\n- Handle validation errors from ERP\n- Rollback on partial posting\n- Log all API calls and responses\n\n## Verification:\n1. Confirm document posted successfully\n2. Verify document number returned\n3. Check document status in ERP\n4. Validate accounting entries created\n5. Confirm payment terms set correctly\n\n## Output Format:\n```json\n{\n  \"postingStatus\": \"success\" | \"failed\" | \"partial\",\n  \"erpSystem\": \"oracle\" | \"sap\",\n  \"documentNumber\": \"...\",\n  \"documentDate\": \"...\",\n  \"postingDate\": \"...\",\n  \"fiscalYear\": \"...\",\n  \"fiscalPeriod\": \"...\",\n  \"companyCode\": \"...\",\n  \"accountingEntries\": [\n    {\n      \"account\": \"...\",\n      \"debit\": 0,\n      \"credit\": 0,\n      \"costCenter\": \"...\"\n    }\n  ],\n  \"paymentInfo\": {\n    \"dueDate\": \"...\",\n    \"paymentMethod\": \"...\",\n    \"paymentTerms\": \"...\"\n  },\n  \"errors\": [],\n  \"warnings\": []\n}\n```\n\nIMPORTANT: Never post twice. Always verify posting status before retry.",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as ERP Posting Agent",
+        "ui_layout": {
+          "x": 2600,
+          "y": 200,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "registered_at": "2026-02-17T19:20:25.620427"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_00b3815ce86d4a75b756121d63cdc312",
+      "name": "Posting Safety",
+      "role": "Error handling",
+      "description": "Failsafe node",
+      "prompt": "",
+      "icon": "\ud83d\udee1\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Failsafe",
+        "goal": "",
+        "ui_layout": {
+          "x": 2850,
+          "y": 200,
+          "icon": "\ud83d\udee1\ufe0f",
+          "color": "#ef4444"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "registered_at": "2026-02-17T19:20:25.647089"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_154390f516624242a5fd2c9df042f4c8",
+      "name": "Posting Verification Agent",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Posting Verification Agent",
+      "prompt": "You are a Quality Assurance Specialist for ERP postings.\n\nYour task is to verify the invoice was posted correctly to the ERP system:\n\n## Verification Steps:\n\n### 1. Document Existence Check\n- Query ERP for document number\n- Verify document exists and is active\n- Check document is not in error status\n- Confirm document not reversed/cancelled\n\n### 2. Data Integrity Verification\n- Verify vendor code matches\n- Confirm invoice number matches\n- Check amounts match (header and lines)\n- Validate dates (invoice date, posting date, due date)\n- Verify currency and exchange rate (if applicable)\n\n### 3. Accounting Verification\n- Retrieve accounting entries\n- Verify debit = credit (balanced)\n- Check accounts used are correct\n- Validate cost center assignments\n- Confirm tax posting is correct\n\n### 4. Status Checks\n- Document status: Posted/Released\n- Payment status: Open/Pending\n- Approval status: Approved\n- Hold status: No holds\n\n### 5. Workflow Status\n- Check if document in payment queue\n- Verify payment method set\n- Confirm payment terms applied\n- Check if any manual intervention needed\n\n## Reconciliation:\nCompare ERP data with original invoice:\n```\nOriginal Invoice Total: $X\nERP Document Total: $Y\nMatch: X === Y\n\nOriginal Tax: $A\nERP Tax: $B\nMatch: A === B\n```\n\n## Output Format:\n```json\n{\n  \"verificationStatus\": \"verified\" | \"discrepancy\" | \"not_found\",\n  \"documentFound\": true | false,\n  \"dataMatch\": true | false,\n  \"accountingBalanced\": true | false,\n  \"documentStatus\": \"...\",\n  \"paymentStatus\": \"...\",\n  \"discrepancies\": [],\n  \"erpData\": {\n    \"documentNumber\": \"...\",\n    \"vendor\": \"...\",\n    \"amount\": 0,\n    \"status\": \"...\",\n    \"postingDate\": \"...\"\n  },\n  \"recommendation\": \"confirm\" | \"investigate\" | \"reverse\",\n  \"nextAction\": \"...\"\n}\n```\n\nIf verification fails, recommend investigation or reversal.",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.1,
+        "max_token": 3000,
+        "top_p": 0.9,
+        "max_iteration": 3,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Posting Verification Agent",
+        "ui_layout": {
+          "x": 3100,
+          "y": 200,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "registered_at": "2026-02-17T19:20:25.671401"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_6916b460912f42bca4f4b1b09b2bbc89",
+      "name": "Verification Success?",
+      "role": "Conditional branching",
+      "description": "Conditional node",
+      "prompt": "",
+      "icon": "\ud83d\udd00",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Conditional",
+        "goal": "",
+        "ui_layout": {
+          "x": 3350,
+          "y": 200,
+          "icon": "\ud83d\udd00",
+          "color": "#8b5cf6"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "branches": [
+          {
+            "condition": "verificationStatus === 'verified' && dataMatch === true",
+            "targetNodeId": "agt_a3e07b5ed22f477d9e71c1c4445b90ff"
+          },
+          {
+            "condition": "verificationStatus === 'discrepancy'",
+            "targetNodeId": "agt_658560ac35bb48819535d248a031fd95"
+          },
+          {
+            "condition": "",
+            "targetNodeId": "agt_fbc1c7d4b24e485490dcdd17c699d021"
+          }
+        ],
+        "registered_at": "2026-02-17T19:20:25.696607"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_a3e07b5ed22f477d9e71c1c4445b90ff",
+      "name": "Document Manager",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Document Manager",
+      "prompt": "You are a Document Management Specialist for invoice processing.\n\nYour task is to manage all documents and attachments:\n\n## Document Management Tasks:\n\n### 1. Attach Invoice to ERP\n- Upload original invoice PDF/image to ERP\n- Link document to posted invoice\n- Set document category/type\n- Add document description\n\n### 2. Archive Supporting Documents\n- Attach purchase order (if applicable)\n- Attach goods receipt (if applicable)\n- Attach approval emails\n- Attach any correspondence\n\n### 3. Update Document Index\n- Create document index entry\n- Tag with metadata:\n  - Vendor name\n  - Invoice number\n  - Document date\n  - Amount\n  - GL account codes\n  - Cost centers\n- Make searchable\n\n### 4. Retention Policy\n- Set retention period (typically 7-10 years)\n- Mark for legal hold (if applicable)\n- Set access permissions\n\n### 5. Audit Trail\n- Log all document operations\n- Record who uploaded\n- Record when uploaded\n- Record any modifications\n\n## Output Format:\n```json\n{\n  \"documentStatus\": \"attached\" | \"failed\",\n  \"documentsAttached\": [\n    {\n      \"documentType\": \"...\",\n      \"documentId\": \"...\",\n      \"filename\": \"...\",\n      \"attachedDate\": \"...\"\n    }\n  ],\n  \"indexCreated\": true | false,\n  \"archiveLocation\": \"...\",\n  \"retentionDate\": \"...\",\n  \"errors\": []\n}\n```",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.1,
+        "max_token": 2000,
+        "top_p": 0.9,
+        "max_iteration": 3,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Document Manager",
+        "ui_layout": {
+          "x": 3463.333333333333,
+          "y": 106.66666666666663,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "registered_at": "2026-02-17T19:20:25.722471"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_3234e8b56d17498c8517a4ba92dfd147",
+      "name": "Notification Agent (Success)",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Notification Agent (Success)",
+      "prompt": "You are a Communication Specialist responsible for success notifications.\n\nYour task is to notify all relevant parties about successful invoice processing:\n\n## Notifications to Send:\n\n### 1. Submitter Notification\nEmail to: Person who submitted the invoice\nSubject: Invoice [Invoice Number] Successfully Processed\nContent:\n- Confirmation of successful processing\n- ERP document number\n- Payment details (due date, method)\n- Link to view in ERP (if available)\n- Next steps (e.g., \"Payment will be processed on [date]\")\n\n### 2. Approver Notification (if applicable)\nEmail to: Person(s) who approved\nSubject: Invoice [Invoice Number] Posted to ERP\nContent:\n- Thank you for approval\n- Confirmation of posting\n- ERP document number\n\n### 3. AP Team Notification\nEmail to: AP team\nSubject: Invoice Auto-Posted - [Invoice Number]\nContent:\n- Invoice details\n- ERP document number\n- Validation results summary\n- Payment due date\n\n### 4. Vendor Portal Update (if applicable)\nUpdate vendor portal:\n- Invoice status: Processed\n- Expected payment date\n- Document number for reference\n\n### 5. Dashboard/Metrics Update\nUpdate real-time dashboard:\n- Total invoices processed today\n- Average processing time\n- Auto-approval rate\n- Value processed\n\n## Notification Format:\n```\nSubject: \u2705 Invoice [Number] Successfully Processed\n\nDear [Name],\n\nYour invoice has been successfully processed and posted to our financial system.\n\n\ud83d\udcc4 Invoice Details:\n- Invoice Number: [Number]\n- Vendor: [Vendor Name]\n- Amount: [Currency] [Amount]\n- Invoice Date: [Date]\n\n\u2705 Processing Results:\n- ERP Document Number: [Doc Number]\n- Posting Date: [Date]\n- Status: Posted and Approved\n\n\ud83d\udcb0 Payment Information:\n- Payment Due Date: [Date]\n- Payment Method: [Method]\n- Payment Terms: [Terms]\n\n\ud83d\udcca View Details:\n[Link to ERP] (if available)\n\nThank you for your business!\n\n---\nAutomated Invoice Processing System\n```\n\nOutput Format:\n```json\n{\n  \"notificationStatus\": \"sent\" | \"failed\",\n  \"notificationsSent\": [\n    {\n      \"recipient\": \"...\",\n      \"type\": \"email\" | \"portal\" | \"sms\",\n      \"status\": \"sent\" | \"failed\",\n      \"sentAt\": \"...\"\n    }\n  ],\n  \"errors\": []\n}\n```",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.3,
+        "max_token": 2000,
+        "top_p": 0.9,
+        "max_iteration": 3,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Notification Agent (Success)",
+        "ui_layout": {
+          "x": 3590,
+          "y": 353.3333333333333,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "registered_at": "2026-02-17T19:20:25.745488"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_f4a45915761544d8baeb70ed9b331c20",
+      "name": "Success Path Complete",
+      "role": "Branch merging",
+      "description": "Merge node",
+      "prompt": "",
+      "icon": "\u26a1",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Merge",
+        "goal": "",
+        "ui_layout": {
+          "x": 3850,
+          "y": 150,
+          "icon": "\u26a1",
+          "color": "#14b8a6"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "registered_at": "2026-02-17T19:20:25.769866"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_2bf5d8865d2c45dea93a5e069cd73d50",
+      "name": "Processing Complete",
+      "role": "Workflow exit point",
+      "description": "End node",
+      "prompt": "",
+      "icon": "\u23f9\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "End",
+        "goal": "",
+        "ui_layout": {
+          "x": 4100,
+          "y": 300,
+          "icon": "\u23f9\ufe0f",
+          "color": "#64748b"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "registered_at": "2026-02-17T19:20:25.795580"
+      },
+      "input_schema": [],
+      "output_schema": [
+        "processingStatus",
+        "erpDocumentNumber",
+        "postingDate",
+        "paymentDueDate",
+        "errorDetails"
+      ]
+    },
+    {
+      "agent_id": "agt_4863eca178c5441586933cb94de42940",
+      "name": "Manual Review Required",
+      "role": "Human approval gate",
+      "description": "HITL node",
+      "prompt": "",
+      "icon": "\ud83d\udc64",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "HITL",
+        "goal": "",
+        "ui_layout": {
+          "x": 850,
+          "y": 450,
+          "icon": "\ud83d\udc64",
+          "color": "#06b6d4"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "hitl_config": {
+          "title": "Invoice Requires Manual Review",
+          "message": "This invoice could not be auto-processed. Please review the validation results, warnings, and exceptions. Decide whether to approve, reject, or request more information.",
+          "priority": "high",
+          "allowEdit": true,
+          "allowDefer": true
+        },
+        "registered_at": "2026-02-17T19:20:25.818481"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_fbc1c7d4b24e485490dcdd17c699d021",
+      "name": "Exception Handler",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Exception Handler",
+      "prompt": "You are an Exception Management Specialist for invoice processing.\n\nYour task is to handle exceptions and create detailed exception reports:\n\n## Exception Types:\n\n### 1. Validation Failures\n- Vendor not found or inactive\n- PO mismatch or not found\n- Amount exceeds PO or budget\n- Invalid GL codes\n- Missing required fields\n\n### 2. Duplicate Detection\n- Exact duplicate found\n- Potential duplicate (fuzzy match)\n- Same PO line already invoiced\n\n### 3. Compliance Failures\n- Tax validation failed\n- Sanctions list match\n- Missing tax documentation\n- Policy violation\n\n### 4. System Errors\n- ERP connection failure\n- Posting error\n- Verification failure\n- Data transformation error\n\n## Exception Report Contents:\n\n```\n\ud83d\udea8 INVOICE EXCEPTION REPORT\n\nInvoice Details:\n- Invoice Number: [Number]\n- Vendor: [Name]\n- Amount: [Amount]\n- Date: [Date]\n\nException Type: [Type]\nSeverity: [Critical | High | Medium | Low]\n\nDescription:\n[Detailed description of what went wrong]\n\nRoot Cause:\n[Analysis of why it happened]\n\nImpact:\n- Payment delay: [Yes/No]\n- Vendor relationship risk: [Level]\n- Financial impact: [Amount/Description]\n\nRecommended Actions:\n1. [Action 1]\n2. [Action 2]\n3. [Action 3]\n\nRequired Information (if applicable):\n- [Missing info 1]\n- [Missing info 2]\n\nNext Steps:\n- Assigned to: [Person/Team]\n- Due date: [Date]\n- Priority: [Level]\n```\n\n## Actions to Take:\n\n1. Create exception record in system\n2. Notify relevant parties:\n   - AP team\n   - Submitter\n   - Manager (for high-severity)\n3. Update invoice status to \"Exception\"\n4. Set follow-up reminder\n5. Log in exception tracking system\n\n## Output Format:\n```json\n{\n  \"exceptionId\": \"...\",\n  \"exceptionType\": \"...\",\n  \"severity\": \"critical\" | \"high\" | \"medium\" | \"low\",\n  \"description\": \"...\",\n  \"rootCause\": \"...\",\n  \"impact\": {...},\n  \"recommendedActions\": [],\n  \"requiredInformation\": [],\n  \"assignedTo\": \"...\",\n  \"dueDate\": \"...\",\n  \"notificationsSent\": [],\n  \"status\": \"open\"\n}\n```",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.2,
+        "max_token": 3000,
+        "top_p": 0.9,
+        "max_iteration": 3,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Exception Handler",
+        "ui_layout": {
+          "x": 2600,
+          "y": 450,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "registered_at": "2026-02-17T19:20:25.841854"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_658560ac35bb48819535d248a031fd95",
+      "name": "Discrepancy Investigator",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Discrepancy Investigator",
+      "prompt": "You are a Financial Investigation Specialist for ERP posting discrepancies.\n\nYour task is to investigate and resolve posting discrepancies:\n\n## Investigation Steps:\n\n### 1. Identify Discrepancies\n- Compare original invoice with ERP data\n- List all mismatches:\n  - Amount differences\n  - Account code differences  \n  - Date differences\n  - Tax calculation differences\n\n### 2. Root Cause Analysis\n- Data transformation error?\n- ERP validation modified data?\n- Rounding differences?\n- Mapping table incorrect?\n- Configuration issue?\n\n### 3. Impact Assessment\n- Financial impact: [Amount]\n- Reporting impact: [Description]\n- Audit risk: [Level]\n- Vendor impact: [Description]\n\n### 4. Resolution Options\n\n**Option A: Reversal and Repost**\n- Reverse incorrect posting\n- Correct data\n- Repost with corrected data\n\n**Option B: Adjustment Posting**\n- Post adjustment entry\n- Correct the discrepancy\n- Document reason\n\n**Option C: Accept as Posted**\n- Discrepancy is immaterial (< $1)\n- Document variance reason\n- Update mapping for future\n\n### 5. Prevention\n- Identify systemic issue\n- Update validation rules\n- Fix mapping tables\n- Update transformation logic\n\n## Output Format:\n```json\n{\n  \"investigationId\": \"...\",\n  \"discrepancies\": [\n    {\n      \"field\": \"...\",\n      \"expectedValue\": \"...\",\n      \"actualValue\": \"...\",\n      \"variance\": 0\n    }\n  ],\n  \"rootCause\": \"...\",\n  \"impact\": {...},\n  \"recommendedResolution\": \"reversal\" | \"adjustment\" | \"accept\",\n  \"resolutionSteps\": [],\n  \"preventiveMeasures\": [],\n  \"approvalRequired\": true | false,\n  \"estimatedResolutionTime\": \"...\"\n}\n```",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.2,
+        "max_token": 3000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Discrepancy Investigator",
+        "ui_layout": {
+          "x": 3663.333333333333,
+          "y": 50,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T19:20:25.253220",
+        "registered_at": "2026-02-17T19:20:25.862668"
+      },
+      "input_schema": [],
+      "output_schema": []
+    }
+  ],
+  "connections": [
+    {
+      "from": "agt_24c36e3ab44d4388add46ecfbb072263",
+      "to": "agt_e524c8be113344a984b3ada7a5b37379"
+    },
+    {
+      "from": "agt_e524c8be113344a984b3ada7a5b37379",
+      "to": "agt_0aa1f8e02deb4893bd7d361bd508e8de"
+    },
+    {
+      "from": "agt_0aa1f8e02deb4893bd7d361bd508e8de",
+      "to": "agt_eb6b488aa9804cb595bb58209fa086ae"
+    },
+    {
+      "from": "agt_0aa1f8e02deb4893bd7d361bd508e8de",
+      "to": "agt_4863eca178c5441586933cb94de42940"
+    },
+    {
+      "from": "agt_0aa1f8e02deb4893bd7d361bd508e8de",
+      "to": "agt_fbc1c7d4b24e485490dcdd17c699d021"
+    },
+    {
+      "from": "agt_eb6b488aa9804cb595bb58209fa086ae",
+      "to": "agt_485ec8e49ac048e398dd7d547a541376"
+    },
+    {
+      "from": "agt_485ec8e49ac048e398dd7d547a541376",
+      "to": "agt_ae3c8925c0dd466599472baeb7d749a7"
+    },
+    {
+      "from": "agt_ae3c8925c0dd466599472baeb7d749a7",
+      "to": "agt_fbc1c7d4b24e485490dcdd17c699d021"
+    },
+    {
+      "from": "agt_ae3c8925c0dd466599472baeb7d749a7",
+      "to": "agt_4863eca178c5441586933cb94de42940"
+    },
+    {
+      "from": "agt_ae3c8925c0dd466599472baeb7d749a7",
+      "to": "agt_c4127008e5cd4a2bb6373d6a9f2676b3"
+    },
+    {
+      "from": "agt_c4127008e5cd4a2bb6373d6a9f2676b3",
+      "to": "agt_1ad03fcb9c8f49779d29b29cfb728150"
+    },
+    {
+      "from": "agt_c4127008e5cd4a2bb6373d6a9f2676b3",
+      "to": "agt_811b3d838f8c4190a6da8ea1be93a74b"
+    },
+    {
+      "from": "agt_c4127008e5cd4a2bb6373d6a9f2676b3",
+      "to": "agt_4863eca178c5441586933cb94de42940"
+    },
+    {
+      "from": "agt_811b3d838f8c4190a6da8ea1be93a74b",
+      "to": "agt_1ad03fcb9c8f49779d29b29cfb728150"
+    },
+    {
+      "from": "agt_1ad03fcb9c8f49779d29b29cfb728150",
+      "to": "agt_763fabe766204ad7a5d28ad80c9875dc"
+    },
+    {
+      "from": "agt_763fabe766204ad7a5d28ad80c9875dc",
+      "to": "agt_6717eb82dca54049988de01dbef8ab5c"
+    },
+    {
+      "from": "agt_763fabe766204ad7a5d28ad80c9875dc",
+      "to": "agt_4863eca178c5441586933cb94de42940"
+    },
+    {
+      "from": "agt_763fabe766204ad7a5d28ad80c9875dc",
+      "to": "agt_fbc1c7d4b24e485490dcdd17c699d021"
+    },
+    {
+      "from": "agt_6717eb82dca54049988de01dbef8ab5c",
+      "to": "agt_00b3815ce86d4a75b756121d63cdc312"
+    },
+    {
+      "from": "agt_00b3815ce86d4a75b756121d63cdc312",
+      "to": "agt_154390f516624242a5fd2c9df042f4c8"
+    },
+    {
+      "from": "agt_154390f516624242a5fd2c9df042f4c8",
+      "to": "agt_6916b460912f42bca4f4b1b09b2bbc89"
+    },
+    {
+      "from": "agt_6916b460912f42bca4f4b1b09b2bbc89",
+      "to": "agt_a3e07b5ed22f477d9e71c1c4445b90ff"
+    },
+    {
+      "from": "agt_6916b460912f42bca4f4b1b09b2bbc89",
+      "to": "agt_658560ac35bb48819535d248a031fd95"
+    },
+    {
+      "from": "agt_6916b460912f42bca4f4b1b09b2bbc89",
+      "to": "agt_fbc1c7d4b24e485490dcdd17c699d021"
+    },
+    {
+      "from": "agt_a3e07b5ed22f477d9e71c1c4445b90ff",
+      "to": "agt_f4a45915761544d8baeb70ed9b331c20"
+    },
+    {
+      "from": "agt_3234e8b56d17498c8517a4ba92dfd147",
+      "to": "agt_f4a45915761544d8baeb70ed9b331c20"
+    },
+    {
+      "from": "agt_a3e07b5ed22f477d9e71c1c4445b90ff",
+      "to": "agt_3234e8b56d17498c8517a4ba92dfd147"
+    },
+    {
+      "from": "agt_f4a45915761544d8baeb70ed9b331c20",
+      "to": "agt_2bf5d8865d2c45dea93a5e069cd73d50"
+    },
+    {
+      "from": "agt_4863eca178c5441586933cb94de42940",
+      "to": "agt_2bf5d8865d2c45dea93a5e069cd73d50"
+    },
+    {
+      "from": "agt_fbc1c7d4b24e485490dcdd17c699d021",
+      "to": "agt_2bf5d8865d2c45dea93a5e069cd73d50"
+    },
+    {
+      "from": "agt_658560ac35bb48819535d248a031fd95",
+      "to": "agt_2bf5d8865d2c45dea93a5e069cd73d50"
+    }
+  ],
+  "state_schema": {
+    "invoiceDocument": "file",
+    "invoiceEmail": "string",
+    "submittedBy": "string",
+    "processingStatus": "string",
+    "erpDocumentNumber": "string",
+    "postingDate": "string",
+    "paymentDueDate": "string",
+    "errorDetails": "object"
+  },
+  "metadata": {
+    "created_by": "workflow_builder",
+    "created_at": "2026-02-17T19:20:25.253220",
+    "canvas_layout": {
+      "width": 5000,
+      "height": 5000
+    }
+  },
+  "human_in_loop": {
+    "enabled": true,
+    "review_points": [
+      "agt_811b3d838f8c4190a6da8ea1be93a74b",
+      "agt_4863eca178c5441586933cb94de42940"
+    ]
+  }
+}

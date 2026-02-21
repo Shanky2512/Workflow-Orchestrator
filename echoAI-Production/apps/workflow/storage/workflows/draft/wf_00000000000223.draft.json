@@ -1,0 +1,344 @@
+{
+    "workflow_id": "wf_00000000000223",
+    "name": "Threat Intelligence Analysis Pipeline",
+    "description": "Fetches threat data via API, analyzes with an AI agent, enriches via MCP tool, then pauses for SOC manager human review before finalizing.",
+    "status": "draft",
+    "version": "0.1",
+    "execution_model": "sequential",
+    "agents": [
+        {
+            "agent_id": "agt_tip_start_0000000000000000001",
+            "name": "Start",
+            "role": "Workflow entry point",
+            "description": "Start node - receives the analyst query",
+            "prompt": "",
+            "icon": "▶️",
+            "model": "",
+            "tools": [],
+            "variables": [],
+            "settings": {
+                "temperature": 0.7,
+                "max_token": 4000,
+                "top_p": 0.9,
+                "max_iteration": 5,
+                "provider": ""
+            },
+            "permissions": {
+                "can_call_agents": false,
+                "allowed_agents": []
+            },
+            "metadata": {
+                "node_type": "Start",
+                "goal": "",
+                "ui_layout": {
+                    "x": 100,
+                    "y": 300,
+                    "icon": "▶️",
+                    "color": "#10b981"
+                },
+                "created_at": "2026-02-17T10:00:00.000000"
+            },
+            "input_schema": [
+                "query"
+            ],
+            "output_schema": []
+        },
+        {
+            "agent_id": "agt_tip_api_00000000000000000001",
+            "name": "Fetch Threat Feed",
+            "role": "HTTP request",
+            "description": "Calls an external threat intelligence API to retrieve IP reputation and known indicators for the suspicious IP.",
+            "prompt": "",
+            "icon": "🌐",
+            "model": "",
+            "tools": [],
+            "variables": [],
+            "settings": {
+                "temperature": 0.7,
+                "max_token": 4000,
+                "top_p": 0.9,
+                "max_iteration": 5,
+                "provider": ""
+            },
+            "permissions": {
+                "can_call_agents": false,
+                "allowed_agents": []
+            },
+            "metadata": {
+                "node_type": "API",
+                "goal": "",
+                "ui_layout": {
+                    "x": 380,
+                    "y": 300,
+                    "icon": "🌐",
+                    "color": "#3b82f6"
+                },
+                "created_at": "2026-02-17T10:00:00.000000",
+                "api_config": {
+                    "method": "GET",
+                    "url": "https://api.abuseipdb.com/api/v2/check?ipAddress=185.220.101.34&maxAgeInDays=90",
+                    "headers": {
+                        "Key": "YOUR_ABUSEIPDB_API_KEY",
+                        "Accept": "application/json"
+                    },
+                    "auth": {
+                        "type": "api_key",
+                        "value": ""
+                    }
+                }
+            },
+            "input_schema": [
+                "query"
+            ],
+            "output_schema": [
+                "threat_data"
+            ],
+            "config": {
+                "method": "GET",
+                "url": "https://api.abuseipdb.com/api/v2/check?ipAddress=185.220.101.34&maxAgeInDays=90",
+                "headers": {
+                    "Key": "YOUR_ABUSEIPDB_API_KEY",
+                    "Accept": "application/json"
+                },
+                "auth": {
+                    "type": "api_key",
+                    "value": ""
+                }
+            }
+        },
+        {
+            "agent_id": "agt_tip_analyst_000000000000000001",
+            "name": "Threat Intelligence Analyst",
+            "role": "SOC Tier-2 threat analyst",
+            "description": "Analyzes the threat feed data and the original alert to produce a structured threat assessment.",
+            "prompt": "You are a senior SOC Tier-2 Threat Intelligence Analyst. You will receive:\n1. An analyst's query about a security alert\n2. Threat feed data from an external API\n\nProduce a structured threat assessment with:\n- **Threat Classification**: (Malware C2 / Tor Exit Node / Botnet / APT / Scanner / Benign)\n- **Confidence Level**: (High / Medium / Low) with justification\n- **Affected Assets**: List internal hosts and potential impact\n- **IOC Summary**: Key indicators of compromise found\n- **Risk Score**: 1-10 with explanation\n- **Recommended Actions**: Prioritized list of containment and remediation steps\n\nBe precise, evidence-based, and actionable. Reference specific data points from the threat feed.",
+            "icon": "🔶",
+            "model": "claude-sonnet-4-5-20250514",
+            "tools": [],
+            "variables": [],
+            "settings": {
+                "temperature": 0.3,
+                "max_token": 4000,
+                "top_p": 0.9,
+                "max_iteration": 5,
+                "provider": ""
+            },
+            "permissions": {
+                "can_call_agents": false,
+                "allowed_agents": []
+            },
+            "metadata": {
+                "node_type": "Agent",
+                "goal": "Produce a structured threat assessment from API data and analyst query",
+                "ui_layout": {
+                    "x": 660,
+                    "y": 300,
+                    "icon": "🔶",
+                    "color": "#f59e0b"
+                },
+                "created_at": "2026-02-17T10:00:00.000000"
+            },
+            "input_schema": [
+                "query",
+                "threat_data"
+            ],
+            "output_schema": [
+                "analysis"
+            ]
+        },
+        {
+            "agent_id": "agt_tip_mcp_00000000000000000001",
+            "name": "VirusTotal Enrichment",
+            "role": "MCP tool invocation",
+            "description": "Enriches the threat assessment by querying VirusTotal via MCP for additional file hashes, domains, and detection ratios associated with the IP.",
+            "prompt": "",
+            "icon": "🔌",
+            "model": "",
+            "tools": [],
+            "variables": [],
+            "settings": {
+                "temperature": 0.7,
+                "max_token": 4000,
+                "top_p": 0.9,
+                "max_iteration": 5,
+                "provider": ""
+            },
+            "permissions": {
+                "can_call_agents": false,
+                "allowed_agents": []
+            },
+            "metadata": {
+                "node_type": "MCP",
+                "goal": "",
+                "ui_layout": {
+                    "x": 940,
+                    "y": 300,
+                    "icon": "🔌",
+                    "color": "#3b82f6"
+                },
+                "created_at": "2026-02-17T10:00:00.000000",
+                "mcp_config": {
+                    "server": "virustotal-mcp",
+                    "endpoint": "ip_report",
+                    "version": "1.0",
+                    "parameters": {
+                        "ip": "185.220.101.34",
+                        "include": "detected_urls,detected_communicating_samples,resolutions"
+                    }
+                }
+            },
+            "input_schema": [
+                "analysis"
+            ],
+            "output_schema": [
+                "enriched_analysis"
+            ],
+            "config": {
+                "server": "virustotal-mcp",
+                "endpoint": "ip_report",
+                "version": "1.0",
+                "parameters": {
+                    "ip": "185.220.101.34",
+                    "include": "detected_urls,detected_communicating_samples,resolutions"
+                }
+            }
+        },
+        {
+            "agent_id": "agt_tip_hitl_0000000000000000001",
+            "name": "SOC Manager Review",
+            "role": "Human approval gate",
+            "description": "Pauses the workflow for SOC Manager review. The manager can approve the assessment to proceed, reject if inaccurate, edit to add context, or defer for further investigation.",
+            "prompt": "",
+            "icon": "👤",
+            "model": "",
+            "tools": [],
+            "variables": [],
+            "settings": {
+                "temperature": 0.7,
+                "max_token": 4000,
+                "top_p": 0.9,
+                "max_iteration": 1,
+                "provider": ""
+            },
+            "permissions": {
+                "can_call_agents": false,
+                "allowed_agents": []
+            },
+            "metadata": {
+                "node_type": "HITL",
+                "goal": "",
+                "hitl_config": {
+                    "title": "Review Threat Assessment",
+                    "message": "A threat intelligence analysis has been completed for suspicious outbound traffic to IP 185.220.101.34. Review the enriched assessment, verify the threat classification and risk score, then approve to issue the containment order, reject if the analysis is flawed, or edit to add SOC manager notes.",
+                    "priority": "critical",
+                    "allowEdit": true,
+                    "allowDefer": true
+                },
+                "ui_layout": {
+                    "x": 1220,
+                    "y": 300,
+                    "icon": "👤",
+                    "color": "#06b6d4"
+                },
+                "created_at": "2026-02-17T10:00:00.000000"
+            },
+            "config": {
+                "title": "Review Threat Assessment",
+                "message": "A threat intelligence analysis has been completed for suspicious outbound traffic to IP 185.220.101.34. Review the enriched assessment, verify the threat classification and risk score, then approve to issue the containment order, reject if the analysis is flawed, or edit to add SOC manager notes.",
+                "priority": "critical",
+                "allowEdit": true,
+                "allowDefer": true
+            },
+            "input_schema": [
+                "enriched_analysis"
+            ],
+            "output_schema": [
+                "enriched_analysis"
+            ]
+        },
+        {
+            "agent_id": "agt_tip_end_00000000000000000001",
+            "name": "End",
+            "role": "Workflow exit point",
+            "description": "End node - outputs the approved threat assessment",
+            "prompt": "",
+            "icon": "⏹️",
+            "model": "",
+            "tools": [],
+            "variables": [],
+            "settings": {
+                "temperature": 0.7,
+                "max_token": 4000,
+                "top_p": 0.9,
+                "max_iteration": 5,
+                "provider": ""
+            },
+            "permissions": {
+                "can_call_agents": false,
+                "allowed_agents": []
+            },
+            "metadata": {
+                "node_type": "End",
+                "goal": "",
+                "ui_layout": {
+                    "x": 1500,
+                    "y": 300,
+                    "icon": "⏹️",
+                    "color": "#64748b"
+                },
+                "created_at": "2026-02-17T10:00:00.000000"
+            },
+            "input_schema": [],
+            "output_schema": [
+                "enriched_analysis"
+            ]
+        }
+    ],
+    "connections": [
+        {
+            "from": "agt_tip_start_0000000000000000001",
+            "to": "agt_tip_api_00000000000000000001"
+        },
+        {
+            "from": "agt_tip_api_00000000000000000001",
+            "to": "agt_tip_analyst_000000000000000001"
+        },
+        {
+            "from": "agt_tip_analyst_000000000000000001",
+            "to": "agt_tip_mcp_00000000000000000001"
+        },
+        {
+            "from": "agt_tip_mcp_00000000000000000001",
+            "to": "agt_tip_hitl_0000000000000000001"
+        },
+        {
+            "from": "agt_tip_hitl_0000000000000000001",
+            "to": "agt_tip_end_00000000000000000001"
+        }
+    ],
+    "state_schema": {
+        "query": "string",
+        "threat_data": "object",
+        "analysis": "string",
+        "enriched_analysis": "string"
+    },
+    "human_in_loop": {
+        "enabled": true,
+        "review_points": [
+            "agt_tip_hitl_0000000000000000001"
+        ]
+    },
+    "metadata": {
+        "created_by": "workflow_builder",
+        "created_at": "2026-02-17T10:00:00.000000",
+        "tags": [
+            "threat-intel",
+            "soc",
+            "incident-response"
+        ],
+        "canvas_layout": {
+            "width": 5000,
+            "height": 5000
+        }
+    }
+}

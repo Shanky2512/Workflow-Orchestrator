@@ -1,0 +1,42 @@
+{
+  "session_id": "339cd7c8-7c7c-4deb-b94c-cbeb875be7ae",
+  "workflow_id": "wf_5a0da1045ead40fab24a54efe722848a",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-15T21:13:49.549222",
+  "last_activity": "2026-02-15T21:13:59.570037",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_5a0da1045ead40fab24a54efe722848a",
+      "timestamp": "2026-02-15T21:13:49.549222",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "Analyze the blog post and rewrite it for better SEO and social media engagement",
+      "timestamp": "2026-02-15T21:13:49.682998",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "Please provide the blog post you would like me to analyze and rewrite for better SEO and social media engagement. I\u2019ll then deliver a fully optimized, ready\u2011to\u2011publish version that maximizes visibility and audience interaction.",
+      "timestamp": "2026-02-15T21:13:59.570037",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "completed"
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "Blog Content Pipeline"
+  },
+  "run_ids": [
+    "run_d5ef3a584ce14e48876a43b679235090"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

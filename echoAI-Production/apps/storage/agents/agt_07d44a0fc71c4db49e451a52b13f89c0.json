@@ -1,0 +1,37 @@
+{
+  "agent_id": "agt_07d44a0fc71c4db49e451a52b13f89c0",
+  "name": "Risk Scoring Engine",
+  "role": "Autonomous AI agent",
+  "description": "Complete the task as Risk Scoring Engine",
+  "prompt": "Synthesize all due diligence findings and calculate overall risk score. Use weighted scoring model: Financial risks (40%), Legal risks (30%), Operational risks (30%). Generate risk rating: Low (0-30), Medium (31-60), High (61-100). Provide executive summary with key findings and deal-breakers.",
+  "icon": "🔶",
+  "model": "claude-opus-4-20250514",
+  "tools": [],
+  "variables": [],
+  "settings": {
+    "temperature": 0.2,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 3,
+    "provider": "anthropic"
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "Agent",
+    "goal": "Complete the task as Risk Scoring Engine",
+    "ui_layout": {
+      "x": 1100,
+      "y": 300,
+      "icon": "🔶",
+      "color": "#f59e0b"
+    },
+    "created_at": "2026-02-17T16:09:25.842754",
+    "registered_at": "2026-02-17T15:37:10.885399",
+    "updated_at": "2026-02-17T16:09:25.921602"
+  },
+  "input_schema": [],
+  "output_schema": []
+}

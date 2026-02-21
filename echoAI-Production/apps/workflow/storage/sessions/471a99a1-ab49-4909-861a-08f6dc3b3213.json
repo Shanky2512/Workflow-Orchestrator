@@ -1,0 +1,43 @@
+{
+  "session_id": "471a99a1-ab49-4909-861a-08f6dc3b3213",
+  "workflow_id": "wf_1cb18237b8024c7aa68cba0a036ab1ed",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-17T18:32:17.652857",
+  "last_activity": "2026-02-17T18:33:09.889403",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_1cb18237b8024c7aa68cba0a036ab1ed",
+      "timestamp": "2026-02-17T18:32:17.652857",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "review my contact 72280443489",
+      "timestamp": "2026-02-17T18:32:17.800484",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "\u26a0\ufe0f Workflow execution failed: '3010'",
+      "timestamp": "2026-02-17T18:33:09.889403",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "failed",
+        "error": "'3010'"
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "contract_reviewer"
+  },
+  "run_ids": [
+    "run_23977a2608b6492388ff65e423e10008"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

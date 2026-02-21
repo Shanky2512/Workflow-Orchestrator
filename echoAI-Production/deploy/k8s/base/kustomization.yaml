@@ -1,0 +1,11 @@
+
+resources:
+  - session.yaml
+  - rag.yaml
+  - llm.yaml
+  - tool.yaml
+  - appmgr.yaml
+  - workflow.yaml
+  - agent.yaml
+  - connector.yaml
+  - chat.yaml

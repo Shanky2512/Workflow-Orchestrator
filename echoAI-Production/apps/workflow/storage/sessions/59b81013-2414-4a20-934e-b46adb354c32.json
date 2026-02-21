@@ -1,0 +1,77 @@
+{
+  "session_id": "59b81013-2414-4a20-934e-b46adb354c32",
+  "workflow_id": "wf_5d530a9fb86046ffb1019988ecf020cb",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-17T18:05:50.576029",
+  "last_activity": "2026-02-17T18:05:59.247683",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_5d530a9fb86046ffb1019988ecf020cb",
+      "timestamp": "2026-02-17T18:05:50.576029",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "give me performance review of shashank",
+      "timestamp": "2026-02-17T18:05:50.724515",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "Workflow paused for human review. Please check the HITL review panel.",
+      "timestamp": "2026-02-17T18:05:59.247683",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "interrupted",
+        "interrupt": {
+          "run_id": "run_54cec8dae09a4e53b685526701760722",
+          "workflow_id": "wf_5d530a9fb86046ffb1019988ecf020cb",
+          "node_id": "agt_d1853ac2dec14f87bd091f66ad0e72a9",
+          "title": "",
+          "message": "Rate your performance for {{review_period}}. Reflect on accomplishments, challenges, and development goals.",
+          "priority": "high",
+          "allowed_decisions": [
+            "approve",
+            "reject",
+            "edit"
+          ],
+          "preceding_output": "null",
+          "preceding_node_name": "agt_d571b12e83cc45b09fb27d636e729c44",
+          "state_snapshot": {
+            "manager_id": "give me performance review of shashank",
+            "employee_id": "give me performance review of shashank",
+            "review_period": "give me performance review of shashank",
+            "user_input": "give me performance review of shashank",
+            "task_description": "give me performance review of shashank",
+            "crew_result": "null",
+            "original_user_input": "give me performance review of shashank",
+            "run_id": "run_54cec8dae09a4e53b685526701760722",
+            "workflow_id": "wf_5d530a9fb86046ffb1019988ecf020cb",
+            "last_node_output": null,
+            "api_result": {
+              "success": false,
+              "status_code": 500,
+              "data": null,
+              "headers": {},
+              "error": "HTTP Error\nPOST https://api.performance.com/v1/self-assessment/request/\n[SSL: TLSV1_UNRECOGNIZED_NAME] tlsv1 unrecognized name (_ssl.c:1000)",
+              "elapsed_seconds": 7.723116874694824
+            }
+          }
+        }
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "performance_review_workfow"
+  },
+  "run_ids": [
+    "run_54cec8dae09a4e53b685526701760722"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

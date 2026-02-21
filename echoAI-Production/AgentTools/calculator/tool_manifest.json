@@ -1,0 +1,82 @@
+{
+  "tool_id": "tool_calculator",
+  "name": "Calculator",
+  "description": "Performs mathematical calculations including arithmetic operations (add, subtract, multiply, divide, power, mod, sqrt), statistics (mean, median, variance, stddev), and linear algebra (dot product, vector operations, matrix operations)",
+  "tool_type": "local",
+  "version": "1.0",
+  "tags": ["math", "calculation", "arithmetic", "statistics", "linear_algebra", "utility"],
+  "status": "active",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "operation": {
+        "type": "string",
+        "enum": [
+          "add", "subtract", "multiply", "divide", "power", "mod", "sqrt", "abs", "exp",
+          "sum", "mean", "median", "variance", "stddev", "min", "max",
+          "dot", "vector_add", "vector_subtract", "magnitude",
+          "matrix_add", "matrix_multiply", "transpose"
+        ],
+        "description": "Mathematical operation to perform"
+      },
+      "values": {
+        "type": "array",
+        "items": {"type": "number"},
+        "description": "Array of numbers for arithmetic and statistical operations"
+      },
+      "vectors": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {"type": "number"}
+        },
+        "description": "Array of vectors for linear algebra operations"
+      },
+      "matrices": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {"type": "number"}
+          }
+        },
+        "description": "Array of matrices for matrix operations"
+      },
+      "precision": {
+        "type": "integer",
+        "default": 2,
+        "description": "Number of decimal places for rounding"
+      },
+      "rounding": {
+        "type": "string",
+        "enum": ["round", "floor", "ceil"],
+        "default": "round",
+        "description": "Rounding method to apply"
+      }
+    },
+    "required": ["operation"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "operation": {
+        "type": "string",
+        "description": "Operation that was performed"
+      },
+      "result": {
+        "description": "Result of the calculation (number or array)"
+      }
+    },
+    "required": ["operation", "result"]
+  },
+  "execution_config": {
+    "module": "AgentTools.calculator.service",
+    "class": "CalculatorService",
+    "method": "calculate"
+  },
+  "metadata": {
+    "author": "EchoAI",
+    "category": "mathematics"
+  }
+}

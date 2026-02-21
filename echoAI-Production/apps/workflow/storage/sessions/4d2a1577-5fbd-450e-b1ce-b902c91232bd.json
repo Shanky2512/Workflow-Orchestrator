@@ -1,0 +1,42 @@
+{
+  "session_id": "4d2a1577-5fbd-450e-b1ce-b902c91232bd",
+  "workflow_id": "wf_37644ef676a2410ea3394f0e5f6fdc00",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-18T00:29:46.171831",
+  "last_activity": "2026-02-18T00:29:52.459974",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_37644ef676a2410ea3394f0e5f6fdc00",
+      "timestamp": "2026-02-18T00:29:46.171831",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "What are Azure best practices?",
+      "timestamp": "2026-02-18T00:29:46.234125",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "Here are the available command and their parameters for 'pricing' tool.\r\nIf you do not find a suitable command, run again with the \"learn=true\" to get a list of available commands and their parameters.\r\nNext, identify the command you want to execute and run again with the \"command\" and \"parameters\" arguments.\r\n\r\n[{\"name\":\"pricing_get\",\"description\":\"Get Azure retail pricing information. CRITICAL/MANDATORY: Do NOT call this tool if the user only specifies a broad service name (e.g., \\u0027Virtual Machines\\u0027, \\u0027Storage\\u0027, \\u0027SQL Database\\u0027) without a specific SKU. Instead, FIRST ask the user which specific SKU or tier they want pricing for. If the user asks to compare pricing across regions or SKUs without specifying exact ARM SKU names, ask them which specific SKUs they want to compare. Do NOT assume or pick default SKUs. Only call this tool AFTER the user provides a specific SKU (--sku) or confirms they want all pricing for that service. Requires at least one filter: --sku, --service, --region, --service-family, or --filter. SAVINGS PLAN: \\u0027SavingsPlan\\u0027 is NOT a valid --price-type. Use --include-savings-plan flag instead. Valid --price-type values: Consumption, Reservation, DevTestConsumption. When --include-savings-plan is true, Consumption items include nested \\u0027savingsPlan\\u0027 array with 1-year/3-year pricing (mainly Linux VMs). FOR BICEP/ARM COST ESTIMATION: When user asks to estimate costs from a Bicep or ARM template file, read the file, extract each resource\\u0027s type and SKU, call this tool for each resource and aggregate the monthly costs (hourly price * 730 hours/month).\",\"inputSchema\":{\"type\":\"object\",\"properties\":{\"tenant\":{\"type\":\"string\",\"description\":\"The Microsoft Entra ID tenant ID or name. This can be either the GUID identifier or the display name of your Entra ID tenant.\"},\"auth-method\":{\"type\":\"integer\",\"description\":\"Authentication method to use. Options: \\u0027credential\\u0027 (Azure CLI/managed identity), \\u0027key\\u0027 (access key), or \\u0027connectionString\\u0027.\"},\"retry-delay\":{\"type\":\"number\",\"description\":\"Initial delay in seconds between retry attempts. For exponential backoff, this value is used as the base.\"},\"retry-max-delay\":{\"type\":\"number\",\"description\":\"Maximum delay in seconds between retries, regardless of the retry strategy.\"},\"retry-max-retries\":{\"type\":\"integer\",\"description\":\"Maximum number of retry attempts for failed operations before giving up.\"},\"retry-mode\":{\"type\":\"integer\",\"description\":\"Retry strategy to use. \\u0027fixed\\u0027 uses consistent delays, \\u0027exponential\\u0027 increases delay between attempts.\"},\"retry-network-timeout\":{\"type\":\"number\",\"description\":\"Network operation timeout in seconds. Operations taking longer than this will be cancelled.\"},\"currency\":{\"type\":\"string\",\"description\":\"Currency code for pricing (e.g., USD, EUR). Default is USD.\"},\"sku\":{\"type\":\"string\",\"description\":\"ARM SKU name (e.g., Standard_D4s_v5, Standard_E64-16ds_v4)\"},\"service\":{\"type\":\"string\",\"description\":\"Azure service name (e.g., Virtual Machines, Storage, SQL Database)\"},\"region\":{\"type\":\"string\",\"description\":\"Azure region (e.g., eastus, westeurope, westus2)\"},\"service-family\":{\"type\":\"string\",\"description\":\"Service family (e.g., Compute, Storage, Databases, Networking)\"},\"price-type\":{\"type\":\"string\",\"description\":\"Price type filter (Consumption, Reservation, DevTestConsumption)\"},\"include-savings-plan\":{\"type\":\"boolean\",\"description\":\"Include savings plan pricing information (uses preview API version)\"},\"filter\":{\"type\":\"string\",\"description\":\"Raw OData filter expression for advanced queries (e.g., \\u0022meterId eq \\u0027abc-123\\u0027\\u0022)\"}},\"required\":[]},\"annotations\":{\"title\":\"Get Azure Retail Pricing\",\"destructiveHint\":false,\"idempotentHint\":true,\"openWorldHint\":false,\"readOnlyHint\":true}}]",
+      "timestamp": "2026-02-18T00:29:52.459974",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "completed"
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "Azure-MCP"
+  },
+  "run_ids": [
+    "run_c0c17dfa539544b59ff742b0e5d9dc00"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

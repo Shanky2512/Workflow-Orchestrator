@@ -1,0 +1,50 @@
+{
+  "agent_id": "agt_ae3c8925c0dd466599472baeb7d749a7",
+  "name": "Duplicate Found?",
+  "role": "Conditional branching",
+  "description": "Conditional node",
+  "prompt": "",
+  "icon": "🔀",
+  "model": "",
+  "tools": [],
+  "variables": [],
+  "settings": {
+    "temperature": 0.7,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 5,
+    "provider": ""
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "Conditional",
+    "goal": "",
+    "ui_layout": {
+      "x": 1350,
+      "y": 200,
+      "icon": "🔀",
+      "color": "#8b5cf6"
+    },
+    "created_at": "2026-02-17T19:20:25.253220",
+    "branches": [
+      {
+        "condition": "isDuplicate === true && confidenceScore >= 0.9",
+        "targetNodeId": "agt_fbc1c7d4b24e485490dcdd17c699d021"
+      },
+      {
+        "condition": "isDuplicate === true && confidenceScore >= 0.7",
+        "targetNodeId": "agt_4863eca178c5441586933cb94de42940"
+      },
+      {
+        "condition": "",
+        "targetNodeId": "agt_c4127008e5cd4a2bb6373d6a9f2676b3"
+      }
+    ],
+    "registered_at": "2026-02-17T19:20:25.490600"
+  },
+  "input_schema": [],
+  "output_schema": []
+}

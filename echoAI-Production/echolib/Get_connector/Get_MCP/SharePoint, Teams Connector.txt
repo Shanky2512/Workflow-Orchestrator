@@ -1,0 +1,57 @@
+SharePoint Connector
+{
+  "name": "sharepoint-root-site",
+  "description": "Get SharePoint root site information",
+  "transport_type": "http",
+  "auth_config": {
+    "type": "bearer",
+    "token": "Fresh_Token_Here"
+  },
+  "endpoint_url": "https://graph.microsoft.com/v1.0/sites/root",
+  "method": "GET",
+  "headers": {
+    "Accept": "application/json"
+  },
+  "query_mapping": {},
+  "input_schema": {
+    "type": "object",
+    "properties": {}
+  },
+  "output_schema": {
+    "type": "object"
+  },
+  "timeout": 15,
+  "verify_ssl": false,
+  "example_payload": {
+  "$select": "id,displayName,webUrl,siteCollection"
+}
+}
+
+Teams Connector 
+{
+  "name": "teams-me-profile",
+  "description": "Get current user's Microsoft 365/Teams profile core fields",
+  "transport_type": "http",
+  "auth_config": {
+    "type": "bearer",
+    "token": "Fresh_Token_Here"
+  },
+  "endpoint_url": "https://graph.microsoft.com/v1.0/me",
+  "method": "GET",
+  "headers": {
+    "Accept": "application/json"
+  },
+  "query_mapping": {},
+  "input_schema": {
+    "type": "object",
+    "properties": {}
+  },
+  "output_schema": {
+    "type": "object"
+  },
+  "timeout": 15,
+  "verify_ssl": false,
+  "example_payload": {
+    "$select": "id,displayName,userPrincipalName,mail,jobTitle,department,officeLocation"
+  }
+}

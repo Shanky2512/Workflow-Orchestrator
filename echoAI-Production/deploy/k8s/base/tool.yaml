@@ -1,0 +1,36 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tool-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: tool }
+  template:
+    metadata:
+      labels:
+        app: tool
+    spec:
+      containers:
+        - name: tool
+          image: your.registry/tool:latest
+          ports:
+            - containerPort: 8004
+          env:
+            - name: SERVICE_MODE
+              value: "micro"
+            - name: APP_NAME
+              value: "echo-mermaid-platform"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tool-svc
+spec:
+  selector:
+    app: tool
+  ports:
+    - port: 8004
+      targetPort: 8004
+      protocol: TCP

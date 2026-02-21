@@ -1,0 +1,42 @@
+{
+  "session_id": "798d40db-0097-4245-9080-cb36b8bcf245",
+  "workflow_id": "wf_37644ef676a2410ea3394f0e5f6fdc00",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-18T00:05:16.951602",
+  "last_activity": "2026-02-18T00:05:23.017510",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_37644ef676a2410ea3394f0e5f6fdc00",
+      "timestamp": "2026-02-18T00:05:16.951602",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "List all my Azure resource groups",
+      "timestamp": "2026-02-18T00:05:17.154527",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "MCP Error in MCP Server: MCP STDIO failed \u2014 ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)",
+      "timestamp": "2026-02-18T00:05:23.017510",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "completed"
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "Azure-MCP"
+  },
+  "run_ids": [
+    "run_026c594b24b84bf899e2962d1151b10b"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

@@ -1,0 +1,257 @@
+{
+  "workflow_id": "wf_5a0da1045ead40fab24a54efe722848a",
+  "name": "Blog Content Pipeline",
+  "description": "Created from canvas on 2026-02-15",
+  "status": "draft",
+  "version": "0.1",
+  "execution_model": "sequential",
+  "agents": [
+    {
+      "agent_id": "agt_25388b883551487aa70ddae118f5e996",
+      "name": "Start",
+      "role": "Workflow entry point",
+      "description": "Start node",
+      "prompt": "",
+      "icon": "\u25b6\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Start",
+        "goal": "",
+        "ui_layout": {
+          "x": 29.14820401983644,
+          "y": 131.07617865412794,
+          "icon": "\u25b6\ufe0f",
+          "color": "#10b981"
+        },
+        "created_at": "2026-02-15T21:09:13.066149",
+        "registered_at": "2026-02-15T18:32:40.079476",
+        "updated_at": "2026-02-15T21:09:13.081780"
+      },
+      "input_schema": [
+        "query"
+      ],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_b24e908d17494228b5386ebe6e65e7c6",
+      "name": "API Request",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 320.75927662683523,
+          "y": 129.87453944403146,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-15T21:09:13.066149",
+        "api_config": {
+          "method": "GET",
+          "url": "https://jsonplaceholder.typicode.com/posts/1",
+          "headers": {},
+          "auth": {
+            "type": "none",
+            "value": ""
+          }
+        },
+        "registered_at": "2026-02-15T18:32:40.085492",
+        "updated_at": "2026-02-15T21:09:13.089536"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "GET",
+        "url": "https://jsonplaceholder.typicode.com/posts/1",
+        "headers": {},
+        "auth": {
+          "type": "none",
+          "value": ""
+        }
+      }
+    },
+    {
+      "agent_id": "agt_8139de29110c4644b53e40f5390b91ca",
+      "name": "Code Execution",
+      "role": "Code execution",
+      "description": "Code node",
+      "prompt": "",
+      "icon": "\ud83d\udcbb",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Code",
+        "goal": "",
+        "ui_layout": {
+          "x": 82.64735874317807,
+          "y": 340.8369572902499,
+          "icon": "\ud83d\udcbb",
+          "color": "#0ea5e9"
+        },
+        "created_at": "2026-02-15T21:09:13.066149",
+        "code_config": {
+          "language": "python",
+          "code": "import json\ndata = json.loads(previous_output) if isinstance(previous_output, str) else previous_output\ntitle = data.get(\"title\", \"No title\")\nbody = data.get(\"body\", \"No body\")\nword_count = len(body.split())\nresult = f\"Title: {title}\\n\\nContent: {body}\\n\\nWord Count: {word_count}\"",
+          "packages": ""
+        },
+        "registered_at": "2026-02-15T18:32:40.104292",
+        "updated_at": "2026-02-15T21:09:13.096581"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "language": "python",
+        "code": "import json\ndata = json.loads(previous_output) if isinstance(previous_output, str) else previous_output\ntitle = data.get(\"title\", \"No title\")\nbody = data.get(\"body\", \"No body\")\nword_count = len(body.split())\nresult = f\"Title: {title}\\n\\nContent: {body}\\n\\nWord Count: {word_count}\"",
+        "packages": ""
+      }
+    },
+    {
+      "agent_id": "agt_630451d5ccee4eeb96673db2d8758909",
+      "name": "Content Strategist",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Content Strategist",
+      "prompt": "You are a content strategist. Analyze the blog post data from previous steps and rewrite it for better SEO and social media engagement. Provide an improved title, optimized body content, and suggested hashtags.",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Content Strategist",
+        "ui_layout": {
+          "x": 379.00735353949995,
+          "y": 327.0407968765281,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-15T21:09:13.066149",
+        "registered_at": "2026-02-15T18:32:40.121386",
+        "updated_at": "2026-02-15T21:09:13.102268"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_690d311d55f74142a9d9299c889bd8d1",
+      "name": "End",
+      "role": "Workflow exit point",
+      "description": "End node",
+      "prompt": "",
+      "icon": "\u23f9\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "End",
+        "goal": "",
+        "ui_layout": {
+          "x": 437.38455246048,
+          "y": 443.40357931445914,
+          "icon": "\u23f9\ufe0f",
+          "color": "#64748b"
+        },
+        "created_at": "2026-02-15T21:09:13.066149",
+        "registered_at": "2026-02-15T18:32:40.138837",
+        "updated_at": "2026-02-15T21:09:13.107886"
+      },
+      "input_schema": [],
+      "output_schema": [
+        "result"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "agt_25388b883551487aa70ddae118f5e996",
+      "to": "agt_b24e908d17494228b5386ebe6e65e7c6"
+    },
+    {
+      "from": "agt_b24e908d17494228b5386ebe6e65e7c6",
+      "to": "agt_8139de29110c4644b53e40f5390b91ca"
+    },
+    {
+      "from": "agt_8139de29110c4644b53e40f5390b91ca",
+      "to": "agt_630451d5ccee4eeb96673db2d8758909"
+    },
+    {
+      "from": "agt_630451d5ccee4eeb96673db2d8758909",
+      "to": "agt_690d311d55f74142a9d9299c889bd8d1"
+    }
+  ],
+  "state_schema": {
+    "query": "string",
+    "result": "string"
+  },
+  "metadata": {
+    "created_by": "workflow_builder",
+    "created_at": "2026-02-15T21:09:13.066149",
+    "canvas_layout": {
+      "width": 5000,
+      "height": 5000
+    }
+  }
+}

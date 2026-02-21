@@ -1,0 +1,48 @@
+{
+  "agent_id": "agt_8c04e22f21874269bb974efea4f2c1a7",
+  "name": "Duration Check",
+  "role": "Conditional branching",
+  "description": "Conditional node",
+  "prompt": "",
+  "icon": "🔀",
+  "model": "",
+  "tools": [],
+  "variables": [],
+  "settings": {
+    "temperature": 0.7,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 5,
+    "provider": ""
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "Conditional",
+    "goal": "",
+    "ui_layout": {
+      "x": 1100,
+      "y": 300,
+      "icon": "🔀",
+      "color": "#8b5cf6"
+    },
+    "created_at": "2026-02-17T18:11:45.671309",
+    "branches": [
+      {
+        "type": "if",
+        "condition": "total_days <= 3 AND coverage_risk !== 'high'",
+        "targetNodeId": 1005
+      },
+      {
+        "type": "else",
+        "condition": "",
+        "targetNodeId": 1006
+      }
+    ],
+    "registered_at": "2026-02-17T18:11:45.765931"
+  },
+  "input_schema": [],
+  "output_schema": []
+}

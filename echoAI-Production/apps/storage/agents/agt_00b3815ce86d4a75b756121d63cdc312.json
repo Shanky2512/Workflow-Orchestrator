@@ -1,0 +1,36 @@
+{
+  "agent_id": "agt_00b3815ce86d4a75b756121d63cdc312",
+  "name": "Posting Safety",
+  "role": "Error handling",
+  "description": "Failsafe node",
+  "prompt": "",
+  "icon": "🛡️",
+  "model": "",
+  "tools": [],
+  "variables": [],
+  "settings": {
+    "temperature": 0.7,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 5,
+    "provider": ""
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "Failsafe",
+    "goal": "",
+    "ui_layout": {
+      "x": 2850,
+      "y": 200,
+      "icon": "🛡️",
+      "color": "#ef4444"
+    },
+    "created_at": "2026-02-17T19:20:25.253220",
+    "registered_at": "2026-02-17T19:20:25.647089"
+  },
+  "input_schema": [],
+  "output_schema": []
+}

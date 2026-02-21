@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MCPToolDefinition",
+  "type": "object",
+  "required": [
+    "tool_id",
+    "name",
+    "description",
+    "mcp",
+    "input_schema",
+    "output_schema"
+  ],
+  "properties": {
+    "tool_id": {
+      "type": "string",
+      "description": "Unique tool identifier"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "mcp": {
+      "type": "object",
+      "required": ["server", "endpoint"],
+      "properties": {
+        "server": {
+          "type": "string",
+          "description": "MCP server name or URL"
+        },
+        "endpoint": {
+          "type": "string",
+          "description": "MCP endpoint for this tool"
+        },
+        "version": {
+          "type": "string",
+          "description": "Tool version exposed by MCP"
+        }
+      }
+    },
+    "input_schema": {
+      "type": "object",
+      "description": "Expected input payload schema",
+      "additionalProperties": true
+    },
+    "output_schema": {
+      "type": "object",
+      "description": "Output payload schema",
+      "additionalProperties": true
+    },
+    "permissions": {
+      "type": "object",
+      "properties": {
+        "requires_auth": {
+          "type": "boolean",
+          "default": true
+        },
+        "allowed_roles": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "timeout_seconds": {
+          "type": "number",
+          "default": 10
+        },
+        "rate_limit_per_min": {
+          "type": "number"
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "deprecated"],
+      "default": "active"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

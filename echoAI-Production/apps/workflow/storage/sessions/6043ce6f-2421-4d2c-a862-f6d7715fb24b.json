@@ -1,0 +1,43 @@
+{
+  "session_id": "6043ce6f-2421-4d2c-a862-f6d7715fb24b",
+  "workflow_id": "wf_62c7282cab69430eb1b4f9b1f1087abb",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-17T19:24:16.300656",
+  "last_activity": "2026-02-17T19:24:25.638390",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_62c7282cab69430eb1b4f9b1f1087abb",
+      "timestamp": "2026-02-17T19:24:16.300656",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "invoice my bill of $100",
+      "timestamp": "2026-02-17T19:24:16.531967",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "\u26a0\ufe0f Workflow execution failed: CrewAI sequential agent node failed: litellm.AuthenticationError: AuthenticationError: OpenAIException - User not found.",
+      "timestamp": "2026-02-17T19:24:25.638390",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "failed",
+        "error": "CrewAI sequential agent node failed: litellm.AuthenticationError: AuthenticationError: OpenAIException - User not found."
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "Invoice Processing & ERP Posting Workflow"
+  },
+  "run_ids": [
+    "run_f328f42a40f44bbb914bf1159a1d7d7f"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

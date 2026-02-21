@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WorkflowDefinition",
+  "type": "object",
+  "required": [
+    "workflow_id",
+    "name",
+    "status",
+    "version",
+    "execution_model",
+    "agents",
+    "connections",
+    "state_schema",
+    "metadata"
+  ],
+  "properties": {
+    "workflow_id": {
+      "type": "string",
+      "description": "Unique workflow identifier"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "validated", "testing", "final"]
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version, e.g. 0.1, 1.0"
+    },
+    "execution_model": {
+      "type": "string",
+      "enum": ["sequential", "parallel", "hierarchical", "hybrid"]
+    },
+    "agents": {
+      "type": "array",
+      "description": "Agents in this workflow - can be IDs (strings) or embedded agent objects",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string",
+            "description": "Agent ID reference"
+          },
+          {
+            "type": "object",
+            "description": "Embedded agent configuration",
+            "required": ["agent_id", "name"],
+            "properties": {
+              "agent_id": { "type": "string" },
+              "name": { "type": "string" },
+              "role": { "type": "string" },
+              "description": { "type": "string" },
+              "prompt": { "type": "string" },
+              "icon": { "type": "string" },
+              "model": { "type": "string" },
+              "tools": { "type": "array" },
+              "variables": { "type": "array" },
+              "settings": { "type": "object" },
+              "permissions": { "type": "object" },
+              "metadata": { "type": "object" },
+              "input_schema": { "type": "array" },
+              "output_schema": { "type": "array" }
+            }
+          }
+        ]
+      }
+    },
+    "connections": {
+      "type": "array",
+      "description": "Defines execution flow",
+      "items": {
+        "type": "object",
+        "required": ["from", "to"],
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "condition": {
+            "type": "string",
+            "description": "Optional conditional expression"
+          }
+        }
+      }
+    },
+    "hierarchy": {
+      "type": "object",
+      "description": "Only present if execution_model is hierarchical",
+      "required": ["master_agent", "delegation_order"],
+      "properties": {
+        "master_agent": {
+          "type": "string",
+          "description": "Agent ID acting as orchestrator"
+        },
+        "delegation_order": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "state_schema": {
+      "type": "object",
+      "description": "Defines shared state keys",
+      "additionalProperties": {
+        "type": "string",
+        "description": "Data type (string, object, array, boolean, number)"
+      }
+    },
+    "human_in_loop": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "review_points": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "agent_id or stage name"
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "validated_by": { "type": "string" },
+        "validated_at": { "type": "string", "format": "date-time" },
+        "validation_hash": { "type": "string" }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "created_by": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

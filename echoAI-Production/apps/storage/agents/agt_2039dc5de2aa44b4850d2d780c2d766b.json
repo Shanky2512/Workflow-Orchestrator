@@ -1,0 +1,53 @@
+{
+  "agent_id": "agt_2039dc5de2aa44b4850d2d780c2d766b",
+  "name": "Risk Level Check",
+  "role": "Conditional branching",
+  "description": "Conditional node",
+  "prompt": "",
+  "icon": " ",
+  "model": "",
+  "tools": [],
+  "variables": [],
+  "settings": {
+    "temperature": 0.7,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 5,
+    "provider": ""
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "Conditional",
+    "goal": "",
+    "ui_layout": {
+      "x": 1500,
+      "y": 200,
+      "icon": " ",
+      "color": "#8b5cf6"
+    },
+    "created_at": "2026-02-17T18:27:28.954567",
+    "branches": [
+      {
+        "type": "if",
+        "condition": "overall_risk_score >= 8",
+        "targetNodeId": 3008
+      },
+      {
+        "type": "elif",
+        "condition": "overall_risk_score >= 5 and overall_risk_score < 8",
+        "targetNodeId": 3009
+      },
+      {
+        "type": "else",
+        "condition": "",
+        "targetNodeId": 3010
+      }
+    ],
+    "registered_at": "2026-02-17T18:27:29.104219"
+  },
+  "input_schema": [],
+  "output_schema": []
+}

@@ -1,0 +1,43 @@
+{
+  "session_id": "4c145033-83f1-4aa5-84e1-5441efde11ff",
+  "workflow_id": "wf_1e6f51dfded5483fb1c13daeb2fef3c6",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-16T20:30:02.888281",
+  "last_activity": "2026-02-16T20:30:03.911330",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_1e6f51dfded5483fb1c13daeb2fef3c6",
+      "timestamp": "2026-02-16T20:30:02.888281",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "Our company is migrating the customer database from on-premise SQL Server to AWS RDS PostgreSQL. The migration       involves 2.3 million customer records including PII (names, emails, SSNs). What are the security risks?",
+      "timestamp": "2026-02-16T20:30:03.030498",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "\u26a0\ufe0f Workflow execution failed: the connection is closed",
+      "timestamp": "2026-02-16T20:30:03.911330",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "failed",
+        "error": "the connection is closed"
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "HITL Test Workflow"
+  },
+  "run_ids": [
+    "run_683a4b4ccd0d47e1b85b58406e70bf23"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

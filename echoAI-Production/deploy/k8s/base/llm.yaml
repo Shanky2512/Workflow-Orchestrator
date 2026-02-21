@@ -1,0 +1,36 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llm-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: llm }
+  template:
+    metadata:
+      labels:
+        app: llm
+    spec:
+      containers:
+        - name: llm
+          image: your.registry/llm:latest
+          ports:
+            - containerPort: 8003
+          env:
+            - name: SERVICE_MODE
+              value: "micro"
+            - name: APP_NAME
+              value: "echo-mermaid-platform"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: llm-svc
+spec:
+  selector:
+    app: llm
+  ports:
+    - port: 8003
+      targetPort: 8003
+      protocol: TCP

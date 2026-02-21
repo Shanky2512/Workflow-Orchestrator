@@ -1,0 +1,47 @@
+{
+  "checkpoint_id": "hitl_cp_442f214bc0e64e099468c4934171e91b",
+  "run_id": "unknown",
+  "state": "waiting_for_human",
+  "workflow_state": {
+    "review_period": "",
+    "employee_id": "",
+    "manager_id": "",
+    "crew_result": "null",
+    "last_node_output": null,
+    "api_result": {
+      "success": false,
+      "status_code": 500,
+      "data": null,
+      "headers": {},
+      "error": "HTTP Error\nPOST https://api.performance.com/v1/self-assessment/request/\n[SSL: TLSV1_UNRECOGNIZED_NAME] tlsv1 unrecognized name (_ssl.c:1000)",
+      "elapsed_seconds": 7.598485469818115
+    },
+    "messages": [
+      {
+        "agent": "agt_bd537f321eba4298be85eb157ffecc75",
+        "role": "Start",
+        "node_type": "Start",
+        "inputs": {
+          "user_input": ""
+        },
+        "outputs": {
+          "employee_id": "",
+          "review_period": "",
+          "manager_id": ""
+        }
+      },
+      {
+        "node": "agt_d571b12e83cc45b09fb27d636e729c44",
+        "type": "api",
+        "name": "Request Self-Assessment",
+        "mode": "ad-hoc",
+        "success": false,
+        "status_code": 500,
+        "data": null
+      }
+    ]
+  },
+  "execution_position": "agt_d1853ac2dec14f87bd091f66ad0e72a9",
+  "created_at": "2026-02-17T17:46:18.144748",
+  "timeout_at": null
+}

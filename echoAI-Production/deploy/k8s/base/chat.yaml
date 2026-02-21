@@ -1,0 +1,36 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: chat }
+  template:
+    metadata:
+      labels:
+        app: chat
+    spec:
+      containers:
+        - name: chat
+          image: your.registry/chat:latest
+          ports:
+            - containerPort: 8009
+          env:
+            - name: SERVICE_MODE
+              value: "micro"
+            - name: APP_NAME
+              value: "echo-mermaid-platform"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat-svc
+spec:
+  selector:
+    app: chat
+  ports:
+    - port: 8009
+      targetPort: 8009
+      protocol: TCP

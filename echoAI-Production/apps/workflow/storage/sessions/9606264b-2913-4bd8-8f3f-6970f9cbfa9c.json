@@ -1,0 +1,59 @@
+{
+  "session_id": "9606264b-2913-4bd8-8f3f-6970f9cbfa9c",
+  "workflow_id": "wf_45eb9810cb194e4c8ae8e69f48ad0831",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-19T11:14:20.476695",
+  "last_activity": "2026-02-19T11:15:17.340730",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_45eb9810cb194e4c8ae8e69f48ad0831",
+      "timestamp": "2026-02-19T11:14:20.476695",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "Hello",
+      "timestamp": "2026-02-19T11:14:20.623184",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "print('Hello')",
+      "timestamp": "2026-02-19T11:14:45.121688",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "completed"
+      }
+    },
+    {
+      "role": "user",
+      "content": "Hello, How are yoy?",
+      "timestamp": "2026-02-19T11:15:12.809400",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "Hello! I'm doing well, thank you. How can I help you today?",
+      "timestamp": "2026-02-19T11:15:17.340730",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "completed"
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "Single-Agent-2525"
+  },
+  "run_ids": [
+    "run_b5ac197daafd4b569b8332c7bbed9650",
+    "run_6b0eb6402114462582f99f86408bf128"
+  ],
+  "message_count": 5,
+  "state_schema": {},
+  "variables": {}
+}

@@ -1,0 +1,585 @@
+{
+  "workflow_id": "wf_dbcb948052a2421ca040d43edb2ee515",
+  "name": "leave_request_workfow",
+  "description": "Created from canvas on 2026-02-17",
+  "status": "draft",
+  "version": "0.1",
+  "execution_model": "hybrid",
+  "agents": [
+    {
+      "agent_id": "agt_009468864ef64f7e904b07794cf3b804",
+      "name": "Employee Submits PTO",
+      "role": "Workflow entry point",
+      "description": "Start node",
+      "prompt": "",
+      "icon": "\u25b6\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Start",
+        "goal": "",
+        "ui_layout": {
+          "x": 100,
+          "y": 300,
+          "icon": "\u25b6\ufe0f",
+          "color": "#10b981"
+        },
+        "created_at": "2026-02-17T18:11:45.671309",
+        "registered_at": "2026-02-17T18:11:45.704089"
+      },
+      "input_schema": [
+        "employee_id",
+        "leave_type",
+        "start_date",
+        "end_date",
+        "reason",
+        "total_days"
+      ],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_eaaea0bbdd704749918dbd4b2a9fc292",
+      "name": "Check PTO Balance",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 350,
+          "y": 300,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T18:11:45.671309",
+        "api_config": {
+          "method": "GET",
+          "url": "https://api.hris.com/v1/employees/{employee_id}/pto-balance",
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T18:11:45.709795"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "GET",
+        "url": "https://api.hris.com/v1/employees/{employee_id}/pto-balance",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_6908bfaeebd64c90806a5fd8af13f069",
+      "name": "Sufficient Balance?",
+      "role": "Conditional branching",
+      "description": "Conditional node",
+      "prompt": "",
+      "icon": "\ud83d\udd00",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Conditional",
+        "goal": "",
+        "ui_layout": {
+          "x": 600,
+          "y": 300,
+          "icon": "\ud83d\udd00",
+          "color": "#8b5cf6"
+        },
+        "created_at": "2026-02-17T18:11:45.671309",
+        "branches": [
+          {
+            "type": "if",
+            "condition": "pto_balance >= total_days",
+            "targetNodeId": 1003
+          },
+          {
+            "type": "else",
+            "condition": "",
+            "targetNodeId": 1009
+          }
+        ],
+        "registered_at": "2026-02-17T18:11:45.731301"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_4ddec02a1743446c8f7ba4a5749b550e",
+      "name": "Check Team Coverage",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Check Team Coverage",
+      "prompt": "Analyze team calendar for the requested dates. Check: Number of team members already on PTO, Critical project deadlines during absence, Minimum coverage requirements. Assess coverage risk: Low (< 25% team absent), Medium (25-50%), High (> 50%). Flag if coverage is insufficient.",
+      "icon": "\ud83d\udd36",
+      "model": "ollama:gpt-oss:20b",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.3,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Check Team Coverage",
+        "ui_layout": {
+          "x": 850,
+          "y": 200,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T18:11:45.671309",
+        "registered_at": "2026-02-17T18:11:45.747797"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_8c04e22f21874269bb974efea4f2c1a7",
+      "name": "Duration Check",
+      "role": "Conditional branching",
+      "description": "Conditional node",
+      "prompt": "",
+      "icon": "\ud83d\udd00",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Conditional",
+        "goal": "",
+        "ui_layout": {
+          "x": 1100,
+          "y": 300,
+          "icon": "\ud83d\udd00",
+          "color": "#8b5cf6"
+        },
+        "created_at": "2026-02-17T18:11:45.671309",
+        "branches": [
+          {
+            "type": "if",
+            "condition": "total_days <= 3 AND coverage_risk !== 'high'",
+            "targetNodeId": 1005
+          },
+          {
+            "type": "else",
+            "condition": "",
+            "targetNodeId": 1006
+          }
+        ],
+        "registered_at": "2026-02-17T18:11:45.765931"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_a7f4378e473e4e7da740e0a3157da019",
+      "name": "Auto-Approve",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 1350,
+          "y": 200,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T18:11:45.671309",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.hris.com/v1/pto-requests/approve",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T18:11:45.787341"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.hris.com/v1/pto-requests/approve",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_d8d2a0f3d5f24981a8d1c87744936878",
+      "name": "Manager Approval",
+      "role": "Human approval gate",
+      "description": "HITL node",
+      "prompt": "",
+      "icon": "\ud83d\udc64",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "HITL",
+        "goal": "",
+        "ui_layout": {
+          "x": 1350,
+          "y": 350,
+          "icon": "\ud83d\udc64",
+          "color": "#06b6d4"
+        },
+        "created_at": "2026-02-17T18:11:45.671309",
+        "hitl_config": {
+          "title": "",
+          "message": "Review PTO request for {{employee_name}}. Coverage risk: {{coverage_risk}}. {{total_days}} days from {{start_date}} to {{end_date}}.",
+          "priority": "medium",
+          "allowEdit": true,
+          "allowDefer": false
+        },
+        "registered_at": "2026-02-17T18:11:45.808478"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_327b4a7d636749ff8404f034c0001a89",
+      "name": "Update Calendar",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 1600,
+          "y": 300,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T18:11:45.671309",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.calendar.com/v1/events",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T18:11:45.829626"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.calendar.com/v1/events",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_df69948be729461bb0af168ae91a08c1",
+      "name": "Notify Employee",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 1850,
+          "y": 300,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T18:11:45.671309",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.notification.com/v1/send",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T18:11:45.845549"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.notification.com/v1/send",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_0869f92e535b4ce598119617894ae899",
+      "name": "Deny - Insufficient Balance",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 850,
+          "y": 400,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T18:11:45.671309",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.notification.com/v1/send",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T18:11:45.860691"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.notification.com/v1/send",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_721ec31b04a340faa4da99683516c89a",
+      "name": "Request Processed",
+      "role": "Workflow exit point",
+      "description": "End node",
+      "prompt": "",
+      "icon": "\u23f9\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "End",
+        "goal": "",
+        "ui_layout": {
+          "x": 2100,
+          "y": 300,
+          "icon": "\u23f9\ufe0f",
+          "color": "#64748b"
+        },
+        "created_at": "2026-02-17T18:11:45.671309",
+        "registered_at": "2026-02-17T18:11:45.877280"
+      },
+      "input_schema": [],
+      "output_schema": [
+        "request_status",
+        "approval_date"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "agt_009468864ef64f7e904b07794cf3b804",
+      "to": "agt_eaaea0bbdd704749918dbd4b2a9fc292"
+    },
+    {
+      "from": "agt_eaaea0bbdd704749918dbd4b2a9fc292",
+      "to": "agt_6908bfaeebd64c90806a5fd8af13f069"
+    },
+    {
+      "from": "agt_6908bfaeebd64c90806a5fd8af13f069",
+      "to": "agt_4ddec02a1743446c8f7ba4a5749b550e"
+    },
+    {
+      "from": "agt_6908bfaeebd64c90806a5fd8af13f069",
+      "to": "agt_0869f92e535b4ce598119617894ae899"
+    },
+    {
+      "from": "agt_4ddec02a1743446c8f7ba4a5749b550e",
+      "to": "agt_8c04e22f21874269bb974efea4f2c1a7"
+    },
+    {
+      "from": "agt_8c04e22f21874269bb974efea4f2c1a7",
+      "to": "agt_a7f4378e473e4e7da740e0a3157da019"
+    },
+    {
+      "from": "agt_8c04e22f21874269bb974efea4f2c1a7",
+      "to": "agt_d8d2a0f3d5f24981a8d1c87744936878"
+    },
+    {
+      "from": "agt_a7f4378e473e4e7da740e0a3157da019",
+      "to": "agt_327b4a7d636749ff8404f034c0001a89"
+    },
+    {
+      "from": "agt_d8d2a0f3d5f24981a8d1c87744936878",
+      "to": "agt_327b4a7d636749ff8404f034c0001a89"
+    },
+    {
+      "from": "agt_327b4a7d636749ff8404f034c0001a89",
+      "to": "agt_df69948be729461bb0af168ae91a08c1"
+    },
+    {
+      "from": "agt_df69948be729461bb0af168ae91a08c1",
+      "to": "agt_721ec31b04a340faa4da99683516c89a"
+    },
+    {
+      "from": "agt_0869f92e535b4ce598119617894ae899",
+      "to": "agt_721ec31b04a340faa4da99683516c89a"
+    }
+  ],
+  "state_schema": {
+    "employee_id": "string",
+    "leave_type": "string",
+    "start_date": "string",
+    "end_date": "string",
+    "reason": "string",
+    "total_days": "string",
+    "request_status": "string",
+    "approval_date": "string"
+  },
+  "metadata": {
+    "created_by": "workflow_builder",
+    "created_at": "2026-02-17T18:11:45.671309",
+    "canvas_layout": {
+      "width": 5000,
+      "height": 5000
+    }
+  },
+  "human_in_loop": {
+    "enabled": true,
+    "review_points": [
+      "agt_d8d2a0f3d5f24981a8d1c87744936878"
+    ]
+  }
+}

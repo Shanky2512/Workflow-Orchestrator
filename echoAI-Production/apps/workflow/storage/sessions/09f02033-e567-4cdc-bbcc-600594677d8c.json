@@ -1,0 +1,77 @@
+{
+  "session_id": "09f02033-e567-4cdc-bbcc-600594677d8c",
+  "workflow_id": "wf_5d530a9fb86046ffb1019988ecf020cb",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-18T01:08:14.907650",
+  "last_activity": "2026-02-18T01:08:23.917544",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_5d530a9fb86046ffb1019988ecf020cb",
+      "timestamp": "2026-02-18T01:08:14.907650",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "Hello",
+      "timestamp": "2026-02-18T01:08:15.004558",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "Workflow paused for human review. Please check the HITL review panel.",
+      "timestamp": "2026-02-18T01:08:23.917544",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "interrupted",
+        "interrupt": {
+          "run_id": "run_997135cf9c6945c8b44ffdcd1b6d8134",
+          "workflow_id": "wf_5d530a9fb86046ffb1019988ecf020cb",
+          "node_id": "agt_d1853ac2dec14f87bd091f66ad0e72a9",
+          "title": "",
+          "message": "Rate your performance for {{review_period}}. Reflect on accomplishments, challenges, and development goals.",
+          "priority": "high",
+          "allowed_decisions": [
+            "approve",
+            "reject",
+            "edit"
+          ],
+          "preceding_output": "null",
+          "preceding_node_name": "agt_d571b12e83cc45b09fb27d636e729c44",
+          "state_snapshot": {
+            "review_period": "Hello",
+            "employee_id": "Hello",
+            "manager_id": "Hello",
+            "user_input": "Hello",
+            "task_description": "Hello",
+            "crew_result": "null",
+            "original_user_input": "Hello",
+            "run_id": "run_997135cf9c6945c8b44ffdcd1b6d8134",
+            "workflow_id": "wf_5d530a9fb86046ffb1019988ecf020cb",
+            "last_node_output": null,
+            "api_result": {
+              "success": false,
+              "status_code": 500,
+              "data": null,
+              "headers": {},
+              "error": "HTTP Error\nPOST https://api.performance.com/v1/self-assessment/request\n[SSL: TLSV1_UNRECOGNIZED_NAME] tlsv1 unrecognized name (_ssl.c:1000)",
+              "elapsed_seconds": 7.8902013301849365
+            }
+          }
+        }
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "performance_review_workfow"
+  },
+  "run_ids": [
+    "run_997135cf9c6945c8b44ffdcd1b6d8134"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

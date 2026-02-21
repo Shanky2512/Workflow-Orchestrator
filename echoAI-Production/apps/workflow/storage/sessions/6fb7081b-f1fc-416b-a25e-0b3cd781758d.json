@@ -1,0 +1,75 @@
+{
+  "session_id": "6fb7081b-f1fc-416b-a25e-0b3cd781758d",
+  "workflow_id": "wf_62c7282cab69430eb1b4f9b1f1087abb",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-17T19:43:28.960573",
+  "last_activity": "2026-02-17T19:43:50.408930",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_62c7282cab69430eb1b4f9b1f1087abb",
+      "timestamp": "2026-02-17T19:43:28.960573",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "invoice my bill of $100",
+      "timestamp": "2026-02-17T19:43:29.278865",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "Workflow paused for human review. Please check the HITL review panel.",
+      "timestamp": "2026-02-17T19:43:50.408930",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "interrupted",
+        "interrupt": {
+          "run_id": "run_adb18f3613a44073b90fab1790908768",
+          "workflow_id": "wf_62c7282cab69430eb1b4f9b1f1087abb",
+          "node_id": "agt_4863eca178c5441586933cb94de42940",
+          "title": "Invoice Requires Manual Review",
+          "message": "This invoice could not be auto-processed. Please review the validation results, warnings, and exceptions. Decide whether to approve, reject, or request more information.",
+          "priority": "high",
+          "allowed_decisions": [
+            "approve",
+            "reject",
+            "edit",
+            "defer"
+          ],
+          "preceding_output": "{\n  \"vendor\": {\n    \"name\": null,\n    \"id\": null,\n    \"address\": null,\n    \"taxId\": null,\n    \"bankAccount\": null\n  },\n  \"invoice\": {\n    \"number\": null,\n    \"date\": null,\n    \"dueDate\": null,\n    \"paymentTerms\": null,\n    \"currency\": \"$\",\n    \"poNumber\": null\n  },\n  \"lineItems\": [\n    {\n      \"description\": \"Bill\",\n      \"quantity\": 1,\n      \"unitPrice\": 100,\n      \"lineAmount\": 100,\n      \"taxRate\": null,\n      \"taxAmount\": null,\n      \"accountCode\": null\n    }\n  ],\n  \"amounts\": {\n    \"subtotal\": 100,\n    \"taxAmount\": 0,\n    \"totalAmount\": 100,\n    \"amountInWords\": null\n  },\n  \"extractionConfidence\": 0.2,\n  \"warnings\": [\n    \"No vendor information provided\",\n    \"No invoice number, date, due date, payment terms, or PO number found\",\n    \"Line item description is generic\",\n    \"Tax details not specified\"\n  ],\n  \"missingFields\": [\n    \"Vendor Name\",\n    \"Vendor ID\",\n    \"Vendor Address\",\n    \"Vendor Tax ID\",\n    \"Vendor Bank Account\",\n    \"Invoice Number\",\n    \"Invoice Date\",\n    \"Due Date\",\n    \"Payment Terms\",\n    \"Currency (specific)\",\n    \"Purchase Order Number\",\n    \"Tax Rate\",\n    \"Tax Amount\",\n    \"Account Code\",\n    \"Amount in Words\"\n  ]\n}",
+          "preceding_node_name": "agt_0aa1f8e02deb4893bd7d361bd508e8de",
+          "state_snapshot": {
+            "processingStatus": "",
+            "invoiceEmail": "invoice my bill of $100",
+            "submittedBy": "invoice my bill of $100",
+            "invoiceDocument": "invoice my bill of $100",
+            "erpDocumentNumber": "",
+            "errorDetails": {},
+            "postingDate": "",
+            "paymentDueDate": "",
+            "user_input": "invoice my bill of $100",
+            "task_description": "invoice my bill of $100",
+            "crew_result": "{\n  \"vendor\": {\n    \"name\": null,\n    \"id\": null,\n    \"address\": null,\n    \"taxId\": null,\n    \"bankAccount\": null\n  },\n  \"invoice\": {\n    \"number\": null,\n    \"date\": null,\n    \"dueDate\": null,\n    \"paymentTerms\": null,\n    \"currency\": \"$\",\n    \"poNumber\": null\n  },\n  \"lineItems\": [\n    {\n      \"description\": \"Bill\",\n      \"quantity\": 1,\n      \"unitPrice\": 100,\n      \"lineAmount\": 100,\n      \"taxRate\": null,\n      \"taxAmount\": null,\n      \"accountCode\": null\n    }\n  ],\n  \"amounts\": {\n    \"subtotal\": 100,\n    \"taxAmount\": 0,\n    \"totalAmount\": 100,\n    \"amountInWords\": null\n  },\n  \"extractionConfidence\": 0.2,\n  \"warnings\": [\n    \"No vendor information provided\",\n    \"No invoice number, date, due date, payment terms, or PO number found\",\n    \"Line item description is generic\",\n    \"Tax details not specified\"\n  ],\n  \"missingFields\": [\n    \"Vendor Name\",\n    \"Vendor ID\",\n    \"Vendor Address\",\n    \"Vendor Tax ID\",\n    \"Vendor Bank Account\",\n    \"Invoice Number\",\n    \"Invoice Date\",\n    \"Due Date\",\n    \"Payment Terms\",\n    \"Currency (specific)\",\n    \"Purchase Order Number\",\n    \"Tax Rate\",\n    \"Tax Amount\",\n    \"Account Code\",\n    \"Amount in Words\"\n  ]\n}",
+            "original_user_input": "invoice my bill of $100",
+            "run_id": "run_adb18f3613a44073b90fab1790908768",
+            "workflow_id": "wf_62c7282cab69430eb1b4f9b1f1087abb",
+            "last_node_output": "invoice my bill of $100"
+          }
+        }
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "Invoice Processing & ERP Posting Workflow"
+  },
+  "run_ids": [
+    "run_adb18f3613a44073b90fab1790908768"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

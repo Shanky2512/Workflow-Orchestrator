@@ -1,0 +1,50 @@
+{
+  "agent_id": "agt_763fabe766204ad7a5d28ad80c9875dc",
+  "name": "Compliance Pass?",
+  "role": "Conditional branching",
+  "description": "Conditional node",
+  "prompt": "",
+  "icon": "🔀",
+  "model": "",
+  "tools": [],
+  "variables": [],
+  "settings": {
+    "temperature": 0.7,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 5,
+    "provider": ""
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "Conditional",
+    "goal": "",
+    "ui_layout": {
+      "x": 2350,
+      "y": 200,
+      "icon": "🔀",
+      "color": "#8b5cf6"
+    },
+    "created_at": "2026-02-17T19:20:25.253220",
+    "branches": [
+      {
+        "condition": "taxValidationStatus === 'pass' && complianceStatus === 'compliant'",
+        "targetNodeId": "agt_6717eb82dca54049988de01dbef8ab5c"
+      },
+      {
+        "condition": "taxValidationStatus === 'warning'",
+        "targetNodeId": "agt_4863eca178c5441586933cb94de42940"
+      },
+      {
+        "condition": "",
+        "targetNodeId": "agt_fbc1c7d4b24e485490dcdd17c699d021"
+      }
+    ],
+    "registered_at": "2026-02-17T19:20:25.596162"
+  },
+  "input_schema": [],
+  "output_schema": []
+}

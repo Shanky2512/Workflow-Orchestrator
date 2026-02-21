@@ -1,0 +1,43 @@
+{
+  "session_id": "7f2ea605-9d7d-4b76-afeb-b230e7203a1c",
+  "workflow_id": "wf_5a0da1045ead40fab24a54efe722848a",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-15T19:44:49.725340",
+  "last_activity": "2026-02-15T19:44:50.495758",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_5a0da1045ead40fab24a54efe722848a",
+      "timestamp": "2026-02-15T19:44:49.725340",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "Analyze the blog post and rewrite it for better SEO and social media engagement",
+      "timestamp": "2026-02-15T19:44:49.857647",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "\u26a0\ufe0f Workflow execution failed: No synchronous function provided to \"agt_8139de29110c4644b53e40f5390b91ca\".\nEither initialize with a synchronous function or invoke via the async API (ainvoke, astream, etc.)",
+      "timestamp": "2026-02-15T19:44:50.495758",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "failed",
+        "error": "No synchronous function provided to \"agt_8139de29110c4644b53e40f5390b91ca\".\nEither initialize with a synchronous function or invoke via the async API (ainvoke, astream, etc.)"
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "Blog Content Pipeline"
+  },
+  "run_ids": [
+    "run_6c56986f0a7f43d9914d09e9b3d7793a"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

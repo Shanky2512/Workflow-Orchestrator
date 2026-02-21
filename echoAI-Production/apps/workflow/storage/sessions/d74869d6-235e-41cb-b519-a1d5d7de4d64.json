@@ -1,0 +1,42 @@
+{
+  "session_id": "d74869d6-235e-41cb-b519-a1d5d7de4d64",
+  "workflow_id": "wf_dbcb948052a2421ca040d43edb2ee515",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-17T18:22:14.607181",
+  "last_activity": "2026-02-17T18:22:33.628921",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_dbcb948052a2421ca040d43edb2ee515",
+      "timestamp": "2026-02-17T18:22:14.607181",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "Can you approve me the leave of 17th February",
+      "timestamp": "2026-02-17T18:22:14.823582",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "null",
+      "timestamp": "2026-02-17T18:22:33.628921",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "completed"
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "leave_request_workfow"
+  },
+  "run_ids": [
+    "run_275b48f36f404d3f90dc3e8b4babc9b1"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

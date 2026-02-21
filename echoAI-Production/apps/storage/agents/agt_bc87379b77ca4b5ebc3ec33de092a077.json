@@ -1,0 +1,65 @@
+{
+  "agent_id": "agt_bc87379b77ca4b5ebc3ec33de092a077",
+  "name": "MCP Server",
+  "role": "MCP tool execution",
+  "description": "MCP node",
+  "prompt": "",
+  "icon": "🔌",
+  "model": "",
+  "tools": [],
+  "variables": [],
+  "settings": {
+    "temperature": 0.7,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 5,
+    "provider": ""
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "MCP",
+    "goal": "",
+    "ui_layout": {
+      "x": 514.1982981456911,
+      "y": 13.422886722987869,
+      "icon": "🔌",
+      "color": "#3b82f6"
+    },
+    "created_at": "2026-02-18T00:27:31.191276",
+    "mcp_config": {
+      "serverId": "azure",
+      "serverName": "",
+      "toolName": "get_azure_bestpractices",
+      "endpoint_url": "",
+      "method": "POST",
+      "headers": {},
+      "auth_config": {},
+      "connector_id": "",
+      "transport_type": "stdio",
+      "command": "npx -y @azure/mcp@latest server start",
+      "timeout": 120,
+      "arguments": {}
+    },
+    "registered_at": "2026-02-17T23:53:29.739531",
+    "updated_at": "2026-02-18T00:27:31.218079"
+  },
+  "input_schema": [],
+  "output_schema": [],
+  "config": {
+    "serverId": "azure",
+    "serverName": "",
+    "toolName": "get_azure_bestpractices",
+    "endpoint_url": "",
+    "method": "POST",
+    "headers": {},
+    "auth_config": {},
+    "connector_id": "",
+    "transport_type": "stdio",
+    "command": "npx -y @azure/mcp@latest server start",
+    "timeout": 120,
+    "arguments": {}
+  }
+}

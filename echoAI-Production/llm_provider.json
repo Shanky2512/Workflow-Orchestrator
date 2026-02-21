@@ -1,0 +1,94 @@
+{
+  "models": [
+    {
+      "id": "openrouter-model",
+      "name": "Open Router ",
+      "provider": "openrouter",
+      "base_url": "https://openrouter.ai/api/v1",
+      "api_key": "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",
+      "model_name": "nvidia/nemotron-3-nano-30b-a3b:free",
+      "is_default": true
+    },
+    {
+      "id": "claude-sonnet-4-5",
+      "name": "Claude Sonnet 4.5",
+      "provider": "openrouter",
+      "base_url": "https://openrouter.ai/api/v1",
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model_name": "anthropic/claude-sonnet-4-5",
+      "is_default": false
+    },
+    {
+      "id": "claude-opus-4",
+      "name": "Claude Opus 4",
+      "provider": "openrouter",
+      "base_url": "https://openrouter.ai/api/v1",
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model_name": "anthropic/claude-opus-4",
+      "is_default": false
+    },
+    {
+      "id": "claude-haiku-4-5",
+      "name": "Claude Haiku 4.5",
+      "provider": "openrouter",
+      "base_url": "https://openrouter.ai/api/v1",
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model_name": "anthropic/claude-haiku-4.5",
+      "is_default": false
+    },
+    {
+      "id": "gpt-4-turbo",
+      "name": "GPT-4 Turbo",
+      "provider": "openrouter",
+      "base_url": "https://openrouter.ai/api/v1",
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model_name": "openai/gpt-4-turbo",
+      "is_default": false
+    },
+    {
+      "id": "gpt-4o",
+      "name": "GPT-4o",
+      "provider": "openrouter",
+      "base_url": "https://openrouter.ai/api/v1",
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model_name": "openai/gpt-4o",
+      "is_default": false
+    },
+    {
+      "id": "gpt-3-5-turbo",
+      "name": "GPT-3.5 Turbo",
+      "provider": "openrouter",
+      "base_url": "https://openrouter.ai/api/v1",
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model_name": "openai/gpt-3.5-turbo",
+      "is_default": false
+    },
+    {
+      "id": "gemini-pro",
+      "name": "Gemini Pro",
+      "provider": "openrouter",
+      "base_url": "https://openrouter.ai/api/v1",
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model_name": "google/gemini-pro",
+      "is_default": false
+    },
+    {
+      "id": "gemini-ultra",
+      "name": "Gemini Ultra",
+      "provider": "openrouter",
+      "base_url": "https://openrouter.ai/api/v1",
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model_name": "google/gemini-ultra",
+      "is_default": false
+    },
+    {
+      "id": "mistral-nemo-12b",
+      "name": "Mistral Nemo 12B (Ollama)",
+      "provider": "ollama",
+      "base_url": "http://10.188.100.130:8002/v1",
+      "api_key": "ollama",
+      "model_name": "gpt-oss:20b",
+      "is_default": false
+    }
+  ]
+}

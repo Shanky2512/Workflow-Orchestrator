@@ -1,0 +1,33 @@
+
+{
+  "a2a_version": "1.0",
+  "name": "<AgentName>",
+  "description": "<High-level purpose>",
+  "endpoints": {
+    "default": "https://<your-domain>/a2a"
+  },
+  "capabilities": [
+    {
+      "id": "<capability_id>",
+      "title": "<Readable title>",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "<input>": { "type": "<string/number/...>" }
+        },
+        "required": ["<input>"]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "<output>": { "type": "<string/number/...>" }
+        }
+      }
+    }
+  ],
+  "auth": {
+    "schemes": [
+      { "type": "bearer" }
+    ]
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "tools": {
+    "tool_calculator": {
+      "name": "Calculator",
+      "tool_type": "local",
+      "status": "active",
+      "version": "1.0",
+      "tags": [
+        "math",
+        "calculation",
+        "arithmetic",
+        "statistics",
+        "linear_algebra",
+        "utility"
+      ],
+      "updated_at": "2026-01-26T07:06:32.118139"
+    },
+    "tool_code_generator": {
+      "name": "Code Generator",
+      "tool_type": "local",
+      "status": "active",
+      "version": "1.0",
+      "tags": [
+        "code",
+        "generation",
+        "crewai",
+        "langgraph",
+        "workflow",
+        "agent",
+        "automation"
+      ],
+      "updated_at": "2026-01-26T07:06:32.151927"
+    },
+    "tool_code_reviewer": {
+      "name": "Code Reviewer",
+      "tool_type": "local",
+      "status": "active",
+      "version": "1.0",
+      "tags": [
+        "code",
+        "review",
+        "analysis",
+        "security",
+        "quality",
+        "best_practices",
+        "refactoring"
+      ],
+      "updated_at": "2026-01-26T07:06:32.180381"
+    },
+    "tool_file_reader": {
+      "name": "File Reader",
+      "tool_type": "local",
+      "status": "active",
+      "version": "1.0",
+      "tags": [
+        "file",
+        "reader",
+        "pdf",
+        "json",
+        "xml",
+        "csv",
+        "parser",
+        "document",
+        "rag",
+        "embeddings"
+      ],
+      "updated_at": "2026-01-26T07:06:32.209682"
+    },
+    "tool_web_search": {
+      "name": "Web Search",
+      "tool_type": "local",
+      "status": "active",
+      "version": "1.0",
+      "tags": [
+        "search",
+        "web",
+        "internet",
+        "research",
+        "google",
+        "bing",
+        "duckduckgo"
+      ],
+      "updated_at": "2026-01-26T07:06:32.237874"
+    },
+    "tool_mcp_mcp_b5373fccbee5": {
+      "name": "mcp_b5373fccbee5",
+      "tool_type": "mcp",
+      "status": "active",
+      "version": "1.0",
+      "tags": [
+        "mcp",
+        "connector",
+        "synced"
+      ],
+      "updated_at": "2026-02-17T13:10:24.739088"
+    },
+    "tool_api_oracle_hcm_leave": {
+      "name": "oracle-hcm-leave",
+      "tool_type": "api",
+      "status": "active",
+      "version": "1.0",
+      "tags": [
+        "api",
+        "connector",
+        "synced"
+      ],
+      "updated_at": "2026-02-17T13:22:11.345491"
+    }
+  },
+  "created_at": "2026-01-26T07:06:32.118139",
+  "last_updated": "2026-02-17T13:22:11.345491",
+  "tool_count": 7
+}

@@ -1,0 +1,564 @@
+{
+  "agents": [
+    {
+      "agent_id": "agt_f21b757e441d47f9aa370b3e02762205",
+      "name": "CollabPilot Pro",
+      "icon": "🤖",
+      "role": "Team Collaboration Manager",
+      "description": "Coordinates team workflows, manages tasks, and facilitates communication to keep projects on track."
+    },
+    {
+      "agent_id": "agt_597a0629793348969d0fca1ae914d832",
+      "name": "OracleSage",
+      "icon": "🤖",
+      "role": "Strategic Oracle Analyst",
+      "description": "Delivers predictive insights and strategic guidance by synthesizing data, trends, and intuitive analysis for decision-making. Your insights empower leaders to navigate uncertainty with confidence."
+    },
+    {
+      "agent_id": "agt_9c315c8c3c6e4273a9f1ede5f4662dab",
+      "name": "TeamSync Architect",
+      "icon": "🤖",
+      "role": "Microsoft Teams Solutions Architect",
+      "description": "Designs and builds custom Microsoft Teams applications and workflows, from concept to deployment."
+    },
+    {
+      "agent_id": "agt_b1483438e24042e1b007fc6096b01d60",
+      "name": "OracleForge",
+      "icon": "🤖",
+      "role": "Oracle Tool Architect",
+      "description": "Designs and implements a customizable oracle tool that delivers predictive insights and guidance based on user queries."
+    },
+    {
+      "agent_id": "agt_bd537f321eba4298be85eb157ffecc75",
+      "name": "Review Cycle Starts",
+      "icon": "▶️",
+      "role": "Workflow entry point",
+      "description": "Start node"
+    },
+    {
+      "agent_id": "agt_d571b12e83cc45b09fb27d636e729c44",
+      "name": "Request Self-Assessment",
+      "icon": "🌐",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_d1853ac2dec14f87bd091f66ad0e72a9",
+      "name": "Employee Self-Assessment",
+      "icon": "👤",
+      "role": "Human approval gate",
+      "description": "HITL node"
+    },
+    {
+      "agent_id": "agt_638ef507aa5d4799b7305ec912b4d124",
+      "name": "Request Peer Feedback",
+      "icon": "🌐",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_9086db03eefa4cb886b4a038c4cb0f7c",
+      "name": "Collect Peer Feedback",
+      "icon": "🔄",
+      "role": "Iteration logic",
+      "description": "Loop node"
+    },
+    {
+      "agent_id": "agt_29d95c2984074de4aede93719a6f7d34",
+      "name": "Aggregate Feedback",
+      "icon": "🖇️",
+      "role": "Branch merging",
+      "description": "Merge node"
+    },
+    {
+      "agent_id": "agt_6fe1d96e5c4f4b53a7c42766730837b2",
+      "name": "Generate Insights",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Generate Insights"
+    },
+    {
+      "agent_id": "agt_c225d3675e6c4cdf960a6e6556f29198",
+      "name": "Manager Review",
+      "icon": "👤",
+      "role": "Human approval gate",
+      "description": "HITL node"
+    },
+    {
+      "agent_id": "agt_e9aece1c5d7a4e99bbc20024cf6f1e49",
+      "name": "Generate Goal Suggestions",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Generate Goal Suggestions"
+    },
+    {
+      "agent_id": "agt_7bb51a6f2b0346808c3bd31fbb0af3f4",
+      "name": "Save Review",
+      "icon": "🌐",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_9b0e645bca7f42ad84dc22cda26cd1ca",
+      "name": "Notify Employee",
+      "icon": "🌐",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_6fa4a14e00c34fa7a592522c7feb2034",
+      "name": "Review Complete",
+      "icon": "⏹️",
+      "role": "Workflow exit point",
+      "description": "End node"
+    },
+    {
+      "agent_id": "agt_706885e16335411bad91508c49214471",
+      "name": "DD Request Received",
+      "icon": "▶️",
+      "role": "Workflow entry point",
+      "description": "Start node"
+    },
+    {
+      "agent_id": "agt_53b2b3e1a9fa416392d8312cc1726cf4",
+      "name": "Document Classifier",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Document Classifier"
+    },
+    {
+      "agent_id": "agt_8758d98da7f54e8db491b4a437ba09ef",
+      "name": "Financial Analysis",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Financial Analysis"
+    },
+    {
+      "agent_id": "agt_1c6a14bdeee5410cb30a55f993a42c5e",
+      "name": "Legal Risk Analysis",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Legal Risk Analysis"
+    },
+    {
+      "agent_id": "agt_27b4a86e1fd540469a02aa7ab1a93101",
+      "name": "Operational Assessment",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Operational Assessment"
+    },
+    {
+      "agent_id": "agt_14bf3bcbedcb43ffa8258833f1aa0e95",
+      "name": "Consolidate Findings",
+      "icon": "🖇️",
+      "role": "Branch merging",
+      "description": "Merge node"
+    },
+    {
+      "agent_id": "agt_07d44a0fc71c4db49e451a52b13f89c0",
+      "name": "Risk Scoring Engine",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Risk Scoring Engine"
+    },
+    {
+      "agent_id": "agt_3b0fa9654c8041ff9f5d9dafe161ab4c",
+      "name": "Risk Assessment Gate",
+      "icon": "🔀",
+      "role": "Conditional branching",
+      "description": "Conditional node"
+    },
+    {
+      "agent_id": "agt_a88c9052806e48828403aafeb7dfef1a",
+      "name": "Partner Escalation",
+      "icon": "👤",
+      "role": "Human approval gate",
+      "description": "HITL node"
+    },
+    {
+      "agent_id": "agt_7cc1af774d7d4e15aea5f1cccdad8cee",
+      "name": "Senior Manager Review",
+      "icon": "👤",
+      "role": "Human approval gate",
+      "description": "HITL node"
+    },
+    {
+      "agent_id": "agt_ce1c75edbbad45618407ae11addbe042",
+      "name": "Report Generator",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Report Generator"
+    },
+    {
+      "agent_id": "agt_efeae7a1b93b4ac1b536fe016cf2e2e3",
+      "name": "Deliver to Client Portal",
+      "icon": "🌐",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_eb083a6432f640f2a0151b76929f91a0",
+      "name": "DD Complete",
+      "icon": "⏹️",
+      "role": "Workflow exit point",
+      "description": "End node"
+    },
+    {
+      "agent_id": "agt_009468864ef64f7e904b07794cf3b804",
+      "name": "Employee Submits PTO",
+      "icon": "▶️",
+      "role": "Workflow entry point",
+      "description": "Start node"
+    },
+    {
+      "agent_id": "agt_eaaea0bbdd704749918dbd4b2a9fc292",
+      "name": "Check PTO Balance",
+      "icon": "🌐",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_6908bfaeebd64c90806a5fd8af13f069",
+      "name": "Sufficient Balance?",
+      "icon": "🔀",
+      "role": "Conditional branching",
+      "description": "Conditional node"
+    },
+    {
+      "agent_id": "agt_4ddec02a1743446c8f7ba4a5749b550e",
+      "name": "Check Team Coverage",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Check Team Coverage"
+    },
+    {
+      "agent_id": "agt_8c04e22f21874269bb974efea4f2c1a7",
+      "name": "Duration Check",
+      "icon": "🔀",
+      "role": "Conditional branching",
+      "description": "Conditional node"
+    },
+    {
+      "agent_id": "agt_a7f4378e473e4e7da740e0a3157da019",
+      "name": "Auto-Approve",
+      "icon": "🌐",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_d8d2a0f3d5f24981a8d1c87744936878",
+      "name": "Manager Approval",
+      "icon": "👤",
+      "role": "Human approval gate",
+      "description": "HITL node"
+    },
+    {
+      "agent_id": "agt_327b4a7d636749ff8404f034c0001a89",
+      "name": "Update Calendar",
+      "icon": "🌐",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_df69948be729461bb0af168ae91a08c1",
+      "name": "Notify Employee",
+      "icon": "🌐",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_0869f92e535b4ce598119617894ae899",
+      "name": "Deny - Insufficient Balance",
+      "icon": "🌐",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_721ec31b04a340faa4da99683516c89a",
+      "name": "Request Processed",
+      "icon": "⏹️",
+      "role": "Workflow exit point",
+      "description": "End node"
+    },
+    {
+      "agent_id": "agt_eeb4edacdb8c44499ec8f67cf53c5577",
+      "name": "Upload Contract",
+      "icon": " ",
+      "role": "Workflow entry point",
+      "description": "Start node"
+    },
+    {
+      "agent_id": "agt_a3f43d73ac26419ab5c060f79d019c9b",
+      "name": "Document Parser",
+      "icon": " ",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Document Parser"
+    },
+    {
+      "agent_id": "agt_0edc7b0e9137445dad1c48a1e4bfe8ad",
+      "name": "Clause Extraction Agent",
+      "icon": " ",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Clause Extraction Agent"
+    },
+    {
+      "agent_id": "agt_7d378da5b31048688897b2c82ca98721",
+      "name": "Risk Assessment Agent",
+      "icon": " ",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Risk Assessment Agent"
+    },
+    {
+      "agent_id": "agt_7292a9c0418d4aa7905693920654ca2e",
+      "name": "Compliance Checker",
+      "icon": "✓",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Compliance Checker"
+    },
+    {
+      "agent_id": "agt_b2e05fc521de446c9c45575498c53d20",
+      "name": "Financial Analysis Agent",
+      "icon": " ",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Financial Analysis Agent"
+    },
+    {
+      "agent_id": "agt_399cfeb64781421bb707a8f3b3b15e49",
+      "name": "Redlining Agent",
+      "icon": " ",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Redlining Agent"
+    },
+    {
+      "agent_id": "agt_2039dc5de2aa44b4850d2d780c2d766b",
+      "name": "Risk Level Check",
+      "icon": " ",
+      "role": "Conditional branching",
+      "description": "Conditional node"
+    },
+    {
+      "agent_id": "agt_23e2a9b0a7e343929cb8cbb0b6efa41b",
+      "name": "Critical Risk Alert",
+      "icon": " ",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_640bdca1b9c549ae8fbc581529a68eda",
+      "name": "Medium Risk Alert",
+      "icon": " ",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_e75f81623eaf470ba2754e124c0d487c",
+      "name": "Low Risk Notification",
+      "icon": " ",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_c3ad7ea9c7184c759f2965f4456679ce",
+      "name": "Report Generator",
+      "icon": " ",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Report Generator"
+    },
+    {
+      "agent_id": "agt_896d3410c32945379bc55e842a7b906e",
+      "name": "Generate Redline Document",
+      "icon": " ",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_6b257d2d210c461bbda5c4c166daa8d4",
+      "name": "Save to Contract Repository",
+      "icon": " ",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_5cab152632274d2a8a63423dba6e8192",
+      "name": "Send Review Package to User",
+      "icon": " ",
+      "role": "HTTP request",
+      "description": "API node"
+    },
+    {
+      "agent_id": "agt_a6a93bb703284d508f1b16550c7ca211",
+      "name": "Review Complete",
+      "icon": " ",
+      "role": "Workflow exit point",
+      "description": "End node"
+    },
+    {
+      "agent_id": "agt_24c36e3ab44d4388add46ecfbb072263",
+      "name": "Invoice Received",
+      "icon": "▶️",
+      "role": "Workflow entry point",
+      "description": "Start node"
+    },
+    {
+      "agent_id": "agt_e524c8be113344a984b3ada7a5b37379",
+      "name": "Invoice Data Extractor",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Invoice Data Extractor"
+    },
+    {
+      "agent_id": "agt_0aa1f8e02deb4893bd7d361bd508e8de",
+      "name": "Extraction Quality Check",
+      "icon": "🔀",
+      "role": "Conditional branching",
+      "description": "Conditional node"
+    },
+    {
+      "agent_id": "agt_eb6b488aa9804cb595bb58209fa086ae",
+      "name": "Invoice Validator",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Invoice Validator"
+    },
+    {
+      "agent_id": "agt_485ec8e49ac048e398dd7d547a541376",
+      "name": "Duplicate Check Agent",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Duplicate Check Agent"
+    },
+    {
+      "agent_id": "agt_ae3c8925c0dd466599472baeb7d749a7",
+      "name": "Duplicate Found?",
+      "icon": "🔀",
+      "role": "Conditional branching",
+      "description": "Conditional node"
+    },
+    {
+      "agent_id": "agt_c4127008e5cd4a2bb6373d6a9f2676b3",
+      "name": "Approval Required?",
+      "icon": "🔀",
+      "role": "Conditional branching",
+      "description": "Conditional node"
+    },
+    {
+      "agent_id": "agt_811b3d838f8c4190a6da8ea1be93a74b",
+      "name": "Invoice Approval",
+      "icon": "👤",
+      "role": "Human approval gate",
+      "description": "HITL node"
+    },
+    {
+      "agent_id": "agt_1ad03fcb9c8f49779d29b29cfb728150",
+      "name": "Tax & Compliance Validator",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Tax & Compliance Validator"
+    },
+    {
+      "agent_id": "agt_763fabe766204ad7a5d28ad80c9875dc",
+      "name": "Compliance Pass?",
+      "icon": "🔀",
+      "role": "Conditional branching",
+      "description": "Conditional node"
+    },
+    {
+      "agent_id": "agt_6717eb82dca54049988de01dbef8ab5c",
+      "name": "ERP Posting Agent",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as ERP Posting Agent"
+    },
+    {
+      "agent_id": "agt_00b3815ce86d4a75b756121d63cdc312",
+      "name": "Posting Safety",
+      "icon": "🛡️",
+      "role": "Error handling",
+      "description": "Failsafe node"
+    },
+    {
+      "agent_id": "agt_154390f516624242a5fd2c9df042f4c8",
+      "name": "Posting Verification Agent",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Posting Verification Agent"
+    },
+    {
+      "agent_id": "agt_6916b460912f42bca4f4b1b09b2bbc89",
+      "name": "Verification Success?",
+      "icon": "🔀",
+      "role": "Conditional branching",
+      "description": "Conditional node"
+    },
+    {
+      "agent_id": "agt_a3e07b5ed22f477d9e71c1c4445b90ff",
+      "name": "Document Manager",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Document Manager"
+    },
+    {
+      "agent_id": "agt_3234e8b56d17498c8517a4ba92dfd147",
+      "name": "Notification Agent (Success)",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Notification Agent (Success)"
+    },
+    {
+      "agent_id": "agt_f4a45915761544d8baeb70ed9b331c20",
+      "name": "Success Path Complete",
+      "icon": "⚡",
+      "role": "Branch merging",
+      "description": "Merge node"
+    },
+    {
+      "agent_id": "agt_2bf5d8865d2c45dea93a5e069cd73d50",
+      "name": "Processing Complete",
+      "icon": "⏹️",
+      "role": "Workflow exit point",
+      "description": "End node"
+    },
+    {
+      "agent_id": "agt_4863eca178c5441586933cb94de42940",
+      "name": "Manual Review Required",
+      "icon": "👤",
+      "role": "Human approval gate",
+      "description": "HITL node"
+    },
+    {
+      "agent_id": "agt_fbc1c7d4b24e485490dcdd17c699d021",
+      "name": "Exception Handler",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Exception Handler"
+    },
+    {
+      "agent_id": "agt_658560ac35bb48819535d248a031fd95",
+      "name": "Discrepancy Investigator",
+      "icon": "🔶",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Discrepancy Investigator"
+    },
+    {
+      "agent_id": "agt_5069fea4ab7245e0b17748afcc02e9cc",
+      "name": "Start",
+      "icon": "▶️",
+      "role": "Workflow entry point",
+      "description": "Start node"
+    },
+    {
+      "agent_id": "agt_bc87379b77ca4b5ebc3ec33de092a077",
+      "name": "MCP Server",
+      "icon": "🔌",
+      "role": "MCP tool execution",
+      "description": "MCP node"
+    },
+    {
+      "agent_id": "agt_23be854653954994980ccb62f64ee7d2",
+      "name": "End",
+      "icon": "⏹️",
+      "role": "Workflow exit point",
+      "description": "End node"
+    }
+  ]
+}

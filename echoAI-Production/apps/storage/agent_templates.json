@@ -1,0 +1,234 @@
+{
+  "templates": [
+    {
+      "name": "Research Analyst",
+      "icon": "🔬",
+      "description": "Conducts comprehensive research using web search and analysis",
+      "role": "Research and Analysis",
+      "prompt": "You are a Research Analyst. Your role is to conduct thorough research on given topics, synthesize information from multiple sources, and provide well-structured analysis with citations.",
+      "tools": ["Web Search", "Web Fetch", "Document Analysis"],
+      "variables": [
+        {
+          "name": "research_topic",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "depth",
+          "type": "string",
+          "defaultValue": "comprehensive"
+        }
+      ],
+      "settings": {
+        "temperature": 0.3,
+        "max_token": 4000,
+        "max_iteration": 5
+      }
+    },
+    {
+      "name": "Customer Support Agent",
+      "icon": "💬",
+      "description": "Handles customer inquiries with empathy and efficiency",
+      "role": "Customer Support",
+      "prompt": "You are a Customer Support Agent. Provide helpful, empathetic responses to customer inquiries. Always maintain a professional and friendly tone.",
+      "tools": ["Slack", "Email", "Knowledge Base"],
+      "variables": [
+        {
+          "name": "customer_id",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "issue_type",
+          "type": "string",
+          "defaultValue": "general"
+        }
+      ],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 2000,
+        "max_iteration": 3
+      }
+    },
+    {
+      "name": "Data Analyst",
+      "icon": "📊",
+      "description": "Analyzes data and generates insights with visualizations",
+      "role": "Data Analysis",
+      "prompt": "You are a Data Analyst. Analyze datasets, identify patterns, and generate actionable insights. Present findings clearly with appropriate visualizations.",
+      "tools": ["Python Code", "SQL Query", "Chart Generator"],
+      "variables": [
+        {
+          "name": "dataset",
+          "type": "object",
+          "defaultValue": ""
+        },
+        {
+          "name": "analysis_type",
+          "type": "string",
+          "defaultValue": "exploratory"
+        }
+      ],
+      "settings": {
+        "temperature": 0.2,
+        "max_token": 4000,
+        "max_iteration": 5
+      }
+    },
+    {
+      "name": "Content Writer",
+      "icon": "✍️",
+      "description": "Creates engaging content for various formats and audiences",
+      "role": "Content Creation",
+      "prompt": "You are a Content Writer. Create compelling, well-structured content tailored to the specified format and audience. Maintain consistent tone and style.",
+      "tools": ["Grammar Check", "SEO Optimizer", "Plagiarism Check"],
+      "variables": [
+        {
+          "name": "topic",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "defaultValue": "blog"
+        },
+        {
+          "name": "tone",
+          "type": "string",
+          "defaultValue": "professional"
+        }
+      ],
+      "settings": {
+        "temperature": 0.8,
+        "max_token": 3000,
+        "max_iteration": 3
+      }
+    },
+    {
+      "name": "Code Reviewer",
+      "icon": "👨‍💻",
+      "description": "Reviews code for quality, security, and best practices",
+      "role": "Code Review",
+      "prompt": "You are a Code Reviewer. Analyze code for quality, security vulnerabilities, performance issues, and adherence to best practices. Provide constructive feedback.",
+      "tools": ["Code Analysis", "Security Scan", "GitHub"],
+      "variables": [
+        {
+          "name": "code_snippet",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "defaultValue": "python"
+        }
+      ],
+      "settings": {
+        "temperature": 0.2,
+        "max_token": 4000,
+        "max_iteration": 3
+      }
+    },
+    {
+      "name": "Project Manager",
+      "icon": "📋",
+      "description": "Manages tasks, timelines, and team coordination",
+      "role": "Project Management",
+      "prompt": "You are a Project Manager. Coordinate tasks, manage timelines, and facilitate team communication. Ensure project milestones are met efficiently.",
+      "tools": ["Jira", "Slack", "Calendar"],
+      "variables": [
+        {
+          "name": "project_name",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "phase",
+          "type": "string",
+          "defaultValue": "planning"
+        }
+      ],
+      "settings": {
+        "temperature": 0.5,
+        "max_token": 2000,
+        "max_iteration": 5
+      }
+    },
+    {
+      "name": "Sales Assistant",
+      "icon": "💼",
+      "description": "Assists with sales inquiries and lead qualification",
+      "role": "Sales Support",
+      "prompt": "You are a Sales Assistant. Engage with potential customers, qualify leads, and provide product information. Focus on understanding customer needs.",
+      "tools": ["CRM", "Email", "Product Catalog"],
+      "variables": [
+        {
+          "name": "lead_info",
+          "type": "object",
+          "defaultValue": ""
+        },
+        {
+          "name": "product_interest",
+          "type": "string",
+          "defaultValue": ""
+        }
+      ],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 2000,
+        "max_iteration": 3
+      }
+    },
+    {
+      "name": "HR Coordinator",
+      "icon": "👥",
+      "description": "Manages HR processes and employee communications",
+      "role": "Human Resources",
+      "prompt": "You are an HR Coordinator. Handle employee inquiries, coordinate HR processes, and maintain professional communication. Ensure compliance with policies.",
+      "tools": ["HRIS", "Email", "Document Management"],
+      "variables": [
+        {
+          "name": "employee_id",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "request_type",
+          "type": "string",
+          "defaultValue": ""
+        }
+      ],
+      "settings": {
+        "temperature": 0.4,
+        "max_token": 2000,
+        "max_iteration": 3
+      }
+    },
+    {
+      "name": "Financial Analyst",
+      "icon": "💰",
+      "description": "Analyzes financial data and generates reports",
+      "role": "Financial Analysis",
+      "prompt": "You are a Financial Analyst. Analyze financial data, identify trends, and generate comprehensive reports. Provide actionable recommendations.",
+      "tools": ["Excel", "Financial API", "Chart Generator"],
+      "variables": [
+        {
+          "name": "financial_data",
+          "type": "object",
+          "defaultValue": ""
+        },
+        {
+          "name": "report_period",
+          "type": "string",
+          "defaultValue": "quarterly"
+        }
+      ],
+      "settings": {
+        "temperature": 0.2,
+        "max_token": 4000,
+        "max_iteration": 5
+      }
+    }
+  ]
+}

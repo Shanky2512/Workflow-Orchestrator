@@ -1,0 +1,48 @@
+{
+  "agent_id": "agt_7bb51a6f2b0346808c3bd31fbb0af3f4",
+  "name": "Save Review",
+  "role": "HTTP request",
+  "description": "API node",
+  "prompt": "",
+  "icon": "🌐",
+  "model": "",
+  "tools": [],
+  "variables": [],
+  "settings": {
+    "temperature": 0.7,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 5,
+    "provider": ""
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "API",
+    "goal": "",
+    "ui_layout": {
+      "x": 2350,
+      "y": 300,
+      "icon": "🌐",
+      "color": "#3b82f6"
+    },
+    "created_at": "2026-02-17T15:33:42.330054",
+    "api_config": {
+      "method": "POST",
+      "url": "https://api.performance.com/v1/reviews/complete",
+      "headers": {},
+      "auth": {}
+    },
+    "registered_at": "2026-02-17T15:33:42.514742"
+  },
+  "input_schema": [],
+  "output_schema": [],
+  "config": {
+    "method": "POST",
+    "url": "https://api.performance.com/v1/reviews/complete",
+    "headers": {},
+    "auth": {}
+  }
+}

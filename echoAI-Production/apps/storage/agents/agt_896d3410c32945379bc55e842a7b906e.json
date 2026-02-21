@@ -1,0 +1,48 @@
+{
+  "agent_id": "agt_896d3410c32945379bc55e842a7b906e",
+  "name": "Generate Redline Document",
+  "role": "HTTP request",
+  "description": "API node",
+  "prompt": "",
+  "icon": " ",
+  "model": "",
+  "tools": [],
+  "variables": [],
+  "settings": {
+    "temperature": 0.7,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 5,
+    "provider": ""
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "API",
+    "goal": "",
+    "ui_layout": {
+      "x": 2100,
+      "y": 100,
+      "icon": " ",
+      "color": "#ec4899"
+    },
+    "created_at": "2026-02-17T18:27:28.954567",
+    "api_config": {
+      "method": "POST",
+      "url": "https://api.documentgen.com/v1/redline",
+      "headers": {},
+      "auth": {}
+    },
+    "registered_at": "2026-02-17T18:27:29.186143"
+  },
+  "input_schema": [],
+  "output_schema": [],
+  "config": {
+    "method": "POST",
+    "url": "https://api.documentgen.com/v1/redline",
+    "headers": {},
+    "auth": {}
+  }
+}

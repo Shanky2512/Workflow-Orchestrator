@@ -1,0 +1,42 @@
+{
+  "tool_id": "tool_api_oracle_hcm_leave",
+  "name": "oracle-hcm-leave",
+  "description": "This tool allows you to interact with oracle-hcm-leave. Use it when you need to call the oracle-hcm-leave API.",
+  "tool_type": "api",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "endpoint": {
+        "type": "string"
+      },
+      "method": {
+        "type": "string"
+      },
+      "body": {
+        "type": "object"
+      }
+    }
+  },
+  "output_schema": {
+    "type": "object"
+  },
+  "execution_config": {
+    "connector_id": "api_0346308a3795",
+    "connector_source": "api",
+    "source": "manual_create"
+  },
+  "version": "1.0",
+  "tags": [
+    "api",
+    "connector",
+    "synced"
+  ],
+  "status": "active",
+  "metadata": {
+    "connector_id": "api_0346308a3795",
+    "connector_name": "oracle-hcm-leave",
+    "connector_source": "api",
+    "system_prompt": "This tool allows you to interact with oracle-hcm-leave. Use it when you need to call the oracle-hcm-leave API."
+  },
+  "_saved_at": "2026-02-17T13:22:11.344494"
+}

@@ -1,0 +1,39 @@
+{
+  "agent_id": "agt_8758d98da7f54e8db491b4a437ba09ef",
+  "name": "Financial Analysis",
+  "role": "Autonomous AI agent",
+  "description": "Complete the task as Financial Analysis",
+  "prompt": "Analyze financial statements and perform comprehensive financial due diligence. Calculate key metrics: Revenue growth, EBITDA margins, Working capital trends, Debt/Equity ratio, Cash flow analysis. Identify red flags: Revenue concentration, Declining margins, Cash flow issues, Unusual transactions. Generate detailed financial risk assessment.",
+  "icon": "🔶",
+  "model": "claude-opus-4-20250514",
+  "tools": [
+    "tool_web_search"
+  ],
+  "variables": [],
+  "settings": {
+    "temperature": 0.2,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 5,
+    "provider": "anthropic"
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "Agent",
+    "goal": "Complete the task as Financial Analysis",
+    "ui_layout": {
+      "x": 600,
+      "y": 150,
+      "icon": "🔶",
+      "color": "#f59e0b"
+    },
+    "created_at": "2026-02-17T16:09:25.842754",
+    "registered_at": "2026-02-17T15:37:10.821819",
+    "updated_at": "2026-02-17T16:09:25.897358"
+  },
+  "input_schema": [],
+  "output_schema": []
+}

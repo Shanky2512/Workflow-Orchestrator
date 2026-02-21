@@ -1,0 +1,614 @@
+{
+  "workflow_id": "wf_b369a82a491142f88fe9fe7cae8c9ed4",
+  "name": "new_hire_onboard_workflow",
+  "description": "Created from canvas on 2026-02-17",
+  "status": "draft",
+  "version": "0.1",
+  "execution_model": "hybrid",
+  "agents": [
+    {
+      "agent_id": "agt_bf63ed509ba64d5b8f4a8b1be47950a4",
+      "name": "New Hire Confirmed",
+      "role": "Workflow entry point",
+      "description": "Start node",
+      "prompt": "",
+      "icon": "\u25b6\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Start",
+        "goal": "",
+        "ui_layout": {
+          "x": 100,
+          "y": 301,
+          "icon": "\u25b6\ufe0f",
+          "color": "#10b981"
+        },
+        "created_at": "2026-02-17T15:18:09.588106",
+        "registered_at": "2026-02-17T15:18:09.695120"
+      },
+      "input_schema": [
+        "employee_id",
+        "start_date",
+        "position",
+        "department",
+        "manager_id"
+      ],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_92bd7493f9da4af4bb6f8998ed545fbe",
+      "name": "Send Welcome Packet",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 350,
+          "y": 200,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T15:18:09.588106",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.onboarding.com/v1/welcome-packet",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:18:09.765787"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.onboarding.com/v1/welcome-packet",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_e2984cca3c9346b6b1a1efc659b21f22",
+      "name": "Create IT Accounts",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 350,
+          "y": 300,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T15:18:09.588106",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.it.com/v1/accounts/provision",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:18:09.831303"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.it.com/v1/accounts/provision",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_994b04cd4ad44701883fcaa8d71bd7c4",
+      "name": "Order Equipment",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 350,
+          "y": 400,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T15:18:09.588106",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.procurement.com/v1/equipment/order",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:18:09.899083"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.procurement.com/v1/equipment/order",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_4bf10226e6af4384a894a62658154f22",
+      "name": "Wait for Provisioning",
+      "role": "Branch merging",
+      "description": "Merge node",
+      "prompt": "",
+      "icon": "\ud83d\udd87\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Merge",
+        "goal": "",
+        "ui_layout": {
+          "x": 600,
+          "y": 300,
+          "icon": "\ud83d\udd87\ufe0f",
+          "color": "#8b5cf6"
+        },
+        "created_at": "2026-02-17T15:18:09.588106",
+        "registered_at": "2026-02-17T15:18:09.973850"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_77f8a4dc6b6d4bf0b572dcba0edb9198",
+      "name": "Assign Training Modules",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Assign Training Modules",
+      "prompt": "Determine required training modules based on: Position requirements, Department standards, Compliance mandates (harassment, security, safety), Role-specific skills, Company policies. Create training plan with: Module names, Estimated duration, Due dates (30-60-90 days), Prerequisites. Assign: Mandatory training (everyone), Role-specific training, Optional development courses.",
+      "icon": "\ud83d\udd36",
+      "model": "ollama:qwen3-vl:8b",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.3,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Assign Training Modules",
+        "ui_layout": {
+          "x": 850,
+          "y": 300,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T15:18:09.588106",
+        "registered_at": "2026-02-17T15:18:10.029786"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_add5d9e21e2f4cc09bc3e7b0c97a9191",
+      "name": "Enroll in Training",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 1100,
+          "y": 300,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T15:18:09.588106",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.lms.com/v1/enrollments",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:18:10.106772"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.lms.com/v1/enrollments",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_d7c1097e7318431e80e0bec9a9df6471",
+      "name": "Complete Paperwork",
+      "role": "Human approval gate",
+      "description": "HITL node",
+      "prompt": "",
+      "icon": "\ud83d\udc64",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "HITL",
+        "goal": "",
+        "ui_layout": {
+          "x": 1350,
+          "y": 300,
+          "icon": "\ud83d\udc64",
+          "color": "#06b6d4"
+        },
+        "created_at": "2026-02-17T15:18:09.588106",
+        "hitl_config": {
+          "title": "",
+          "message": "Complete required documents: Tax forms (W-4), I-9 verification, Direct deposit, Emergency contacts, Benefits enrollment.",
+          "priority": "high",
+          "allowEdit": true,
+          "allowDefer": false
+        },
+        "registered_at": "2026-02-17T15:18:10.174721"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_37b95cc3a50548e996244d69dfb2c9b4",
+      "name": "Schedule Orientation",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 1600,
+          "y": 300,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T15:18:09.588106",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.calendar.com/v1/schedule",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:18:10.240440"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.calendar.com/v1/schedule",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_6f36e2b1a10b4dfcbc10dfea88b7ab40",
+      "name": "Assign Onboarding Buddy",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 1850,
+          "y": 300,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T15:18:09.588106",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.hr.com/v1/buddy-program",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:18:10.299021"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.hr.com/v1/buddy-program",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_b80239c2fe104bfabcaf977f21caf4f2",
+      "name": "Create Onboarding Checklist",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 2100,
+          "y": 300,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T15:18:09.588106",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.onboarding.com/v1/checklist",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:18:10.371545"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.onboarding.com/v1/checklist",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_d9eb2606eb3a4c01b4961892449d1591",
+      "name": "Onboarding Initiated",
+      "role": "Workflow exit point",
+      "description": "End node",
+      "prompt": "",
+      "icon": "\u23f9\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "End",
+        "goal": "",
+        "ui_layout": {
+          "x": 2350,
+          "y": 300,
+          "icon": "\u23f9\ufe0f",
+          "color": "#64748b"
+        },
+        "created_at": "2026-02-17T15:18:09.588106",
+        "registered_at": "2026-02-17T15:18:10.446120"
+      },
+      "input_schema": [],
+      "output_schema": []
+    }
+  ],
+  "connections": [
+    {
+      "from": "agt_bf63ed509ba64d5b8f4a8b1be47950a4",
+      "to": "agt_92bd7493f9da4af4bb6f8998ed545fbe"
+    },
+    {
+      "from": "agt_bf63ed509ba64d5b8f4a8b1be47950a4",
+      "to": "agt_e2984cca3c9346b6b1a1efc659b21f22"
+    },
+    {
+      "from": "agt_bf63ed509ba64d5b8f4a8b1be47950a4",
+      "to": "agt_994b04cd4ad44701883fcaa8d71bd7c4"
+    },
+    {
+      "from": "agt_92bd7493f9da4af4bb6f8998ed545fbe",
+      "to": "agt_4bf10226e6af4384a894a62658154f22"
+    },
+    {
+      "from": "agt_e2984cca3c9346b6b1a1efc659b21f22",
+      "to": "agt_4bf10226e6af4384a894a62658154f22"
+    },
+    {
+      "from": "agt_994b04cd4ad44701883fcaa8d71bd7c4",
+      "to": "agt_4bf10226e6af4384a894a62658154f22"
+    },
+    {
+      "from": "agt_4bf10226e6af4384a894a62658154f22",
+      "to": "agt_77f8a4dc6b6d4bf0b572dcba0edb9198"
+    },
+    {
+      "from": "agt_77f8a4dc6b6d4bf0b572dcba0edb9198",
+      "to": "agt_add5d9e21e2f4cc09bc3e7b0c97a9191"
+    },
+    {
+      "from": "agt_add5d9e21e2f4cc09bc3e7b0c97a9191",
+      "to": "agt_d7c1097e7318431e80e0bec9a9df6471"
+    },
+    {
+      "from": "agt_d7c1097e7318431e80e0bec9a9df6471",
+      "to": "agt_37b95cc3a50548e996244d69dfb2c9b4"
+    },
+    {
+      "from": "agt_37b95cc3a50548e996244d69dfb2c9b4",
+      "to": "agt_6f36e2b1a10b4dfcbc10dfea88b7ab40"
+    },
+    {
+      "from": "agt_6f36e2b1a10b4dfcbc10dfea88b7ab40",
+      "to": "agt_b80239c2fe104bfabcaf977f21caf4f2"
+    },
+    {
+      "from": "agt_b80239c2fe104bfabcaf977f21caf4f2",
+      "to": "agt_d9eb2606eb3a4c01b4961892449d1591"
+    }
+  ],
+  "state_schema": {
+    "employee_id": "string",
+    "start_date": "string",
+    "position": "string",
+    "department": "string",
+    "manager_id": "string"
+  },
+  "metadata": {
+    "created_by": "workflow_builder",
+    "created_at": "2026-02-17T15:18:09.588106",
+    "canvas_layout": {
+      "width": 5000,
+      "height": 5000
+    }
+  },
+  "human_in_loop": {
+    "enabled": true,
+    "review_points": [
+      "agt_d7c1097e7318431e80e0bec9a9df6471"
+    ]
+  }
+}

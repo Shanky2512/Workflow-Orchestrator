@@ -1,0 +1,237 @@
+{
+  "workflow_id": "wf_1e6f51dfded5483fb1c13daeb2fef3c6",
+  "name": "HITL Test Workflow",
+  "description": "Created from canvas on 2026-02-16",
+  "status": "draft",
+  "version": "0.1",
+  "execution_model": "sequential",
+  "agents": [
+    {
+      "agent_id": "agt_da959010dfa8449382fbb26754c1d5e2",
+      "name": "Start",
+      "role": "Workflow entry point",
+      "description": "Start node",
+      "prompt": "",
+      "icon": "\u25b6\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Start",
+        "goal": "",
+        "ui_layout": {
+          "x": 16.98635808764692,
+          "y": 22.476450951907935,
+          "icon": "\u25b6\ufe0f",
+          "color": "#10b981"
+        },
+        "created_at": "2026-02-16T19:43:05.814395",
+        "registered_at": "2026-02-16T19:43:05.861495"
+      },
+      "input_schema": [
+        "query"
+      ],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_8d64cf4841584a0eb06d3d1e7c810ada",
+      "name": "End",
+      "role": "Workflow exit point",
+      "description": "End node",
+      "prompt": "",
+      "icon": "\u23f9\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "End",
+        "goal": "",
+        "ui_layout": {
+          "x": 631.4427522838013,
+          "y": 323.99810724274835,
+          "icon": "\u23f9\ufe0f",
+          "color": "#64748b"
+        },
+        "created_at": "2026-02-16T19:43:05.814395",
+        "registered_at": "2026-02-16T19:43:05.913726"
+      },
+      "input_schema": [],
+      "output_schema": [
+        "result"
+      ]
+    },
+    {
+      "agent_id": "agt_58982119229943d6a26dd85fe34f21fb",
+      "name": "Risk Analyst",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Risk Analyst",
+      "prompt": "You are a senior security risk analyst. Analyze the following input and produce a structured risk assessment with: \n1) Risk Level (Low/Medium/High/Critical), \n2) Key Findings (bullet points), \n3) Recommended Actions. \nBe thorough but concise.",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.3,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Risk Analyst",
+        "ui_layout": {
+          "x": 305.00816078709545,
+          "y": 41.173626522867835,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-16T19:43:05.814395",
+        "registered_at": "2026-02-16T19:43:05.951959"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_02cc7522da84414d9673a1e30259f799",
+      "name": "Human Review",
+      "role": "Human approval gate",
+      "description": "HITL node",
+      "prompt": "",
+      "icon": "\ud83d\udc64",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "HITL",
+        "goal": "",
+        "ui_layout": {
+          "x": 582.4100355246961,
+          "y": 47.1773372719004,
+          "icon": "\ud83d\udc64",
+          "color": "#06b6d4"
+        },
+        "created_at": "2026-02-16T19:43:05.814395",
+        "hitl_config": {
+          "title": "Review Risk Assessment",
+          "message": "Please review the risk assessment produced by the analyst. Approve if accurate, reject if flawed, or edit",
+          "priority": "high",
+          "allowEdit": true,
+          "allowDefer": true
+        },
+        "registered_at": "2026-02-16T19:43:05.988048"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_d4f1632a7c7f4ab0b947cfd3285905d7",
+      "name": "Report Writer",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Report Writer",
+      "prompt": "You are an executive report writer. Take the approved risk assessment and produce a concise executive summary suitable for C-level stakeholders. Include:\n1) One-line verdict, \n2) Business impact, \n3) Immediate next steps. \n\nKeep it under 200 words.",
+      "icon": "\ud83d\udd36",
+      "model": "claude-sonnet-4-5-20250514",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.3,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Report Writer",
+        "ui_layout": {
+          "x": 750.6692901326757,
+          "y": 186.80622310933035,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-16T19:43:05.814395",
+        "registered_at": "2026-02-16T19:43:06.023368"
+      },
+      "input_schema": [],
+      "output_schema": []
+    }
+  ],
+  "connections": [
+    {
+      "from": "agt_da959010dfa8449382fbb26754c1d5e2",
+      "to": "agt_58982119229943d6a26dd85fe34f21fb"
+    },
+    {
+      "from": "agt_58982119229943d6a26dd85fe34f21fb",
+      "to": "agt_02cc7522da84414d9673a1e30259f799"
+    },
+    {
+      "from": "agt_02cc7522da84414d9673a1e30259f799",
+      "to": "agt_d4f1632a7c7f4ab0b947cfd3285905d7"
+    },
+    {
+      "from": "agt_d4f1632a7c7f4ab0b947cfd3285905d7",
+      "to": "agt_8d64cf4841584a0eb06d3d1e7c810ada"
+    }
+  ],
+  "state_schema": {
+    "query": "string",
+    "result": "string"
+  },
+  "metadata": {
+    "created_by": "workflow_builder",
+    "created_at": "2026-02-16T19:43:05.814395",
+    "canvas_layout": {
+      "width": 5000,
+      "height": 5000
+    }
+  },
+  "human_in_loop": {
+    "enabled": true,
+    "review_points": [
+      "agt_02cc7522da84414d9673a1e30259f799"
+    ]
+  }
+}

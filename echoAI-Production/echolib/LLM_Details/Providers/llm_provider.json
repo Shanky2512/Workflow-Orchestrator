@@ -1,0 +1,58 @@
+{
+  "models": [
+    {
+      "id": "ollama:qwen3-vl:8b",
+      "name": "In-house Models - qwen3-vl:8b",
+      "provider": "ollama",
+      "base_url": "http://10.188.100.130:8002",
+      "api_key_env": null,
+      "model_name": "qwen3-vl:8b",
+      "is_default": false
+    },
+    {
+      "id": "ollama:llama3.1:8b",
+      "name": "In-house Models - llama3.1:8b",
+      "provider": "ollama",
+      "base_url": "http://10.188.100.130:8002",
+      "api_key_env": null,
+      "model_name": "llama3.1:8b",
+      "is_default": false
+    },
+    {
+      "id": "ollama:gpt-oss:20b",
+      "name": "In-house Models - gpt-oss:20b",
+      "provider": "ollama",
+      "base_url": "http://10.188.100.130:8002",
+      "api_key_env": null,
+      "model_name": "gpt-oss:20b",
+      "is_default": false
+    },
+    {
+      "id": "ollama:qwen3-embedding:latest",
+      "name": "In-house Models - qwen3-embedding:latest",
+      "provider": "ollama",
+      "base_url": "http://10.188.100.130:8002",
+      "api_key_env": null,
+      "model_name": "qwen3-embedding:latest",
+      "is_default": false
+    },
+    {
+      "id": "ollama:nomic-embed-text:latest",
+      "name": "In-house Models - nomic-embed-text:latest",
+      "provider": "ollama",
+      "base_url": "http://10.188.100.130:8002",
+      "api_key_env": null,
+      "model_name": "nomic-embed-text:latest",
+      "is_default": false
+    },
+    {
+      "id": "openaimodel",
+      "name": "gpt-4o_model",
+      "provider": "azure",
+      "base_url": ""I will put it later"",
+      "api_key_env": "AZURE_OPENAI_KEY",
+      "model_name": "gpt-4o",
+      "is_default": false
+    }
+  ]
+}

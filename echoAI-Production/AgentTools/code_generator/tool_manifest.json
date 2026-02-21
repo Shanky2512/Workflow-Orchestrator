@@ -1,0 +1,88 @@
+{
+  "tool_id": "tool_code_generator",
+  "name": "Code Generator",
+  "description": "Generates executable CrewAI and LangGraph code from workflow configurations using LLM. Converts workflow JSON into production-ready Python code with proper agent definitions, task orchestration, and execution logic",
+  "tool_type": "local",
+  "version": "1.0",
+  "tags": ["code", "generation", "crewai", "langgraph", "workflow", "agent", "automation"],
+  "status": "active",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "workflow_json": {
+        "type": "object",
+        "description": "Complete workflow configuration as JSON object",
+        "properties": {
+          "workflow_id": {"type": "string"},
+          "name": {"type": "string"},
+          "execution_mode": {
+            "type": "string",
+            "enum": ["sequential", "parallel", "hierarchical", "hybrid"]
+          },
+          "agents": {
+            "type": "array",
+            "items": {"type": "object"}
+          },
+          "connections": {
+            "type": "array",
+            "items": {"type": "object"}
+          }
+        },
+        "required": ["name", "execution_mode", "agents"]
+      },
+      "output_format": {
+        "type": "string",
+        "enum": ["crewai", "langgraph", "both"],
+        "default": "both",
+        "description": "Which code format to generate"
+      },
+      "include_imports": {
+        "type": "boolean",
+        "default": true,
+        "description": "Include import statements in generated code"
+      },
+      "include_error_handling": {
+        "type": "boolean",
+        "default": true,
+        "description": "Include try-catch blocks and error handling"
+      },
+      "production_ready": {
+        "type": "boolean",
+        "default": true,
+        "description": "Generate production-ready code with logging and documentation"
+      }
+    },
+    "required": ["workflow_json"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "crewai_code": {
+        "type": "string",
+        "description": "Generated CrewAI Python code (if requested)"
+      },
+      "langgraph_code": {
+        "type": "string",
+        "description": "Generated LangGraph Python code (if requested)"
+      },
+      "metadata": {
+        "type": "object",
+        "properties": {
+          "workflow_name": {"type": "string"},
+          "execution_mode": {"type": "string"},
+          "agent_count": {"type": "integer"},
+          "generation_timestamp": {"type": "string"}
+        }
+      }
+    }
+  },
+  "execution_config": {
+    "module": "AgentTools.code_generator.service",
+    "class": "CodeGeneratorService",
+    "method": "generate_both_codes"
+  },
+  "metadata": {
+    "author": "EchoAI",
+    "category": "code_generation"
+  }
+}

@@ -1,0 +1,585 @@
+{
+  "workflow_id": "wf_5d530a9fb86046ffb1019988ecf020cb",
+  "name": "performance_review_workfow",
+  "description": "Created from canvas on 2026-02-17",
+  "status": "draft",
+  "version": "0.1",
+  "execution_model": "hybrid",
+  "agents": [
+    {
+      "agent_id": "agt_bd537f321eba4298be85eb157ffecc75",
+      "name": "Review Cycle Starts",
+      "role": "Workflow entry point",
+      "description": "Start node",
+      "prompt": "",
+      "icon": "\u25b6\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Start",
+        "goal": "",
+        "ui_layout": {
+          "x": 100,
+          "y": 300,
+          "icon": "\u25b6\ufe0f",
+          "color": "#10b981"
+        },
+        "created_at": "2026-02-17T15:33:42.330054",
+        "registered_at": "2026-02-17T15:33:42.369375"
+      },
+      "input_schema": [
+        "employee_id",
+        "review_period",
+        "manager_id"
+      ],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_d571b12e83cc45b09fb27d636e729c44",
+      "name": "Request Self-Assessment",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 350,
+          "y": 300,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T15:33:42.330054",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.performance.com/v1/self-assessment/request",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:33:42.375045"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.performance.com/v1/self-assessment/request",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_d1853ac2dec14f87bd091f66ad0e72a9",
+      "name": "Employee Self-Assessment",
+      "role": "Human approval gate",
+      "description": "HITL node",
+      "prompt": "",
+      "icon": "\ud83d\udc64",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "HITL",
+        "goal": "",
+        "ui_layout": {
+          "x": 600,
+          "y": 300,
+          "icon": "\ud83d\udc64",
+          "color": "#06b6d4"
+        },
+        "created_at": "2026-02-17T15:33:42.330054",
+        "hitl_config": {
+          "title": "",
+          "message": "Rate your performance for {{review_period}}. Reflect on accomplishments, challenges, and development goals.",
+          "priority": "high",
+          "allowEdit": true,
+          "allowDefer": false
+        },
+        "registered_at": "2026-02-17T15:33:42.393748"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_638ef507aa5d4799b7305ec912b4d124",
+      "name": "Request Peer Feedback",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 850,
+          "y": 200,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T15:33:42.330054",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.performance.com/v1/peer-feedback/request",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:33:42.410849"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.performance.com/v1/peer-feedback/request",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_9086db03eefa4cb886b4a038c4cb0f7c",
+      "name": "Collect Peer Feedback",
+      "role": "Iteration logic",
+      "description": "Loop node",
+      "prompt": "",
+      "icon": "\ud83d\udd04",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 10,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Loop",
+        "goal": "",
+        "ui_layout": {
+          "x": 1100,
+          "y": 200,
+          "icon": "\ud83d\udd04",
+          "color": "#8b5cf6"
+        },
+        "created_at": "2026-02-17T15:33:42.330054",
+        "loop_config": {
+          "loopType": "for-each",
+          "arrayVariable": "peers",
+          "maxIterations": 10
+        },
+        "registered_at": "2026-02-17T15:33:42.425913"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_29d95c2984074de4aede93719a6f7d34",
+      "name": "Aggregate Feedback",
+      "role": "Branch merging",
+      "description": "Merge node",
+      "prompt": "",
+      "icon": "\ud83d\udd87\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Merge",
+        "goal": "",
+        "ui_layout": {
+          "x": 1350,
+          "y": 300,
+          "icon": "\ud83d\udd87\ufe0f",
+          "color": "#8b5cf6"
+        },
+        "created_at": "2026-02-17T15:33:42.330054",
+        "registered_at": "2026-02-17T15:33:42.442645"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_6fe1d96e5c4f4b53a7c42766730837b2",
+      "name": "Generate Insights",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Generate Insights",
+      "prompt": "Analyze performance data and generate insights. Compare: Self-assessment vs peer feedback vs manager observations. Identify: Key strengths (mentioned by 3+ sources), Development areas (gaps in skills/performance), Blind spots (self-rating vs others), Consistent themes across feedback. Analyze goal achievement: Met goals (%), Exceeded expectations, Missed targets with reasons. Provide data-driven talking points for review discussion.",
+      "icon": "\ud83d\udd36",
+      "model": "ollama:qwen3-vl:8b",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.3,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Generate Insights",
+        "ui_layout": {
+          "x": 1524.2857142857147,
+          "y": 272.8571428571429,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T15:33:42.330054",
+        "registered_at": "2026-02-17T15:33:42.458172"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_c225d3675e6c4cdf960a6e6556f29198",
+      "name": "Manager Review",
+      "role": "Human approval gate",
+      "description": "HITL node",
+      "prompt": "",
+      "icon": "\ud83d\udc64",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "HITL",
+        "goal": "",
+        "ui_layout": {
+          "x": 1850,
+          "y": 300,
+          "icon": "\ud83d\udc64",
+          "color": "#06b6d4"
+        },
+        "created_at": "2026-02-17T15:33:42.330054",
+        "hitl_config": {
+          "title": "",
+          "message": "Review insights and complete evaluation for {{employee_name}}. Self-assessment, peer feedback, and AI insights available.",
+          "priority": "high",
+          "allowEdit": true,
+          "allowDefer": false
+        },
+        "registered_at": "2026-02-17T15:33:42.477233"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_e9aece1c5d7a4e99bbc20024cf6f1e49",
+      "name": "Generate Goal Suggestions",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as Generate Goal Suggestions",
+      "prompt": "Generate SMART goal suggestions for next period. Based on: Development areas identified, Career aspirations mentioned, Role requirements, Company objectives, Industry trends. Create 3-5 goals covering: Performance improvement, Skill development, Career advancement, Team contribution. Goals should be: Specific, Measurable, Achievable, Relevant, Time-bound.",
+      "icon": "\ud83d\udd36",
+      "model": "ollama:qwen3-vl:8b",
+      "tools": [
+        "tool_web_search"
+      ],
+      "variables": [],
+      "settings": {
+        "temperature": 0.5,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": "anthropic"
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as Generate Goal Suggestions",
+        "ui_layout": {
+          "x": 2100,
+          "y": 299,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-17T15:33:42.330054",
+        "registered_at": "2026-02-17T15:33:42.495560"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_7bb51a6f2b0346808c3bd31fbb0af3f4",
+      "name": "Save Review",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 2350,
+          "y": 300,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T15:33:42.330054",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.performance.com/v1/reviews/complete",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:33:42.514742"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.performance.com/v1/reviews/complete",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_9b0e645bca7f42ad84dc22cda26cd1ca",
+      "name": "Notify Employee",
+      "role": "HTTP request",
+      "description": "API node",
+      "prompt": "",
+      "icon": "\ud83c\udf10",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "API",
+        "goal": "",
+        "ui_layout": {
+          "x": 2600,
+          "y": 300,
+          "icon": "\ud83c\udf10",
+          "color": "#3b82f6"
+        },
+        "created_at": "2026-02-17T15:33:42.330054",
+        "api_config": {
+          "method": "POST",
+          "url": "https://api.notification.com/v1/send",
+          "headers": {},
+          "auth": {}
+        },
+        "registered_at": "2026-02-17T15:33:42.530859"
+      },
+      "input_schema": [],
+      "output_schema": [],
+      "config": {
+        "method": "POST",
+        "url": "https://api.notification.com/v1/send",
+        "headers": {},
+        "auth": {}
+      }
+    },
+    {
+      "agent_id": "agt_6fa4a14e00c34fa7a592522c7feb2034",
+      "name": "Review Complete",
+      "role": "Workflow exit point",
+      "description": "End node",
+      "prompt": "",
+      "icon": "\u23f9\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "End",
+        "goal": "",
+        "ui_layout": {
+          "x": 2850,
+          "y": 300,
+          "icon": "\u23f9\ufe0f",
+          "color": "#64748b"
+        },
+        "created_at": "2026-02-17T15:33:42.330054",
+        "registered_at": "2026-02-17T15:33:42.552217"
+      },
+      "input_schema": [],
+      "output_schema": []
+    }
+  ],
+  "connections": [
+    {
+      "from": "agt_bd537f321eba4298be85eb157ffecc75",
+      "to": "agt_d571b12e83cc45b09fb27d636e729c44"
+    },
+    {
+      "from": "agt_d571b12e83cc45b09fb27d636e729c44",
+      "to": "agt_d1853ac2dec14f87bd091f66ad0e72a9"
+    },
+    {
+      "from": "agt_d1853ac2dec14f87bd091f66ad0e72a9",
+      "to": "agt_638ef507aa5d4799b7305ec912b4d124"
+    },
+    {
+      "from": "agt_638ef507aa5d4799b7305ec912b4d124",
+      "to": "agt_9086db03eefa4cb886b4a038c4cb0f7c"
+    },
+    {
+      "from": "agt_9086db03eefa4cb886b4a038c4cb0f7c",
+      "to": "agt_29d95c2984074de4aede93719a6f7d34"
+    },
+    {
+      "from": "agt_d1853ac2dec14f87bd091f66ad0e72a9",
+      "to": "agt_29d95c2984074de4aede93719a6f7d34"
+    },
+    {
+      "from": "agt_29d95c2984074de4aede93719a6f7d34",
+      "to": "agt_6fe1d96e5c4f4b53a7c42766730837b2"
+    },
+    {
+      "from": "agt_6fe1d96e5c4f4b53a7c42766730837b2",
+      "to": "agt_c225d3675e6c4cdf960a6e6556f29198"
+    },
+    {
+      "from": "agt_c225d3675e6c4cdf960a6e6556f29198",
+      "to": "agt_e9aece1c5d7a4e99bbc20024cf6f1e49"
+    },
+    {
+      "from": "agt_e9aece1c5d7a4e99bbc20024cf6f1e49",
+      "to": "agt_7bb51a6f2b0346808c3bd31fbb0af3f4"
+    },
+    {
+      "from": "agt_7bb51a6f2b0346808c3bd31fbb0af3f4",
+      "to": "agt_9b0e645bca7f42ad84dc22cda26cd1ca"
+    },
+    {
+      "from": "agt_9b0e645bca7f42ad84dc22cda26cd1ca",
+      "to": "agt_6fa4a14e00c34fa7a592522c7feb2034"
+    }
+  ],
+  "state_schema": {
+    "employee_id": "string",
+    "review_period": "string",
+    "manager_id": "string"
+  },
+  "metadata": {
+    "created_by": "workflow_builder",
+    "created_at": "2026-02-17T15:33:42.330054",
+    "canvas_layout": {
+      "width": 5000,
+      "height": 5000
+    }
+  },
+  "human_in_loop": {
+    "enabled": true,
+    "review_points": [
+      "agt_d1853ac2dec14f87bd091f66ad0e72a9",
+      "agt_c225d3675e6c4cdf960a6e6556f29198"
+    ]
+  }
+}

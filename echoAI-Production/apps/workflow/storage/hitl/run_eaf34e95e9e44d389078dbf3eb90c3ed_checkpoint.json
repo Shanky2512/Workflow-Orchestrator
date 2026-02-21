@@ -1,0 +1,52 @@
+{
+  "checkpoint_id": "hitl_cp_bd88ded68f7c48dead6dbfa013819c96",
+  "run_id": "run_eaf34e95e9e44d389078dbf3eb90c3ed",
+  "state": "waiting_for_human",
+  "workflow_state": {
+    "employee_id": "review the performance for shashank singh",
+    "review_period": "review the performance for shashank singh",
+    "manager_id": "review the performance for shashank singh",
+    "user_input": "review the performance for shashank singh",
+    "task_description": "review the performance for shashank singh",
+    "crew_result": "null",
+    "original_user_input": "review the performance for shashank singh",
+    "run_id": "run_eaf34e95e9e44d389078dbf3eb90c3ed",
+    "workflow_id": "wf_5d530a9fb86046ffb1019988ecf020cb",
+    "last_node_output": null,
+    "api_result": {
+      "success": false,
+      "status_code": 500,
+      "data": null,
+      "headers": {},
+      "error": "HTTP Error\nPOST https://api.performance.com/v1/self-assessment/request/\n[SSL: TLSV1_UNRECOGNIZED_NAME] tlsv1 unrecognized name (_ssl.c:1000)",
+      "elapsed_seconds": 7.807736396789551
+    },
+    "messages": [
+      {
+        "agent": "agt_bd537f321eba4298be85eb157ffecc75",
+        "role": "Start",
+        "node_type": "Start",
+        "inputs": {
+          "user_input": "review the performance for shashank singh"
+        },
+        "outputs": {
+          "employee_id": "review the performance for shashank singh",
+          "review_period": "review the performance for shashank singh",
+          "manager_id": "review the performance for shashank singh"
+        }
+      },
+      {
+        "node": "agt_d571b12e83cc45b09fb27d636e729c44",
+        "type": "api",
+        "name": "Request Self-Assessment",
+        "mode": "ad-hoc",
+        "success": false,
+        "status_code": 500,
+        "data": null
+      }
+    ]
+  },
+  "execution_position": "agt_d1853ac2dec14f87bd091f66ad0e72a9",
+  "created_at": "2026-02-17T17:37:57.892344",
+  "timeout_at": null
+}

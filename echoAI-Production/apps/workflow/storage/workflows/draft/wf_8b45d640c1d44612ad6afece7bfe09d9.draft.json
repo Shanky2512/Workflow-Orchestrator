@@ -1,0 +1,147 @@
+{
+  "workflow_id": "wf_8b45d640c1d44612ad6afece7bfe09d9",
+  "name": "SingleAgentTask - 2525",
+  "description": "Created from canvas on 2026-02-06",
+  "status": "draft",
+  "version": "0.1",
+  "execution_model": "sequential",
+  "agents": [
+    {
+      "agent_id": "agt_0cba6e21fc8849e1b8616031a6c46f48",
+      "name": "Workflow Start",
+      "role": "Workflow entry point",
+      "description": "Start node",
+      "prompt": "",
+      "icon": "\u25b6\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Start",
+        "goal": "",
+        "ui_layout": {
+          "x": 100,
+          "y": 100,
+          "icon": "\u25b6\ufe0f",
+          "color": "#10b981"
+        },
+        "created_at": "2026-02-06T11:01:08.782126",
+        "registered_at": "2026-02-06T11:01:08.796110"
+      },
+      "input_schema": [
+        "query"
+      ],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_1facb6de0bc84b33911b1032fa9bd111",
+      "name": "TaskAgent",
+      "role": "Autonomous AI agent",
+      "description": "Complete the task as TaskAgent",
+      "prompt": "Performs the end-to-end workflow of analyzing, planning, and delivering the final output.",
+      "icon": "\ud83d\udd36",
+      "model": "",
+      "tools": [
+        "tool_code_generator",
+        "tool_web_search"
+      ],
+      "variables": [],
+      "settings": {
+        "temperature": 0.3,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 10,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "Agent",
+        "goal": "Complete the task as TaskAgent",
+        "ui_layout": {
+          "x": 380,
+          "y": 100,
+          "icon": "\ud83d\udd36",
+          "color": "#f59e0b"
+        },
+        "created_at": "2026-02-06T11:01:08.782126",
+        "registered_at": "2026-02-06T11:01:08.815405"
+      },
+      "input_schema": [],
+      "output_schema": []
+    },
+    {
+      "agent_id": "agt_89d4e1c460494909a22799cd89e55403",
+      "name": "Workflow End",
+      "role": "Workflow exit point",
+      "description": "End node",
+      "prompt": "",
+      "icon": "\u23f9\ufe0f",
+      "model": "",
+      "tools": [],
+      "variables": [],
+      "settings": {
+        "temperature": 0.7,
+        "max_token": 4000,
+        "top_p": 0.9,
+        "max_iteration": 5,
+        "provider": ""
+      },
+      "permissions": {
+        "can_call_agents": false,
+        "allowed_agents": []
+      },
+      "metadata": {
+        "node_type": "End",
+        "goal": "",
+        "ui_layout": {
+          "x": 660,
+          "y": 100,
+          "icon": "\u23f9\ufe0f",
+          "color": "#64748b"
+        },
+        "created_at": "2026-02-06T11:01:08.782126",
+        "registered_at": "2026-02-06T11:01:08.830729"
+      },
+      "input_schema": [],
+      "output_schema": [
+        "result"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "agt_0cba6e21fc8849e1b8616031a6c46f48",
+      "to": "agt_1facb6de0bc84b33911b1032fa9bd111"
+    },
+    {
+      "from": "agt_1facb6de0bc84b33911b1032fa9bd111",
+      "to": "agt_89d4e1c460494909a22799cd89e55403"
+    }
+  ],
+  "state_schema": {
+    "query": "string",
+    "result": "string"
+  },
+  "metadata": {
+    "created_by": "workflow_builder",
+    "created_at": "2026-02-06T11:01:08.782126",
+    "canvas_layout": {
+      "width": 5000,
+      "height": 5000
+    }
+  }
+}

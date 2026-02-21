@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la \"C:\\\\Users\\\\Shashank Singh\\\\Desktop\\\\Phase 2 - ECHO\\\\echoAI\\\\apps\"\" | grep -E \"^d \")",
+      "WebSearch",
+      "WebFetch(domain:reference.langchain.com)",
+      "mcp__claude_ai_langchain__SearchDocsByLangChain",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs",
+      "Bash(wc:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:a2ui.org)",
+      "Bash(cmd /c \"echo %USERPROFILE%\")",
+      "WebFetch(domain:langfuse.com)",
+      "Bash(python:*)",
+      "Bash(echo:*)",
+      "WebFetch(domain:a2aprotocol.ai)",
+      "WebFetch(domain:pypi.org)"
+    ]
+  }
+}

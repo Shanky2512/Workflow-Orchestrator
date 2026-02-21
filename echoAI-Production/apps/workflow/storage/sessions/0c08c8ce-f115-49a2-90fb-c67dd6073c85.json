@@ -1,0 +1,43 @@
+{
+  "session_id": "0c08c8ce-f115-49a2-90fb-c67dd6073c85",
+  "workflow_id": "wf_1e6f51dfded5483fb1c13daeb2fef3c6",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-16T20:28:27.237057",
+  "last_activity": "2026-02-16T20:28:28.587124",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_1e6f51dfded5483fb1c13daeb2fef3c6",
+      "timestamp": "2026-02-16T20:28:27.237057",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "Our company is migrating the customer database from on-premise SQL Server to AWS RDS PostgreSQL. The migration       involves 2.3 million customer records including PII (names, emails, SSNs). What are the security risks?",
+      "timestamp": "2026-02-16T20:28:27.385506",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "\u26a0\ufe0f Workflow execution failed: '_GeneratorContextManager' object has no attribute 'get_next_version'",
+      "timestamp": "2026-02-16T20:28:28.587124",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "failed",
+        "error": "'_GeneratorContextManager' object has no attribute 'get_next_version'"
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "HITL Test Workflow"
+  },
+  "run_ids": [
+    "run_7256533118d74e1f8a3792aa21b34c77"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

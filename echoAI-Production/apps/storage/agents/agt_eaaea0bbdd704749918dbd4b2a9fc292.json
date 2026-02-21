@@ -1,0 +1,52 @@
+{
+  "agent_id": "agt_eaaea0bbdd704749918dbd4b2a9fc292",
+  "name": "Check PTO Balance",
+  "role": "HTTP request",
+  "description": "API node",
+  "prompt": "",
+  "icon": "🌐",
+  "model": "",
+  "tools": [],
+  "variables": [],
+  "settings": {
+    "temperature": 0.7,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 5,
+    "provider": ""
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "API",
+    "goal": "",
+    "ui_layout": {
+      "x": 350,
+      "y": 300,
+      "icon": "🌐",
+      "color": "#3b82f6"
+    },
+    "created_at": "2026-02-17T18:11:45.671309",
+    "api_config": {
+      "method": "GET",
+      "url": "https://api.hris.com/v1/employees/{employee_id}/pto-balance",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "auth": {}
+    },
+    "registered_at": "2026-02-17T18:11:45.709795"
+  },
+  "input_schema": [],
+  "output_schema": [],
+  "config": {
+    "method": "GET",
+    "url": "https://api.hris.com/v1/employees/{employee_id}/pto-balance",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "auth": {}
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "tool_id": "tool_web_search",
+  "name": "Web Search",
+  "description": "Performs web searches using Bing search provider. Returns relevant web results with titles, URLs, and snippets",
+  "tool_type": "local",
+  "version": "1.0",
+  "tags": ["search", "web", "internet", "research", "bing"],
+  "status": "active",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "Search query string"
+      },
+      "provider": {
+        "type": "string",
+        "enum": ["bing"],
+        "default": "bing",
+        "description": "Search provider to use"
+      },
+      "max_results": {
+        "type": "integer",
+        "default": 10,
+        "minimum": 1,
+        "maximum": 50,
+        "description": "Maximum number of results to return"
+      },
+      "safe_search": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable safe search filtering"
+      },
+      "language": {
+        "type": "string",
+        "default": "en",
+        "description": "Language code for search results (e.g., 'en', 'es', 'fr')"
+      }
+    },
+    "required": ["query"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "query": {
+        "type": "string",
+        "description": "Original search query"
+      },
+      "provider": {
+        "type": "string",
+        "description": "Search provider used"
+      },
+      "results": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": {"type": "string"},
+            "url": {"type": "string"},
+            "snippet": {"type": "string"},
+            "position": {"type": "integer"}
+          }
+        },
+        "description": "Array of search results"
+      },
+      "total_results": {
+        "type": "integer",
+        "description": "Total number of results returned"
+      }
+    },
+    "required": ["query", "provider", "results"]
+  },
+  "execution_config": {
+    "module": "AgentTools.web_search.providers.bing",
+    "class": "BingSearchProvider",
+    "method": "search"
+  },
+  "metadata": {
+    "author": "EchoAI",
+    "category": "research"
+  }
+}

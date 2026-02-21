@@ -1,0 +1,32 @@
+{
+  "tool_id": "tool_mcp_mcp_b5373fccbee5",
+  "name": "mcp_b5373fccbee5",
+  "description": "This tool allows you to interact with mcp_b5373fccbee5. Get current user's Microsoft 365/Teams profile core fields. Use it when you need to call the mcp_b5373fccbee5 MCP service.",
+  "tool_type": "mcp",
+  "input_schema": {
+    "type": "object",
+    "properties": {}
+  },
+  "output_schema": {
+    "type": "object"
+  },
+  "execution_config": {
+    "connector_id": "mcp_b5373fccbee5",
+    "connector_source": "mcp",
+    "source": "manual_create"
+  },
+  "version": "1.0",
+  "tags": [
+    "mcp",
+    "connector",
+    "synced"
+  ],
+  "status": "active",
+  "metadata": {
+    "connector_id": "mcp_b5373fccbee5",
+    "connector_name": "mcp_b5373fccbee5",
+    "connector_source": "mcp",
+    "system_prompt": "This tool allows you to interact with mcp_b5373fccbee5. Get current user's Microsoft 365/Teams profile core fields. Use it when you need to call the mcp_b5373fccbee5 MCP service."
+  },
+  "_saved_at": "2026-02-17T13:10:24.733679"
+}

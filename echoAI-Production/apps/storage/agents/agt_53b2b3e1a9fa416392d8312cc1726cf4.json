@@ -1,0 +1,39 @@
+{
+  "agent_id": "agt_53b2b3e1a9fa416392d8312cc1726cf4",
+  "name": "Document Classifier",
+  "role": "Autonomous AI agent",
+  "description": "Complete the task as Document Classifier",
+  "prompt": "You are a due diligence specialist. Classify uploaded documents into categories: Financial Statements, Legal Contracts, HR Documents, Operational Data, IP Documentation, Customer Contracts, Regulatory Filings. Extract key metadata from each document.",
+  "icon": "🔶",
+  "model": "ollama:gpt-oss:20b",
+  "tools": [
+    "tool_web_search"
+  ],
+  "variables": [],
+  "settings": {
+    "temperature": 0.3,
+    "max_token": 4000,
+    "top_p": 0.9,
+    "max_iteration": 3,
+    "provider": "anthropic"
+  },
+  "permissions": {
+    "can_call_agents": false,
+    "allowed_agents": []
+  },
+  "metadata": {
+    "node_type": "Agent",
+    "goal": "Complete the task as Document Classifier",
+    "ui_layout": {
+      "x": 352,
+      "y": 300,
+      "icon": "🔶",
+      "color": "#f59e0b"
+    },
+    "created_at": "2026-02-17T16:09:25.842754",
+    "registered_at": "2026-02-17T15:37:10.802765",
+    "updated_at": "2026-02-17T16:09:25.891050"
+  },
+  "input_schema": [],
+  "output_schema": []
+}

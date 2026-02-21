@@ -1,0 +1,42 @@
+{
+  "session_id": "69d14f2d-62cd-4c14-aa2d-b31d3e787249",
+  "workflow_id": "wf_45eb9810cb194e4c8ae8e69f48ad0831",
+  "workflow_mode": "draft",
+  "workflow_version": null,
+  "created_at": "2026-02-06T11:08:15.265303",
+  "last_activity": "2026-02-06T11:08:27.382230",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Started testing workflow: wf_45eb9810cb194e4c8ae8e69f48ad0831",
+      "timestamp": "2026-02-06T11:08:15.265303",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "user",
+      "content": "Hello",
+      "timestamp": "2026-02-06T11:08:15.289377",
+      "agent_id": null,
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "Hello! How can I help you today?",
+      "timestamp": "2026-02-06T11:08:27.382230",
+      "agent_id": null,
+      "metadata": {
+        "execution_status": "completed"
+      }
+    }
+  ],
+  "context": {
+    "workflow_name": "Single-Agent-2525"
+  },
+  "run_ids": [
+    "run_c410d5c0c61247fc92486431122ed1c8"
+  ],
+  "message_count": 3,
+  "state_schema": {},
+  "variables": {}
+}

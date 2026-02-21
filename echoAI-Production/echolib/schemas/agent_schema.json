@@ -1,0 +1,142 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AgentDefinition",
+  "type": "object",
+  "required": [
+    "agent_id",
+    "name",
+    "role",
+    "tools"
+  ],
+  "properties": {
+    "agent_id": {
+      "type": "string",
+      "description": "Unique agent identifier"
+    },
+    "name": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string",
+      "description": "High-level responsibility"
+    },
+    "description": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string",
+      "description": "Emoji icon for agent"
+    },
+    "prompt": {
+      "type": "string",
+      "description": "System prompt for agent behavior"
+    },
+    "model": {
+      "type": "string",
+      "description": "Model identifier (e.g., 'mistral-nemo-12b', 'gpt-4o-mini')"
+    },
+    "llm": {
+      "type": "object",
+      "description": "DEPRECATED: Use 'model' field instead. Kept for backward compatibility.",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "enum": ["openai", "anthropic", "local", "azure"]
+        },
+        "model": {
+          "type": "string"
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "max_tokens": {
+          "type": "number"
+        }
+      }
+    },
+    "tools": {
+      "type": "array",
+      "description": "Tool names (e.g., 'Web Search', 'Web Fetch')",
+      "items": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "type": "array",
+      "description": "Runtime variables for agent context",
+      "items": {
+        "type": "object",
+        "required": ["name", "type"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["string", "number", "boolean", "object", "array", "file", "date", "datetime", "url", "email", "integer", "float"]
+          },
+          "defaultValue": {
+            "description": "Default value for the variable"
+          }
+        }
+      }
+    },
+    "settings": {
+      "type": "object",
+      "description": "Agent execution settings",
+      "properties": {
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "max_token": {
+          "type": "number"
+        },
+        "top_p": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "max_iteration": {
+          "type": "number"
+        }
+      }
+    },
+    "input_schema": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "output_schema": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "max_steps": { "type": "number" },
+        "timeout_seconds": { "type": "number" },
+        "budget_tokens": { "type": "number" }
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "properties": {
+        "can_call_agents": { "type": "boolean" },
+        "allowed_agents": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" }
+      }
+    }
+  }
+}

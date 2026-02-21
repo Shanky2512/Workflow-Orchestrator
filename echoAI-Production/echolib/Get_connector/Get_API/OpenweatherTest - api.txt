@@ -1,0 +1,51 @@
+CREATE CONNECTOR WITH EXAMPLE PAYLOAD:
+{
+  "name": "openweather",
+  "base_url": "https://api.openweathermap.org/data/2.5",
+  "description" : "Test",
+  "auth_config": {
+    "type": "api_key",
+    "key": "6213ab7aa2f276094c77883649d66305",
+    "location": "query",
+    "param_name": "appid"
+  },
+  "default_headers": {
+    "Accept": "application/json"
+  },
+  "timeout": 30,
+  "example_payload": {
+    "endpoint": "/weather",
+    "method": "GET",
+    "params": {
+      "q": "London",
+      "units": "metric"
+    }
+  }
+}
+
+TEST CONNECTOR (with stored example):
+{
+  "connector_id": "openweather"
+}
+
+TEST CONNECTOR (with custom payload):
+{
+  "connector_id": "openweather",
+  "custom_payload": {
+    "endpoint": "/weather",
+    "method": "GET",
+    "params": {
+      "q": "Tokyo",
+      "units": "metric"
+    }
+  }
+}
+
+Update Connector :
+{ 
+  "connector_id":"",
+  "timeout": 50
+}
+
+
+
