@@ -42,6 +42,10 @@ python-dateutil>=2.9.0 # Date utilities
 # ============================================================================
 opentelemetry-api>=1.20.0
 opentelemetry-sdk>=1.20.0
+langfuse>=3.0.0
+opentelemetry-instrumentation-fastapi
+opentelemetry-instrumentation-threading
+openinference-instrumentation-crewai>=0.1.19
 
 # ============================================================================
 # Development & Testing

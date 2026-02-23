@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 llm = ChatOpenAI(
     model="liquid/lfm-2.5-1.2b-instruct:free",          # user will fill
     base_url="https://openrouter.ai/api/v1",       # user will fill
-    api_key="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",        # user will fill
+    api_key="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",        # user will fill
     temperature=0.2,
 )
 

@@ -37,7 +37,7 @@ class CodeGeneratorService:
         self.llm = ChatOpenAI(
             base_url="https://openrouter.ai/api/v1",
             model="nvidia/nemotron-3-nano-30b-a3b:free",
-            api_key="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"
+            api_key="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"
         )
 
     def generate_crewai_code(self, workflow_json: Dict[str, Any]) -> str:

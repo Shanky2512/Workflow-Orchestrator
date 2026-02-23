@@ -54,7 +54,7 @@ class LLMSettings(BaseModel):
     # OpenRouter settings (current default)
     openrouter_api_key: str = os.getenv(
         'OPENROUTER_API_KEY',
-        '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'
+        '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'
     )
     openrouter_base_url: str = os.getenv('OPENROUTER_BASE_URL', 'https://openrouter.ai/api/v1')
     openrouter_model: str = os.getenv('OPENROUTER_MODEL', 'nvidia/nemotron-3-nano-30b-a3b:free')
@@ -126,6 +126,14 @@ class Settings(BaseModel):
     # Execution Transparency (WebSocket step events)
     transparency_enabled: bool = os.getenv('ECHO_TRANSPARENCY_ENABLED', 'true').lower() == 'true'
 
+    # Langfuse Observability (SDK v3 — OTel-native)
+    LANGFUSE_PUBLIC_KEY: str = os.getenv("LANGFUSE_PUBLIC_KEY")
+    LANGFUSE_SECRET_KEY: str = os.getenv("LANGFUSE_SECRET_KEY")
+    LANGFUSE_BASE_URL: str = os.getenv("LANGFUSE_BASE_URL")
+    LANGFUSE_TRACING_ENABLED: bool = os.getenv("LANGFUSE_TRACING_ENABLED", "true").lower() == "true"
+    LANGFUSE_SAMPLE_RATE: float = float(os.getenv("LANGFUSE_SAMPLE_RATE", "1.0"))
+    LANGFUSE_BLOCKED_SCOPES: str = os.getenv("LANGFUSE_BLOCKED_SCOPES", "")
+
     @property
     def memcached_host_list(self) -> List[Tuple[str, int]]:
         """
@@ -156,3 +164,5 @@ settings = Settings()
 
 # Convenience access to LLM settings
 llm_settings = settings.llm
+
+

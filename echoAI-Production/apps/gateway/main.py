@@ -102,12 +102,68 @@ async def lifespan(app: FastAPI):
             else:
                 logger.info("ℹ️ Memcached disabled - using database only")
 
+            # ---------------------------------------------------------------
+            # Observability Initialization (Langfuse SDK v3 + OTel)
+            # ---------------------------------------------------------------
+            langfuse_client = None
+            try:
+                if settings.LANGFUSE_TRACING_ENABLED and settings.LANGFUSE_PUBLIC_KEY:
+                    from langfuse import Langfuse
+                    from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+                    from opentelemetry.instrumentation.threading import ThreadingInstrumentor
+                    from openinference.instrumentation.crewai import CrewAIInstrumentor
+
+                    # Parse blocked instrumentation scopes (exact scope names, no regex)
+                    blocked = [
+                        s.strip()
+                        for s in settings.LANGFUSE_BLOCKED_SCOPES.split(",")
+                        if s.strip()
+                    ] or None
+
+                    # 1. Initialize Langfuse (auto-creates OTel TracerProvider)
+                    langfuse_client = Langfuse(
+                        public_key=settings.LANGFUSE_PUBLIC_KEY,
+                        secret_key=settings.LANGFUSE_SECRET_KEY,
+                        host=settings.LANGFUSE_BASE_URL,
+                        sample_rate=settings.LANGFUSE_SAMPLE_RATE,
+                        blocked_instrumentation_scopes=blocked,
+                    )
+                    langfuse_client.auth_check()
+                    logger.info("Langfuse observability initialized (auth OK)")
+
+                    # 2. Thread context propagation (for asyncio.to_thread + ThreadPoolExecutor)
+                    ThreadingInstrumentor().instrument()
+
+                    # 3. FastAPI auto-instrumentation (HTTP request spans)
+                    FastAPIInstrumentor.instrument_app(app)
+
+                    # 4. CrewAI auto-instrumentation (agent/tool spans)
+                    CrewAIInstrumentor().instrument()
+
+                    logger.info("OTel instrumentors attached (Threading, FastAPI, CrewAI)")
+                else:
+                    logger.info("Langfuse tracing disabled or no public key configured")
+            except Exception as e:
+                logger.warning(
+                    f"Langfuse initialization failed (app will continue without tracing): {e}"
+                )
+                langfuse_client = None
+
             logger.info("=" * 60)
-            logger.info("🎉 EchoAI Gateway READY")
+            logger.info("EchoAI Gateway READY")
             logger.info("=" * 60)
             yield
 
-    logger.info("👋 EchoAI Gateway shutdown complete")
+            # --- Observability Shutdown ---
+            if langfuse_client:
+                try:
+                    langfuse_client.flush()
+                    langfuse_client.shutdown()
+                    logger.info("Langfuse client shut down cleanly")
+                except Exception as e:
+                    logger.warning(f"Langfuse shutdown error: {e}")
+
+    logger.info("EchoAI Gateway shutdown complete")
 
 
 # Create FastAPI application with lifespan
@@ -275,6 +331,38 @@ async def health_cache():
         response["test_get"] = "ok" if get_result else "failed"
 
     return response
+
+
+@app.get("/health/observability")
+async def health_observability():
+    """
+    Observability health check.
+
+    Tests Langfuse connectivity by performing an auth check.
+    """
+    if not settings.LANGFUSE_TRACING_ENABLED or not settings.LANGFUSE_PUBLIC_KEY:
+        return {
+            "status": "disabled",
+            "langfuse_tracing_enabled": settings.LANGFUSE_TRACING_ENABLED,
+            "langfuse_public_key_set": bool(settings.LANGFUSE_PUBLIC_KEY),
+        }
+
+    try:
+        from langfuse import get_client
+        langfuse = get_client()
+        auth_ok = langfuse.auth_check()
+        return {
+            "status": "ok" if auth_ok else "auth_failed",
+            "langfuse_tracing_enabled": True,
+            "langfuse_base_url": settings.LANGFUSE_BASE_URL,
+            "sample_rate": settings.LANGFUSE_SAMPLE_RATE,
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "langfuse_tracing_enabled": True,
+            "error": str(e),
+        }
 
 
 # ==============================================================================

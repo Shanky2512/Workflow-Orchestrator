@@ -24,6 +24,19 @@ import logging
 from echolib.config import settings
 from echolib.utils import new_id
 
+# Langfuse observability — import @observe decorator for tracing.
+# Wrapped in try/except so the module still loads if langfuse is not installed.
+try:
+    from langfuse import observe as _langfuse_observe
+except ImportError:
+    # Fallback: no-op decorator if langfuse is not available
+    def _langfuse_observe(*args, **kwargs):
+        if args and callable(args[0]):
+            return args[0]
+        def decorator(fn):
+            return fn
+        return decorator
+
 logger = logging.getLogger(__name__)
 
 
@@ -289,6 +302,7 @@ class CrewAIAdapter:
             List of CrewAI tool instances ready for agent use
         """
         tool_ids = agent_config.get("tools", [])
+        tool_ids = list(dict.fromkeys(tool_ids))  # deduplicate, preserve order
         crewai_tools = []
 
         if not tool_ids:
@@ -330,6 +344,7 @@ class CrewAIAdapter:
     # HIERARCHICAL WORKFLOWS: Manager + Workers with Dynamic Delegation
     # ========================================================================
 
+    @_langfuse_observe(name="crewai_create_hierarchical_node")
     def create_hierarchical_crew_node(
         self,
         master_agent_config: Dict[str, Any],
@@ -354,6 +369,7 @@ class CrewAIAdapter:
         Returns:
             Callable node function compatible with LangGraph StateGraph
         """
+        @_langfuse_observe(name="crewai_hierarchical_execution")
         def hierarchical_node(state: Dict[str, Any]) -> Dict[str, Any]:
             """
             LangGraph node that executes CrewAI hierarchical crew.
@@ -558,6 +574,7 @@ class CrewAIAdapter:
     # PARALLEL WORKFLOWS: Multiple Agents Executing Concurrently
     # ========================================================================
 
+    @_langfuse_observe(name="crewai_create_parallel_node")
     def create_parallel_crew_node(
         self,
         agent_configs: List[Dict[str, Any]],
@@ -580,6 +597,7 @@ class CrewAIAdapter:
         Returns:
             Callable node function compatible with LangGraph StateGraph
         """
+        @_langfuse_observe(name="crewai_parallel_execution")
         def parallel_node(state: Dict[str, Any]) -> Dict[str, Any]:
             """
             LangGraph node that executes CrewAI agents in parallel.
@@ -788,6 +806,7 @@ class CrewAIAdapter:
     # SEQUENTIAL WORKFLOWS: Single Agent with CrewAI
     # ========================================================================
 
+    @_langfuse_observe(name="crewai_create_sequential_node")
     def create_sequential_agent_node(
         self,
         agent_config: Dict[str, Any]
@@ -808,6 +827,7 @@ class CrewAIAdapter:
         Returns:
             Callable node function compatible with LangGraph StateGraph
         """
+        @_langfuse_observe(name="crewai_sequential_execution")
         def sequential_agent_node(state: Dict[str, Any]) -> Dict[str, Any]:
             """
             LangGraph node that executes a single CrewAI agent.

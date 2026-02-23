@@ -1,7 +1,7 @@
 {
-  "workflow_id": "wf_e6d20ccd15cc4aa5beb9544306335cf1",
-  "name": "MaDueDiligence Main",
-  "description": "Created from canvas on 2026-02-21",
+  "workflow_id": "wf_140bb0af94bc4001804c4e2e1d395242",
+  "name": "MaDueDiligence",
+  "description": "Created from canvas on 2026-02-17",
   "status": "draft",
   "version": "0.1",
   "execution_model": "hybrid",
@@ -36,9 +36,8 @@
           "icon": "\u25b6\ufe0f",
           "color": "#10b981"
         },
-        "created_at": "2026-02-21T21:03:05.573580",
-        "registered_at": "2026-02-17T15:37:10.794349",
-        "updated_at": "2026-02-21T21:03:05.662130"
+        "created_at": "2026-02-17T15:17:54.071119",
+        "registered_at": "2026-02-17T15:17:54.194620"
       },
       "input_schema": [
         "target_company",
@@ -57,7 +56,9 @@
       "icon": "\ud83d\udd36",
       "model": "ollama:gpt-oss:20b",
       "tools": [
-        "tool_web_search"
+        "tool_web_search",
+        "tool_document_analysis",
+        "tool_document_analysis"
       ],
       "variables": [],
       "settings": {
@@ -80,9 +81,8 @@
           "icon": "\ud83d\udd36",
           "color": "#f59e0b"
         },
-        "created_at": "2026-02-21T21:03:05.573580",
-        "registered_at": "2026-02-17T15:37:10.802765",
-        "updated_at": "2026-02-21T21:03:05.676442"
+        "created_at": "2026-02-17T15:17:54.071119",
+        "registered_at": "2026-02-17T15:17:54.273952"
       },
       "input_schema": [],
       "output_schema": []
@@ -119,9 +119,8 @@
           "icon": "\ud83d\udd36",
           "color": "#f59e0b"
         },
-        "created_at": "2026-02-21T21:03:05.573580",
-        "registered_at": "2026-02-17T15:37:10.821819",
-        "updated_at": "2026-02-21T21:03:05.717406"
+        "created_at": "2026-02-17T15:17:54.071119",
+        "registered_at": "2026-02-17T15:17:54.343595"
       },
       "input_schema": [],
       "output_schema": []
@@ -158,9 +157,8 @@
           "icon": "\ud83d\udd36",
           "color": "#f59e0b"
         },
-        "created_at": "2026-02-21T21:03:05.573580",
-        "registered_at": "2026-02-17T15:37:10.838178",
-        "updated_at": "2026-02-21T21:03:05.750594"
+        "created_at": "2026-02-17T15:17:54.071119",
+        "registered_at": "2026-02-17T15:17:54.421063"
       },
       "input_schema": [],
       "output_schema": []
@@ -174,7 +172,8 @@
       "icon": "\ud83d\udd36",
       "model": "claude-sonnet-4-5-20250514",
       "tools": [
-        "tool_web_search"
+        "tool_web_search",
+        "tool_document_analysis"
       ],
       "variables": [],
       "settings": {
@@ -197,9 +196,8 @@
           "icon": "\ud83d\udd36",
           "color": "#f59e0b"
         },
-        "created_at": "2026-02-21T21:03:05.573580",
-        "registered_at": "2026-02-17T15:37:10.852793",
-        "updated_at": "2026-02-21T21:03:05.780501"
+        "created_at": "2026-02-17T15:17:54.071119",
+        "registered_at": "2026-02-17T15:17:54.503398"
       },
       "input_schema": [],
       "output_schema": []
@@ -234,9 +232,8 @@
           "icon": "\ud83d\udd87\ufe0f",
           "color": "#8b5cf6"
         },
-        "created_at": "2026-02-21T21:03:05.573580",
-        "registered_at": "2026-02-17T15:37:10.869368",
-        "updated_at": "2026-02-21T21:03:05.809924"
+        "created_at": "2026-02-17T15:17:54.071119",
+        "registered_at": "2026-02-17T15:17:54.573587"
       },
       "input_schema": [],
       "output_schema": []
@@ -271,9 +268,8 @@
           "icon": "\ud83d\udd36",
           "color": "#f59e0b"
         },
-        "created_at": "2026-02-21T21:03:05.573580",
-        "registered_at": "2026-02-17T15:37:10.885399",
-        "updated_at": "2026-02-21T21:03:05.841421"
+        "created_at": "2026-02-17T15:17:54.071119",
+        "registered_at": "2026-02-17T15:17:54.650857"
       },
       "input_schema": [],
       "output_schema": []
@@ -308,7 +304,7 @@
           "icon": "\ud83d\udd00",
           "color": "#8b5cf6"
         },
-        "created_at": "2026-02-21T21:03:05.573580",
+        "created_at": "2026-02-17T15:17:54.071119",
         "branches": [
           {
             "type": "if",
@@ -326,8 +322,7 @@
             "targetNodeId": 1010
           }
         ],
-        "registered_at": "2026-02-17T15:37:10.902600",
-        "updated_at": "2026-02-21T21:03:05.879110"
+        "registered_at": "2026-02-17T15:17:54.727861"
       },
       "input_schema": [],
       "output_schema": []
@@ -362,7 +357,7 @@
           "icon": "\ud83d\udc64",
           "color": "#06b6d4"
         },
-        "created_at": "2026-02-21T21:03:05.573580",
+        "created_at": "2026-02-17T15:17:54.071119",
         "hitl_config": {
           "title": "",
           "message": "Deal has critical risks requiring partner decision",
@@ -370,8 +365,7 @@
           "allowEdit": true,
           "allowDefer": false
         },
-        "registered_at": "2026-02-17T15:37:10.916825",
-        "updated_at": "2026-02-21T21:03:05.912400"
+        "registered_at": "2026-02-17T15:17:54.809017"
       },
       "input_schema": [],
       "output_schema": []
@@ -406,7 +400,7 @@
           "icon": "\ud83d\udc64",
           "color": "#06b6d4"
         },
-        "created_at": "2026-02-21T21:03:05.573580",
+        "created_at": "2026-02-17T15:17:54.071119",
         "hitl_config": {
           "title": "",
           "message": "Moderate risks identified requiring management review",
@@ -414,8 +408,7 @@
           "allowEdit": true,
           "allowDefer": false
         },
-        "registered_at": "2026-02-17T15:37:10.932985",
-        "updated_at": "2026-02-21T21:03:05.946734"
+        "registered_at": "2026-02-17T15:17:54.882352"
       },
       "input_schema": [],
       "output_schema": []
@@ -428,7 +421,9 @@
       "prompt": "Generate comprehensive due diligence report. Include: Executive Summary, Detailed Findings by Category, Risk Analysis with Scores, Recommendations, Mitigation Strategies, Deal Structure Suggestions. Format as professional consulting deliverable.",
       "icon": "\ud83d\udd36",
       "model": "claude-sonnet-4-5-20250514",
-      "tools": [],
+      "tools": [
+        "tool_document_analysis"
+      ],
       "variables": [],
       "settings": {
         "temperature": 0.4,
@@ -450,9 +445,8 @@
           "icon": "\ud83d\udd36",
           "color": "#f59e0b"
         },
-        "created_at": "2026-02-21T21:03:05.573580",
-        "registered_at": "2026-02-17T15:37:10.946894",
-        "updated_at": "2026-02-21T21:03:05.979893"
+        "created_at": "2026-02-17T15:17:54.071119",
+        "registered_at": "2026-02-17T15:17:54.951191"
       },
       "input_schema": [],
       "output_schema": []
@@ -487,7 +481,7 @@
           "icon": "\ud83c\udf10",
           "color": "#3b82f6"
         },
-        "created_at": "2026-02-21T21:03:05.573580",
+        "created_at": "2026-02-17T15:17:54.071119",
         "api_config": {
           "method": "POST",
           "url": "https://api.clientportal.com/v1/deliverables",
@@ -496,8 +490,7 @@
           },
           "auth": {}
         },
-        "registered_at": "2026-02-17T15:37:10.963965",
-        "updated_at": "2026-02-21T21:03:06.009456"
+        "registered_at": "2026-02-17T15:17:55.023226"
       },
       "input_schema": [],
       "output_schema": [],
@@ -540,9 +533,8 @@
           "icon": "\u23f9\ufe0f",
           "color": "#64748b"
         },
-        "created_at": "2026-02-21T21:03:05.573580",
-        "registered_at": "2026-02-17T15:37:10.981411",
-        "updated_at": "2026-02-21T21:03:06.042867"
+        "created_at": "2026-02-17T15:17:54.071119",
+        "registered_at": "2026-02-17T15:17:55.143260"
       },
       "input_schema": [],
       "output_schema": [
@@ -629,7 +621,7 @@
   },
   "metadata": {
     "created_by": "workflow_builder",
-    "created_at": "2026-02-21T21:03:05.573580",
+    "created_at": "2026-02-17T15:17:54.071119",
     "canvas_layout": {
       "width": 5000,
       "height": 5000

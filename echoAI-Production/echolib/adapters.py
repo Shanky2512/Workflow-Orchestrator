@@ -53,11 +53,53 @@ class KeyVaultClient(ICredentialStore):
         self._secrets[name] = self._secrets.get(name, '') + '_rotated'
 
 class OTelLogger(ILogger):
+    """
+    OTel-backed logger implementation.
+
+    Creates real OpenTelemetry spans for each log/trace call.
+    The spans are automatically forwarded to Langfuse (or any configured
+    OTel exporter) via the global TracerProvider set up during app startup.
+
+    Falls back to standard Python logging if OTel is not initialized.
+    """
+
+    def __init__(self) -> None:
+        try:
+            from opentelemetry import trace
+            self._tracer = trace.get_tracer("echoai.logger")
+        except ImportError:
+            self._tracer = None
+
     def info(self, msg: str, ctx: dict) -> None:
         logger.info(msg + ' ' + str(ctx))
+        if self._tracer:
+            with self._tracer.start_as_current_span("log.info") as span:
+                span.set_attribute("log.message", msg)
+                for k, v in ctx.items():
+                    span.set_attribute(f"log.ctx.{k}", str(v))
+
     def warn(self, msg: str, ctx: dict) -> None:
         logger.warning(msg + ' ' + str(ctx))
+        if self._tracer:
+            with self._tracer.start_as_current_span("log.warn") as span:
+                span.set_attribute("log.message", msg)
+                span.set_attribute("log.severity", "WARN")
+                for k, v in ctx.items():
+                    span.set_attribute(f"log.ctx.{k}", str(v))
+
     def error(self, msg: str, ctx: dict) -> None:
         logger.error(msg + ' ' + str(ctx))
-    def trace(self, span: str, ctx: dict) -> None:
-        logger.debug(f'TRACE {span} {ctx}')
+        if self._tracer:
+            with self._tracer.start_as_current_span("log.error") as span:
+                span.set_attribute("log.message", msg)
+                span.set_attribute("log.severity", "ERROR")
+                for k, v in ctx.items():
+                    span.set_attribute(f"log.ctx.{k}", str(v))
+
+    def trace(self, span_name: str, ctx: dict) -> None:
+        if self._tracer:
+            with self._tracer.start_as_current_span(span_name) as span:
+                for k, v in ctx.items():
+                    span.set_attribute(k, str(v))
+        else:
+            logger.debug(f'TRACE {span_name} {ctx}')

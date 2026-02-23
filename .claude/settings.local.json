@@ -15,7 +15,8 @@
       "Bash(python:*)",
       "Bash(echo:*)",
       "WebFetch(domain:a2aprotocol.ai)",
-      "WebFetch(domain:pypi.org)"
+      "WebFetch(domain:pypi.org)",
+      "WebFetch(domain:python.reference.langfuse.com)"
     ]
   }
 }

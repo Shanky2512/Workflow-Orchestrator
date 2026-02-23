@@ -34,6 +34,10 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# Load environment variables from .env file
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 class LLMManager:
     """
@@ -52,7 +56,7 @@ class LLMManager:
     DEFAULT_PROVIDER = "openrouter"
 
     # DEFAULT MODEL: The model used when no override is specified
-    DEFAULT_MODEL = "nvidia/nemotron-3-nano-30b-a3b:free"
+    DEFAULT_MODEL = os.getenv("OPENROUTER_MODEL")
 
     # DEFAULT PARAMETERS
     DEFAULT_TEMPERATURE = 0.3
@@ -61,7 +65,7 @@ class LLMManager:
     # API KEYS - Hardcoded here (add to .gitignore to prevent commits)
     # IMPORTANT: Keep this file in .gitignore!
     API_KEYS = {
-        "openrouter": "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",
+        "openrouter": os.getenv("OPENROUTER_API_KEY"),
         #, "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"
         "openai": "sk-YOUR_OPENAI_KEY_HERE",
         "anthropic": "sk-ant-YOUR_ANTHROPIC_KEY_HERE",
@@ -71,7 +75,7 @@ class LLMManager:
 
     # BASE URLs for providers
     BASE_URLS = {
-        "openrouter": "https://openrouter.ai/api/v1",
+        "openrouter": os.getenv("OPENROUTER_BASE_URL"),
         "ollama": "http://localhost:11434/v1",
         "azure": "YOUR_AZURE_ENDPOINT_HERE"  # e.g., https://your-resource.openai.azure.com/
     }

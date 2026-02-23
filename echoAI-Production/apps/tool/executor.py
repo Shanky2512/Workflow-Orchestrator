@@ -206,9 +206,72 @@ class ToolExecutor:
                 }
             )
 
+    @staticmethod
+    def _normalize_enum_fields(schema: Dict[str, Any], data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Normalize string enum fields to lowercase before validation.
+
+        Walks the schema properties and, for any string property whose enum
+        values are ALL lowercase, lowercases the corresponding input value.
+        This prevents retry loops caused by the LLM passing e.g. "Bing"
+        when the schema expects "bing".
+
+        Centralized here so ALL tools benefit automatically.
+
+        Args:
+            schema: JSON Schema dict with "properties"
+            data: Input data dict to normalize
+
+        Returns:
+            A shallow copy of data with enum-matching fields lowercased.
+        """
+        properties = schema.get("properties", {})
+        if not properties:
+            return data
+
+        normalized = dict(data)
+        for field_name, field_spec in properties.items():
+            if field_name not in normalized:
+                continue
+            enum_values = field_spec.get("enum")
+            if not enum_values:
+                continue
+            # Only normalize when all enum values are lowercase strings
+            if (all(isinstance(v, str) for v in enum_values)
+                    and all(v == v.lower() for v in enum_values)
+                    and isinstance(normalized[field_name], str)):
+                normalized[field_name] = normalized[field_name].lower()
+        return normalized
+
+    @staticmethod
+    def _strip_null_optional_fields(schema: Dict[str, Any], data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Remove None-valued keys from input data when the key is not in the
+        schema's required list.
+
+        Prevents retry loops caused by the LLM passing `field: null` for
+        optional fields whose schema type doesn't include null.
+
+        Centralized here so ALL tools benefit automatically.
+
+        Args:
+            schema: JSON Schema dict
+            data: Input data dict
+
+        Returns:
+            A shallow copy of data with null optional fields stripped.
+        """
+        required = set(schema.get("required", []))
+        return {k: v for k, v in data.items()
+                if v is not None or k in required}
+
     def _validate_input(self, tool: ToolDef, input_data: Dict[str, Any]) -> None:
         """
         Validate input data against tool's input schema.
+
+        Applies centralized normalizations before validation so that
+        common LLM mistakes (wrong case enums, null optional fields)
+        are silently corrected instead of triggering retry loops.
 
         Args:
             tool: ToolDef containing the input schema
@@ -224,6 +287,17 @@ class ToolExecutor:
 
         try:
             import jsonschema
+
+            # --- Centralized pre-validation normalizations ---
+            # These prevent the most common LLM-caused validation failures
+            # that trigger expensive retry loops across ALL tools.
+            cleaned = self._strip_null_optional_fields(tool.input_schema, input_data)
+            cleaned = self._normalize_enum_fields(tool.input_schema, cleaned)
+
+            # Write normalizations back so downstream execution sees clean data
+            input_data.clear()
+            input_data.update(cleaned)
+
             jsonschema.validate(instance=input_data, schema=tool.input_schema)
             logger.debug(f"Input validation passed for tool '{tool.name}'")
 

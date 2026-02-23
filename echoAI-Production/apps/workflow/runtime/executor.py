@@ -6,6 +6,7 @@ import re
 import logging
 from typing import Dict, Any, Optional
 from echolib.utils import new_id
+from echolib.config import settings
 from apps.workflow.visualization.node_mapper import normalize_agent_config
 
 logger = logging.getLogger(__name__)
@@ -295,8 +296,38 @@ class WorkflowExecutor:
                 "_state_schema": workflow.get("state_schema", {})  # Track variable types
             }
 
+            # Audit log user input (prompt injection detection)
+            try:
+                from echolib.observability import audit_log_input
+                audit_log_input(
+                    run_id=run_id,
+                    user_input=user_input,
+                    user_id=str(input_payload.get("user_id", "system")),
+                    workflow_id=workflow_id,
+                )
+            except Exception as _audit_err:
+                logger.debug(f"Audit log skipped: {_audit_err}")
+
             # Run the compiled graph
             config = {"configurable": {"thread_id": run_id}}
+
+            # --- Langfuse Tracing ---
+            try:
+                if settings.LANGFUSE_TRACING_ENABLED and settings.LANGFUSE_PUBLIC_KEY:
+                    from langfuse.langchain import CallbackHandler
+                    langfuse_handler = CallbackHandler()
+                    config["callbacks"] = [langfuse_handler]
+                    config["metadata"] = {
+                        "langfuse_session_id": str(run_id),
+                        "langfuse_user_id": str(input_payload.get("user_id", "system")),
+                        "langfuse_tags": [
+                            f"workflow:{workflow_id}",
+                            f"mode:{execution_mode}",
+                        ],
+                    }
+            except Exception as _lf_err:
+                logger.debug(f"Langfuse handler skipped: {_lf_err}")
+
             final_state = compiled_graph.invoke(initial_state, config)
 
             result = {
@@ -560,8 +591,38 @@ class WorkflowExecutor:
                 "_state_schema": workflow.get("state_schema", {}),
             }
 
+            # Audit log user input (prompt injection detection)
+            try:
+                from echolib.observability import audit_log_input
+                audit_log_input(
+                    run_id=run_id,
+                    user_input=user_input,
+                    user_id=str(input_payload.get("user_id", "system")),
+                    workflow_id=workflow_id,
+                )
+            except Exception as _audit_err:
+                logger.debug(f"Audit log skipped: {_audit_err}")
+
             # Run the compiled graph
             config = {"configurable": {"thread_id": run_id}}
+
+            # --- Langfuse Tracing ---
+            try:
+                if settings.LANGFUSE_TRACING_ENABLED and settings.LANGFUSE_PUBLIC_KEY:
+                    from langfuse.langchain import CallbackHandler
+                    langfuse_handler = CallbackHandler()
+                    config["callbacks"] = [langfuse_handler]
+                    config["metadata"] = {
+                        "langfuse_session_id": str(run_id),
+                        "langfuse_user_id": str(input_payload.get("user_id", "system")),
+                        "langfuse_tags": [
+                            f"workflow:{workflow_id}",
+                            f"mode:{execution_mode}",
+                        ],
+                    }
+            except Exception as _lf_err:
+                logger.debug(f"Langfuse handler skipped: {_lf_err}")
+
             result = compiled_graph.invoke(initial_state, config)
 
             # CHECK: Did the graph pause at an interrupt?
@@ -668,6 +729,24 @@ class WorkflowExecutor:
         }
 
         config = {"configurable": {"thread_id": run_id}}
+
+        # --- Langfuse Tracing ---
+        try:
+            if settings.LANGFUSE_TRACING_ENABLED and settings.LANGFUSE_PUBLIC_KEY:
+                from langfuse.langchain import CallbackHandler
+                langfuse_handler = CallbackHandler()
+                config["callbacks"] = [langfuse_handler]
+                config["metadata"] = {
+                    "langfuse_session_id": str(run_id),
+                    "langfuse_user_id": "system",
+                    "langfuse_tags": [
+                        f"workflow:{workflow_id}",
+                        f"mode:{execution_mode}",
+                        "resume",
+                    ],
+                }
+        except Exception as _lf_err:
+            logger.debug(f"Langfuse handler skipped on resume: {_lf_err}")
 
         try:
             # Resume from interrupt -- Command(resume=...) becomes the return

@@ -1730,6 +1730,41 @@ class WorkflowCompiler:
                 f"[CONDITION EVAL] Result: '{normalized}' → {bool_result}"
             )
             return bool_result
+        except TypeError as e:
+            # Handle comparison between incompatible types (e.g. str vs int)
+            # by extracting numeric values from string operands.
+            # This is centralized here so ALL conditional branches across
+            # ALL workflows benefit automatically.
+            if "not supported between" in str(e):
+                logger.info(
+                    f"[CONDITION EVAL] TypeError for '{normalized}': {e}. "
+                    f"Retrying with numeric coercion of string operands."
+                )
+                for var in referenced_vars:
+                    val = safe_locals.get(var)
+                    if isinstance(val, str):
+                        import re as _re
+                        num = _re.search(r'-?\d+(?:\.\d+)?', val)
+                        if num:
+                            safe_locals[var] = float(num.group()) if '.' in num.group() else int(num.group())
+                try:
+                    result = eval(normalized, safe_globals, safe_locals)
+                    bool_result = bool(result)
+                    logger.info(
+                        f"[CONDITION EVAL] Result after coercion: '{normalized}' → {bool_result}"
+                    )
+                    return bool_result
+                except Exception as inner_e:
+                    logger.warning(
+                        f"[CONDITION EVAL] Coercion retry also failed for '{normalized}': {inner_e}"
+                    )
+                    return False
+            else:
+                logger.warning(
+                    f"[CONDITION EVAL] TypeError for '{condition}' "
+                    f"(normalized: '{normalized}'): {e}"
+                )
+                return False
         except NameError as e:
             # Variable not found in context — treat as False
             logger.warning(
@@ -3344,6 +3379,49 @@ Respond in the following JSON format ONLY (no other text):
 
         return hitl_node
 
+    def _wrap_node_with_tracing(self, node_fn, node_name: str):
+        """
+        Wrap a LangGraph node function to trace state transitions via Langfuse.
+
+        Uses the Langfuse @observe decorator to create an OTel-compatible span
+        for each node execution, logging input state keys and modified output keys.
+
+        Args:
+            node_fn: The original node function to wrap.
+            node_name: Human-readable name for the node (used in trace).
+
+        Returns:
+            Wrapped function that traces state transitions.
+        """
+        try:
+            from langfuse import observe, get_client
+
+            @observe(name=f"node:{node_name}")
+            def traced_node(state):
+                try:
+                    langfuse = get_client()
+                    langfuse.update_current_span(
+                        input={"state_keys": list(state.keys()), "node": node_name},
+                    )
+                except Exception:
+                    pass  # Tracing update is best-effort
+                result = node_fn(state)
+                try:
+                    langfuse = get_client()
+                    langfuse.update_current_span(
+                        output={
+                            "modified_keys": list(result.keys()) if isinstance(result, dict) else "non-dict"
+                        },
+                    )
+                except Exception:
+                    pass  # Tracing update is best-effort
+                return result
+
+            return traced_node
+        except ImportError:
+            # langfuse not installed — return original function unchanged
+            return node_fn
+
     def _create_node_for_type(
         self,
         node_id: str,
@@ -3384,46 +3462,60 @@ Respond in the following JSON format ONLY (no other text):
 
         node_type_normalized = node_type.strip().lower()
 
+        node_fn = None
+
         if node_type_normalized == "api":
             logger.info(f"Creating API node: {node_id} ('{node_config.get('name', node_id)}')")
-            return self._create_api_node(node_id, node_config)
+            node_fn = self._create_api_node(node_id, node_config)
 
         elif node_type_normalized == "mcp":
             logger.info(f"Creating MCP node: {node_id} ('{node_config.get('name', node_id)}')")
-            return self._create_mcp_node(node_id, node_config)
+            node_fn = self._create_mcp_node(node_id, node_config)
 
         elif node_type_normalized == "code":
             logger.info(f"Creating Code node: {node_id} ('{node_config.get('name', node_id)}')")
-            return self._create_code_node(node_id, node_config)
+            node_fn = self._create_code_node(node_id, node_config)
 
         elif node_type_normalized in ("self-review", "self_review", "selfreview"):
             logger.info(f"Creating Self-Review node: {node_id} ('{node_config.get('name', node_id)}')")
-            return self._create_self_review_node(node_id, node_config)
+            node_fn = self._create_self_review_node(node_id, node_config)
 
         elif node_type_normalized in ("conditional", "router"):
             # Conditional nodes are handled separately in the BFS traversal,
             # but this fallback exists for safety.
             logger.info(f"Creating Conditional node: {node_id}")
-            return self._create_conditional_node(node_id, node_config)
+            node_fn = self._create_conditional_node(node_id, node_config)
 
         elif node_type_normalized == "start":
             logger.info(f"Creating Start node: {node_id} (passthrough, no LLM)")
-            return self._create_start_node(node_id, node_config)
+            node_fn = self._create_start_node(node_id, node_config)
 
         elif node_type_normalized == "end":
             logger.info(f"Creating End node: {node_id} (passthrough, no LLM)")
-            return self._create_end_node(node_id, node_config)
+            node_fn = self._create_end_node(node_id, node_config)
 
         elif node_type_normalized == "hitl":
             # Dedicated HITL node with LangGraph interrupt() support.
             # Uses _create_hitl_node which properly pauses graph execution.
             logger.info(f"Creating HITL node: {node_id} (interrupt-based pause)")
-            return self._create_hitl_node(node_id, node_config)
+            node_fn = self._create_hitl_node(node_id, node_config)
 
         else:
             # Default: Agent node (also handles HITL via internal check)
             logger.info(f"Creating Agent node: {node_id} (type='{node_type}')")
-            return self._create_agent_node(node_id, node_config)
+            node_fn = self._create_agent_node(node_id, node_config)
+
+        # Wrap node function with Langfuse tracing for state transition visibility
+        try:
+            from echolib.config import settings as _cfg
+            if _cfg.LANGFUSE_TRACING_ENABLED and _cfg.LANGFUSE_PUBLIC_KEY:
+                node_fn = self._wrap_node_with_tracing(
+                    node_fn, node_config.get("name", node_id)
+                )
+        except Exception:
+            pass  # Tracing wrapper is best-effort
+
+        return node_fn
 
     def _execute_llm_call(self, llm_config: Dict[str, Any], prompt: str) -> str:
         """
